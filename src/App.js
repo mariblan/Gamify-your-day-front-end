@@ -1,10 +1,18 @@
-import './App.css';
+import { Routes, Route } from "react-router-dom";
+import "./App.css";
 
 function App() {
   return (
-    <div className="App">
-      Gamify your day starts here!
-    </div>
+    <Routes>
+      <Route path="/" element="component here" />
+      <Route path="/" element="component here" />
+      <Route path="/" element="component here" />
+      <Route path="/" element="component here" />
+      <Route path="/" element="component here" />
+      <Route path="/" element="component here" />
+      <Route path="/" element="component here" />
+      <Route path="/" element="component here" />
+    </Routes>
   );
 }
 

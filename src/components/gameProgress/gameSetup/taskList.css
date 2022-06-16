@@ -1,4 +1,4 @@
-/*@import url("https://fonts.googleapis.com/css2?family=Fresca&family=Merienda&family=Patrick+Hand&family=Sansita&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Fresca&family=Merienda&family=Patrick+Hand&family=Sansita&display=swap");
 
 * {
   box-sizing: border-box;
@@ -9,10 +9,10 @@
 
 body {
   background-color: rgb(235, 243, 192);
-  background-image: url("./leaves-bg.png");
+  background-image: url("../../../images/leaves-bg.png");
 }
 
-button {
+.fadedBtn {
   border-top: 1px solid rgb(106, 199, 106);
   border-left: 1px solid rgb(82, 187, 82);
   border-right: 1px solid rgb(109, 212, 109);
@@ -26,7 +26,7 @@ button {
   transform: skewY(-3deg);
 }
 
-button:active {
+.fadedBtn:active {
   transform: translate(2px, 2px);
   box-shadow: -1px 3px 4px rgba(0, 0, 0, 0.3);
 }
@@ -37,7 +37,7 @@ button:active {
   top: 0;
   width: 100%;
   background-color: rgb(235, 243, 192);
-  background-image: url("./leaves-bg.png");
+  background-image: url("../../../images/leaves-bg.png");
 }
 
 .mainBtn {
@@ -67,7 +67,7 @@ button:active {
 }
 
 .taskExpanded,
-.task {
+.taskMini {
   position: relative;
   background-color: rgba(255, 255, 255, 0.6);
   border-radius: 15px;
@@ -125,7 +125,7 @@ button:active {
 }
 
 input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none; /* Override default look
+  -webkit-appearance: none; /* Override default look */
   appearance: none;
   background-color: #d39522;
   height: 1.4rem;
@@ -134,7 +134,7 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 input[type="range"]::-moz-range-thumb {
-  -webkit-appearance: none; /* Override default look
+  -webkit-appearance: none; /* Override default look */
   appearance: none;
   border: none;
   background-color: #d39522;
@@ -143,19 +143,19 @@ input[type="range"]::-moz-range-thumb {
   border-radius: 50%;
 }
 
-.task {
+.taskMini {
   position: relative;
   display: flex;
   align-items: center;
 }
 
-.task h3 {
+.taskMini h3 {
   text-overflow: ellipsis;
   width: 65%;
   overflow: hidden;
 }
 
-.task:last-of-type {
+.taskMini:last-of-type {
   margin-bottom: 250px;
 }
 
@@ -164,9 +164,31 @@ input[type="range"]::-moz-range-thumb {
   padding: 10px;
 }
 
-.task img {
+.taskMini img {
   max-height: 10vh;
   padding: 10px;
+}
+
+.rewardDisplay {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.rewardText {
+  width: 50%;
+  text-align: right;
+}
+
+.rewardWrapper {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+}
+
+.rewardWrapper img {
+  max-width: 30%;
+  padding: 2%;
 }
 
 .favIcon {
@@ -230,4 +252,3 @@ input[type="range"]::-moz-range-thumb {
   align-items: center;
   justify-content: space-around;
 }
-*/

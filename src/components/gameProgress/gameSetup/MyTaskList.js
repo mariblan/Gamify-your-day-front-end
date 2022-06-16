@@ -4,7 +4,7 @@ export default function MyTaskList() {
   return (
     <>
       <div className="headerWrapper">
-        <button className="profileBtn">Profile</button>
+        <button className="profileBtn fadedBtn">Profile</button>
         <h1 className="title">Select your tasks!</h1>
       </div>
       <TaskList fullList={false} />
@@ -39,13 +39,13 @@ export default function MyTaskList() {
           />
         </div>
         <div className="navWrapper">
-          <button type="button" className="taskList">
+          <button type="button" className="fadedBtn">
             All tasks
           </button>
-          <button type="button" className="customTasks">
+          <button type="button" className="fadedBtn">
             Custom tasks
           </button>
-          <button type="button" className="petPick mainBtn">
+          <button type="button" className="mainBtn">
             Pick pet
           </button>
         </div>

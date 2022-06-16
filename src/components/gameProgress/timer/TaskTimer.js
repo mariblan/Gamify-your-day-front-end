@@ -4,6 +4,7 @@ import canary from "../../../images/canary-normal.png";
 import apple from "../../../images/apple-color.png";
 import chore from "../../../images/chores-icon.png";
 
+
 export default function TaskTimer() {
   return (
     <div className="bodytimer">
@@ -16,7 +17,7 @@ export default function TaskTimer() {
           <div className="timer">
             <h2>10:00</h2>
             <div className="tasks-options">
-              <button className="pause" type="button">
+              <button className="fadedBtn" type="button">
                 ||{" "}
               </button>
             </div>
@@ -45,7 +46,7 @@ export default function TaskTimer() {
               </button>
             </div>
             <div>
-              <button className="done" type="button">
+              <button className="mainBtn" type="button">
                 I'm done
               </button>
             </div>

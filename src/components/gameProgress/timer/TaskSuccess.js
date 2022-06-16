@@ -2,6 +2,7 @@ import "./timer.css";
 import canaryhappy from "../../../images/canary-happy.png";
 import applecolor from "../../../images/apple-color.png";
 import appleBW from "../../../images/apple-bw.png";
+import checkicon from "../../../images/check-icon.png";
 
 export default function TaskSuccess() {
   return (
@@ -10,9 +11,13 @@ export default function TaskSuccess() {
         Menu
       </button>
       <div className="success">
+        <img className="chicken" src={canaryhappy} alt="canary-normal" />
         <div className="boxsuccess">
           <div className="congrats">
-            <h2 id="congrat">Well done!</h2>
+            <div className="title-congrats">
+              <img className="checkicon" src={checkicon} />
+              <h2 id="congrat">Well done!</h2>
+            </div>
             <h6>You finished your task with 1:46 minutes remaining</h6>
           </div>
           <div className="task">
@@ -31,17 +36,17 @@ export default function TaskSuccess() {
             <img className="apple" src={applecolor} alt="apple1" />
             <img className="apple" src={applecolor} alt="apple2" />
           </div>
-          <div className="next">
-            <button>Next</button>
+          <div>
+            <button className="next">Next</button>
           </div>
         </div>
         <div className="boxpet">
           <img className="pet" src={canaryhappy} alt="" />
-          <div className="reward">
-            <img className="apple" src={applecolor} alt="" />
-            <img className="apple" src={applecolor} alt="" />
-            <img className="apple" src={appleBW} alt="" />
-            <img className="apple" src={appleBW} alt="" />
+          <div className="petfood">
+            <img className="applereward" src={applecolor} alt="" />
+            <img className="applereward" src={applecolor} alt="" />
+            <img className="applereward" src={appleBW} alt="" />
+            <img className="applereward" src={appleBW} alt="" />
           </div>
         </div>
       </div>

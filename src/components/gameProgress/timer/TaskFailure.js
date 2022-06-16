@@ -1,8 +1,9 @@
 import React from "react";
 import "./timer.css";
 import applecolor from "../../../images/apple-color.png";
-import applewb from "../../../images/apple-bw.png";
+import applebw from "../../../images/apple-bw.png";
 import canarysad from "../../../images/canary-sad.png";
+import failedicon from "../../../images/failed-task-icon.png";
 
 export default function TaskFailure() {
   return (
@@ -11,9 +12,13 @@ export default function TaskFailure() {
         Menu
       </button>
       <div className="success">
-        <div className="box-success">
+        <img className="chicken" src={canarysad} alt="canary-normal" />
+        <div className="boxsuccess">
           <div className="congrats">
-            <h2>Time's up!</h2>
+            <div className="title-congrats">
+              <img className="checkicon" src={failedicon} />
+              <h2 id="congrat">Time's up!</h2>
+            </div>
             <h6>It seems you needed more time...</h6>
           </div>
           <div className="task">
@@ -32,17 +37,17 @@ export default function TaskFailure() {
             <img className="apple" src={applecolor} alt="apple1" />
             <img className="apple" src={applecolor} alt="apple2" />
           </div>
-          <div className="next">
-            <button>Next</button>
+          <div>
+            <button className="next">Next</button>
           </div>
         </div>
-        <div className="box-pet">
-          <img src={canarysad} alt="" />
-          <div className="reward">
-            <img src={applecolor} alt="" />
-            <img src={applecolor} alt="" />
-            <img src={applewb} alt="" />
-            <img src={applewb} alt="" />
+        <div className="boxpet">
+          <img className="pet" src={canarysad} alt="" />
+          <div className="petfood">
+            <img className="applereward" src={applecolor} alt="" />
+            <img className="applereward" src={applecolor} alt="" />
+            <img className="applereward" src={applebw} alt="" />
+            <img className="applereward" src={applebw} alt="" />
           </div>
         </div>
       </div>

@@ -1,6 +1,6 @@
 const taskDB = [
   {
-    id: 1,
+    taskId: 1,
     taskName: "Do the dishes",
     taskTime: {
       minEasy: 1,
@@ -10,7 +10,6 @@ const taskDB = [
       minHard: 16,
       maxHard: 30,
     },
-    taskReward: { easy: 1, medium: 2, hard: 3 },
     taskDescriptions: {
       easy: "Plates and cutlery for up to two people",
       medium:
@@ -20,7 +19,7 @@ const taskDB = [
     category: "chores",
   },
   {
-    id: 2,
+    taskId: 2,
     taskName: "Declutter",
     taskTime: {
       minEasy: 1,
@@ -30,7 +29,6 @@ const taskDB = [
       minHard: 16,
       maxHard: 30,
     },
-    taskReward: { easy: 1, medium: 2, hard: 3 },
     taskDescriptions: {
       easy: "Tidy a small room or area",
       medium: "",
@@ -39,7 +37,7 @@ const taskDB = [
     category: "chores",
   },
   {
-    id: 3,
+    taskId: 3,
     taskName: "Call mom",
     taskTime: {
       minEasy: 1,
@@ -49,7 +47,6 @@ const taskDB = [
       minHard: 16,
       maxHard: 30,
     },
-    taskReward: { easy: 1, medium: 2, hard: 3 },
     taskDescriptions: {
       easy: "",
       medium: "",
@@ -58,7 +55,7 @@ const taskDB = [
     category: "social",
   },
   {
-    id: 4,
+    taskId: 4,
     taskName: "Prepare a presentation for work meeting",
     taskTime: {
       minEasy: 1,
@@ -68,7 +65,6 @@ const taskDB = [
       minHard: 16,
       maxHard: 30,
     },
-    taskReward: { easy: 1, medium: 2, hard: 3 },
     taskDescriptions: {
       easy: "",
       medium: "",
@@ -77,7 +73,7 @@ const taskDB = [
     category: "work",
   },
   {
-    id: 5,
+    taskId: 5,
     taskName: "Tidy work inbox",
     taskTime: {
       minEasy: 1,
@@ -87,7 +83,6 @@ const taskDB = [
       minHard: 11,
       maxHard: 30,
     },
-    taskReward: { easy: 1, medium: 2, hard: 3 },
     taskDescriptions: {
       easy: "",
       medium: "",
@@ -97,4 +92,16 @@ const taskDB = [
   },
 ];
 
-export default taskDB;
+const userDB = [
+  {
+    userId: 1,
+    name: "Forgerlil",
+    email: "myfakeemail@myfakehost.com",
+    password: "notmyrealpassword",
+    progress: [],
+    favoriteTasks: [4, 2],
+    active: true,
+  },
+];
+
+export { taskDB, userDB };

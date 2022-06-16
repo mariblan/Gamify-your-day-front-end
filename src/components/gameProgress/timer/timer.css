@@ -1,0 +1,246 @@
+@import url("https://fonts.googleapis.com/css2?family=Fresca&family=Merienda&family=Patrick+Hand&family=Sansita&display=swap");
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/*
+
+.fadedBtn,
+.mainBtn {
+  color: white;
+  font-size: 1.1rem;
+  padding: 1.2rem;
+  border-radius: 65% 5%;
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.3);
+  transform: skewY(-3deg);
+}
+
+.fadedBtn:active,
+.mainBtn:active {
+  transform: translate(2px, 2px);
+  box-shadow: -1px 3px 4px rgba(0, 0, 0, 0.3);
+}
+
+.fadedBtn {
+  border-top: 1px solid rgb(106, 199, 106);
+  border-left: 1px solid rgb(82, 187, 82);
+  border-right: 1px solid rgb(109, 212, 109);
+  border-bottom: 1px solid rgb(130, 221, 130);
+  background-color: rgb(112, 201, 112);
+}
+
+.mainBtn {
+  border-top: 1px solid rgb(112, 218, 112);
+  border-left: 1px solid rgb(58, 155, 58);
+  border-right: 1px solid rgb(66, 165, 66);
+  border-bottom: 1px solid rgb(130, 221, 130);
+  background-color: rgb(66, 165, 66);
+}
+
+*/
+
+.bodytimer {
+  width: 100%;
+  height: 100%;
+  background-image: url("../../../images/leaves-bg.png");
+  background-color: rgb(235, 243, 192);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-size: x-large;
+  font-family: "Patrick Hand", sans-serif;
+}
+
+.menu {
+  margin-left: 78%;
+  margin-right: 2%;
+  font-size: 1rem;
+  margin-top: 2%;
+  justify-self: flex-end;
+  background-color: rgb(109, 212, 109);
+  color: white;
+  border: solid rgb(109, 212, 109) 1px;
+  border-radius: 60% 10% 60% 10%;
+  padding: 4%;
+}
+.menu:active {
+  transform: translate(2px, 2px);
+}
+/* .chicken-bg {
+    margin: 0%;
+    background-image: url(./sources/canary-happy.png);
+    background-size: contain;
+    height: 70%;
+    background-repeat: no-repeat;
+} */
+.chicken {
+  width: 90%;
+  position: absolute;
+  top: 5%;
+  z-index: 1;
+}
+
+/* All the box for  tasks, success, 
+failure and pet*/
+.box,
+.boxsuccess,
+.boxpet {
+  max-width: 80%;
+  padding: 1% 5% 1% 5%;
+  background-color: rgb(255, 255, 255);
+  border: solid black 1px;
+  border-radius: 15px;
+  display: flex;
+}
+.box {
+  z-index: 1;
+  position: absolute;
+  position: relative;
+  margin: 28% 0% 10% 10%;
+  flex-direction: column;
+}
+.boxsuccess {
+  margin: 18% 0% 10% 10%;
+  position: relative;
+  flex-direction: column;
+}
+.boxpet {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 5% 0% 10% 10%;
+  position: relative;
+}
+/* Finish the box for  tasks, success, 
+failure and pet*/
+/* Start of the task section in the
+timer components*/
+.tasks-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3%;
+}
+
+.timer,
+.congrats {
+  margin: 4%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.timer {
+  font-size: 4rem;
+}
+.task,
+.difficulty,
+.time {
+  font-size: 2rem;
+}
+#congrat {
+  font-size: 3rem;
+}
+.timer > h2 {
+  margin-bottom: 5%;
+  padding: 2%;
+  font-family: "Sansita", sans-serif;
+}
+
+.task {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: 1% 0% 8%;
+  font-size: larger;
+}
+.task > h5 {
+  margin-left: 2%;
+}
+.icon {
+  width: 20%;
+  height: auto;
+  margin-right: 2%;
+}
+
+.difficulty {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1% 0% 1% 0%;
+}
+.difficulty > h6 {
+  margin-left: 5%;
+}
+.time {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1% 0% 1% 0%;
+}
+.time > h6 {
+  margin-left: 5%;
+}
+.reward {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 3% 0% 10% 0%;
+}
+.reward > h6 {
+  margin-right: 4%;
+  font-size: 1.3rem;
+}
+.apple {
+  width: 5%;
+  height: auto;
+  margin-left: 1%;
+}
+.pet {
+  width: 25%;
+  height: auto;
+  padding: 2% 0% 0% 0%;
+  margin-left: 1%;
+}
+
+/*Buttons for the timer screens*/
+.forfeit-task {
+  background-color: rgba(182, 158, 48, 0.7);
+  color: white;
+  border-left: rgb(182, 158, 48) 1px;
+  border-top: rgb(182, 158, 48) 1px;
+  border-right: solid rgba(182, 158, 48, 0.7) 1px;
+  border-bottom: solid rgb(226, 195, 54) 1px;
+  border-radius: 60% 10% 60% 10%;
+  padding: 20%;
+  box-shadow: 3px 5px 5px rgba(0, 0, 0, 0.3);
+}
+.forfeit-task:active {
+  transform: translate(2px, 2px);
+}
+.pause {
+  background-color: rgba(109, 212, 109, 0.9);
+  color: white;
+  border: solid rgb(109, 212, 109) 1px;
+  border-radius: 60% 10% 60% 10%;
+  padding: 100%;
+  box-shadow: 3px 5px 5px rgba(0, 0, 0, 0.3);
+}
+.pause:active {
+  transform: translate(2px, 2px);
+}
+.done {
+  background-color: rgba(66, 165, 66, 0.8);
+  color: white;
+  border: solid rgb(109, 212, 109) 1px;
+  border-top: solid 1px rgb(45, 176, 45);
+  border-left: solid 1px rgb(45, 176, 45);
+  border-radius: 60% 10% 60% 10%;
+  padding: 30%;
+  box-shadow: 3px 5px 5px rgba(0, 0, 0, 0.3);
+}
+.done:active {
+  transform: translate(2px, 2px);
+}

@@ -1,0 +1,233 @@
+/*@import url("https://fonts.googleapis.com/css2?family=Fresca&family=Merienda&family=Patrick+Hand&family=Sansita&display=swap");
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Patrick Hand", sans-serif;
+}
+
+body {
+  background-color: rgb(235, 243, 192);
+  background-image: url("./leaves-bg.png");
+}
+
+button {
+  border-top: 1px solid rgb(106, 199, 106);
+  border-left: 1px solid rgb(82, 187, 82);
+  border-right: 1px solid rgb(109, 212, 109);
+  border-bottom: 1px solid rgb(130, 221, 130);
+  background-color: rgb(112, 201, 112);
+  color: white;
+  font-size: 1.1rem;
+  padding: 1.2rem;
+  border-radius: 65% 5%;
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.3);
+  transform: skewY(-3deg);
+}
+
+button:active {
+  transform: translate(2px, 2px);
+  box-shadow: -1px 3px 4px rgba(0, 0, 0, 0.3);
+}
+
+.headerWrapper {
+  position: fixed;
+  z-index: 5;
+  top: 0;
+  width: 100%;
+  background-color: rgb(235, 243, 192);
+  background-image: url("./leaves-bg.png");
+}
+
+.mainBtn {
+  border-top: 1px solid rgb(112, 218, 112);
+  border-left: 1px solid rgb(58, 155, 58);
+  border-right: 1px solid rgb(66, 165, 66);
+  border-bottom: 1px solid rgb(130, 221, 130);
+  background-color: rgb(66, 165, 66);
+}
+
+.profileBtn {
+  position: absolute;
+  right: 2vw;
+  top: 1vh;
+  padding: 0.7rem;
+}
+
+.title {
+  text-align: center;
+  padding: 5rem 0 2rem;
+  font-family: "Sansita", sans-serif;
+  font-size: 2.7rem;
+}
+
+.taskWrapper {
+  margin-top: 25vh;
+}
+
+.taskExpanded,
+.task {
+  position: relative;
+  background-color: rgba(255, 255, 255, 0.6);
+  border-radius: 15px;
+  width: 80%;
+  margin: 0 auto 1.5rem;
+  border: 1px solid #e9c77c8c;
+}
+
+.taskExpanded {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.taskConcluded {
+  position: absolute;
+  width: 50px;
+  top: -5%;
+  left: -8%;
+}
+
+.taskMain {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.5vh;
+}
+
+.titleFavoriteWrapper {
+  font-size: 1.2rem;
+}
+
+.titleFavoriteWrapper img {
+  position: absolute;
+  top: 1vw;
+  right: 0;
+}
+
+.taskDescription {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 2vh;
+  width: 100%;
+}
+
+#timeSetter {
+  -webkit-appearance: none;
+  margin-bottom: 3vh;
+  width: 65%;
+  outline: none;
+  border-radius: 10px;
+  background: rgba(255, 68, 0, 0.336);
+  height: 0.5rem;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Override default look
+  appearance: none;
+  background-color: #d39522;
+  height: 1.4rem;
+  width: 1.4rem;
+  border-radius: 50%;
+}
+
+input[type="range"]::-moz-range-thumb {
+  -webkit-appearance: none; /* Override default look
+  appearance: none;
+  border: none;
+  background-color: #d39522;
+  height: 1.4rem;
+  width: 1.4rem;
+  border-radius: 50%;
+}
+
+.task {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.task h3 {
+  text-overflow: ellipsis;
+  width: 65%;
+  overflow: hidden;
+}
+
+.task:last-of-type {
+  margin-bottom: 250px;
+}
+
+.taskExpanded img {
+  max-height: 15vh;
+  padding: 10px;
+}
+
+.task img {
+  max-height: 10vh;
+  padding: 10px;
+}
+
+.favIcon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  max-width: 7vh;
+}
+
+.dailyPet {
+  border-top: 1px solid rgba(47, 79, 79, 0.1);
+  border-bottom: 1px solid rgba(47, 79, 79, 0.1);
+  background-color: #f7fae6;
+  position: fixed;
+  bottom: 15%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.animal {
+  max-height: 30vw;
+  padding: 1vh 0;
+  margin: 0 3vw;
+}
+
+.imgWrapper {
+  position: relative;
+}
+
+.changeAnimal {
+  position: absolute;
+  border-radius: 50%;
+  background-color: #eff3db;
+  bottom: 10%;
+  right: 15%;
+  padding: 5px;
+  width: 30%;
+  height: 30%;
+}
+
+.changeAnimal img {
+  max-width: 100%;
+  max-height: auto;
+}
+
+.appleIcon {
+  max-width: 6vw;
+  margin-left: 1vw;
+}
+
+.navWrapper {
+  border-top: 3px solid #e9c77c8c;
+  background-color: #f7fae6;
+  min-height: 15vh;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+*/

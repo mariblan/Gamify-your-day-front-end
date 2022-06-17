@@ -3,7 +3,7 @@ import redX from "../../../images/failed-task-icon.png";
 import greenCheck from "../../../images/check-icon.png";
 import notFavTask from "../../../images/fav-icon.png";
 import favTask from "../../../images/fav-filled-icon.png";
-import appleColor from "../../../images/apple-color.png";
+import renderApples from "../../../utils/generateApples";
 import { useState, useEffect, useRef } from "react";
 
 function TaskMini({
@@ -15,7 +15,17 @@ function TaskMini({
   const minifiedTask = useRef(null);
 
   useEffect(() => {}, []);
-  const handleClick = (e) => {};
+  // const handleClick = (e) => {};
+
+  // This function is not working properly. The empty heart changes src upon click, but when the condition
+  // is false, it doesn't go back to an empty heart.
+  const toggleFavorite = (e) => {
+    console.log(e.target.src);
+    e.target.src =
+      "http://localhost:3000/static/media/fav-icon.73fa405e50650ef9b42b.png"
+        ? (e.target.src = favTask)
+        : (e.target.src = notFavTask);
+  };
 
   return (
     <div className="taskMini" ref={minifiedTask}>
@@ -32,6 +42,7 @@ function TaskMini({
         src={favoriteTasks.includes(taskId) ? favTask : notFavTask}
         alt="A heart favorite icon"
         className="favIcon"
+        onClick={toggleFavorite}
       />
     </div>
   );
@@ -44,7 +55,7 @@ function TaskExpanded({
   const [sliderValue, setSliderValue] = useState(taskTime.minMedium);
   const [difficulty, setDifficulty] = useState("");
   const [reward, setReward] = useState(2);
-  const taskConcluded = false;
+  const taskConcluded = false; //This goes to the persistence layer!
 
   const { icon, alt } = checkCategory(category);
 
@@ -63,29 +74,6 @@ function TaskExpanded({
 
   const handleChange = (e) => {
     setSliderValue(e.target.value);
-  };
-
-  const renderApples = (num) => {
-    if (num === 1) {
-      return (
-        <img src={appleColor} alt="A red apple" className="appleExpanded" />
-      );
-    } else if (num === 2) {
-      return (
-        <>
-          <img src={appleColor} alt="A red apple" className="appleExpanded" />
-          <img src={appleColor} alt="A red apple" className="appleExpanded" />
-        </>
-      );
-    } else {
-      return (
-        <>
-          <img src={appleColor} alt="A red apple" className="appleExpanded" />
-          <img src={appleColor} alt="A red apple" className="appleExpanded" />
-          <img src={appleColor} alt="A red apple" className="appleExpanded" />
-        </>
-      );
-    }
   };
 
   return (
@@ -126,7 +114,9 @@ function TaskExpanded({
       />
       <div className="rewardDisplay">
         <div className="rewardText">Reward: </div>
-        <div className="rewardWrapper">{renderApples(reward)}</div>
+        <div className="rewardWrapper">
+          {renderApples(reward, "appleExpanded")}
+        </div>
       </div>
     </div>
   );

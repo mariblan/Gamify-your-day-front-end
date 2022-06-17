@@ -2,6 +2,7 @@ import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import AllTasks from "./components/gameProgress/gameSetup/fullTaskList";
 import AnimalSelection from "./components/gameProgress/gameSetup/animalSelection";
+import GameGo from "./components/gameProgress/gameSetup/gameGo";
 import TaskTimer from "./components/gameProgress/timer/taskTimer";
 import MyTaskList from "./components/gameProgress/gameSetup/myTaskList";
 import TaskSuccess from "./components/gameProgress/timer/taskSuccess";
@@ -13,6 +14,7 @@ function App() {
       <Route path="alltasks" element={<AllTasks />} />
       <Route path="mytasks" element={<MyTaskList />} />
       <Route path="petselection" element={<AnimalSelection />} />
+      <Route path="gamego" element={<GameGo />} />
       <Route path="tasktimer" element={<TaskTimer />} />
       <Route path="tasksuccess" element={<TaskSuccess />} />
       <Route path="taskfailure" element={<TaskFailure />} />

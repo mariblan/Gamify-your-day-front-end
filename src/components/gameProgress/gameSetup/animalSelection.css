@@ -1,0 +1,153 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.bodyselection {
+  width: 100%;
+  height: 100%;
+  background-image: url("../../../images/leaves-bg.png");
+  background-color: rgb(235, 243, 192);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-size: x-large;
+  font-family: "Patrick Hand", sans-serif;
+  text-align: center;
+}
+
+/* All the css to style the animals on the 
+  screen and the hunger level*/
+.animalselection {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 5%;
+}
+.petselection {
+  display: flex;
+  flex-direction: column;
+  align-items: space-around;
+  justify-content: center;
+  margin-top: 6%;
+}
+.hungerlevel {
+  display: flex;
+  flex-direction: column;
+  align-items: space-around;
+  justify-content: center;
+  margin: 4% 2% 13% 2%;
+}
+.pets {
+  margin: 0% 3% 13% 3%;
+}
+
+.class {
+  margin: 23% 3% 18% 3%;
+}
+
+.petfoodtortoise,
+.petfoodcanary {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 9rem;
+}
+
+.petfoodtortoise {
+  margin: 24% 3% 25% 3%;
+}
+.petfoodcanary {
+  margin: 31% 3% 25% 3%;
+}
+
+.petfoodwrap {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+  width: 7rem;
+  margin: 24% 0% 7% 18%;
+}
+
+/*Images styling*/
+.applehunger {
+  width: 1.7rem;
+  height: 5%;
+  margin-left: 1%;
+}
+.applehungerwrap {
+  width: 1.5rem;
+  height: 5%;
+  margin-left: 1%;
+  flex: 1 1 1%;
+}
+.class,
+.pets {
+  font-size: 1.5rem;
+}
+.petselect {
+  width: 100%;
+  height: auto;
+  padding: 0% 0% 2% 0%;
+  margin-left: 3%;
+}
+
+/*Buttons for animalSelection*/
+.menu,
+.confirmbtn {
+  color: white;
+  font-size: 1.1rem;
+  padding: 1.2rem;
+  border-radius: 65% 5%;
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.3);
+  transform: skewY(-3deg);
+  background-color: rgb(109, 212, 109);
+  color: white;
+  border: solid rgb(109, 212, 109) 1px;
+  padding: 4%;
+}
+.menu {
+  margin-left: 78%;
+  margin-right: 2%;
+  font-size: 1rem;
+  margin-top: 2%;
+  justify-self: flex-end;
+  background-color: rgb(109, 212, 109);
+  color: white;
+  border: solid rgb(109, 212, 109) 1px;
+  padding: 4%;
+}
+.confirmbtn {
+  align-self: center;
+  margin: 3% 0%;
+}
+.petbtn {
+  width: 50%;
+  background-color: transparent;
+  border: none;
+}
+#tortoisebtn {
+  width: 7rem;
+}
+#canarybtn {
+  width: 7rem;
+}
+
+#hamsterbtn {
+  width: 7rem;
+}
+.menu:active,
+.confirmbtn:active {
+  transform: translate(2px, 2px);
+  box-shadow: -1px 3px 4px rgba(0, 0, 0, 0.3);
+}
+
+.petbtn:active {
+  transform: translate(2px, 2px);
+  border-radius: 10px;
+  box-shadow: inset 2px 3px 4px rgba(0, 0, 0, 0.3);
+}

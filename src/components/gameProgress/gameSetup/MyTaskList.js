@@ -1,42 +1,34 @@
 import TaskList from "./taskList";
+import pets from "./mockanimalsDB";
+import reload from "../../../images/change-icon.png";
+import renderApples from "../../../utils/generateApples";
 
 export default function MyTaskList() {
   return (
     <>
       <div className="headerWrapper">
         <button className="profileBtn fadedBtn">Profile</button>
-        <h1 className="title">Select your tasks!</h1>
+        <h1 className="title">Today's task list</h1>
       </div>
-      <TaskList fullList={false} />
+      <div className="hidden">
+        <button className="profileBtn fadedBtn">Profile</button>
+        <h1 className="title">Today's task list</h1>
+      </div>
+      <div className="fixedTaskWrapper">
+        <TaskList fullList={false} />
+      </div>
       <footer>
         <div className="dailyPet">
           <h3>My pet for today</h3>
           <div className="imgWrapper">
-            <img src="canary-happy.png" alt="A canary" className="animal" />
+            <img src={pets[1].mood[0]} alt="A canary" className="animal" />
             <div className="changeAnimal">
-              <img src="./change-icon.png" alt="A reload icon" />
+              <img src={reload} alt="A reload icon" />
             </div>
           </div>
-          <img
-            src="./apple-color.png"
-            alt="A red apple"
-            className="appleIcon"
-          />
-          <img
-            src="./apple-color.png"
-            alt="A red apple"
-            className="appleIcon"
-          />
-          <img
-            src="./apple-bw.png"
-            alt="A black and white apple"
-            className="appleIcon"
-          />
-          <img
-            src="./apple-bw.png"
-            alt="A black and white apple"
-            className="appleIcon"
-          />
+          <div className="appleWrapper">
+            {renderApples(pets[1].hungerlevel, "appleIcon")}
+          </div>
         </div>
         <div className="navWrapper">
           <button type="button" className="fadedBtn">

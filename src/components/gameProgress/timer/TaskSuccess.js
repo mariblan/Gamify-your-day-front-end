@@ -15,7 +15,7 @@ export default function TaskSuccess() {
         <div className="boxsuccess">
           <div className="congrats">
             <div className="title-congrats">
-              <img className="checkicon" src={checkicon} />
+              <img className="checkicon" src={checkicon} alt="" />
               <h2 id="congrat">Well done!</h2>
             </div>
             <h6>You finished your task with 1:46 minutes remaining</h6>

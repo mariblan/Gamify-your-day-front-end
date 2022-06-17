@@ -16,7 +16,7 @@ export default function TaskFailure() {
         <div className="boxsuccess">
           <div className="congrats">
             <div className="title-congrats">
-              <img className="checkicon" src={failedicon} />
+              <img className="checkicon" src={failedicon} alt="" />
               <h2 id="congrat">Time's up!</h2>
             </div>
             <h6>It seems you needed more time...</h6>

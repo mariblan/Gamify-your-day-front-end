@@ -12,6 +12,11 @@ body {
   background-image: url("../../../images/leaves-bg.png");
 }
 
+.hidden {
+  visibility: hidden;
+  padding-bottom: 2%;
+}
+
 .fadedBtn {
   border-top: 1px solid rgb(106, 199, 106);
   border-left: 1px solid rgb(82, 187, 82);
@@ -31,15 +36,6 @@ body {
   box-shadow: -1px 3px 4px rgba(0, 0, 0, 0.3);
 }
 
-.headerWrapper {
-  position: fixed;
-  z-index: 5;
-  top: 0;
-  width: 100%;
-  background-color: rgb(235, 243, 192);
-  background-image: url("../../../images/leaves-bg.png");
-}
-
 .mainBtn {
   border-top: 1px solid rgb(112, 218, 112);
   border-left: 1px solid rgb(58, 155, 58);
@@ -55,15 +51,108 @@ body {
   padding: 0.7rem;
 }
 
+.smallBtn {
+  /* width: 70%; */
+  height: auto;
+}
+
+.headerWrapper {
+  position: fixed;
+  z-index: 5;
+  top: 0;
+  width: 100%;
+  background-color: rgb(235, 243, 192);
+  background-image: url("../../../images/leaves-bg.png");
+  padding-bottom: 2%;
+}
+
+/* .headerWrapper {
+  width: 100%;
+  background-color: rgb(235, 243, 192);
+  background-image: url("../../../images/leaves-bg.png");
+} */
+
 .title {
   text-align: center;
-  padding: 5rem 0 2rem;
+  max-width: 90%;
+  margin: 0 auto;
+  padding: 5rem 0 0;
   font-family: "Sansita", sans-serif;
   font-size: 2.7rem;
 }
 
+.filterCategory {
+  list-style: none;
+  width: 80%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.filterCategory li {
+  width: 20%;
+  height: auto;
+  margin: 1.2rem 0.3rem;
+  background-color: rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
+  border: 1px solid #e9c77c8c;
+  display: flex;
+  align-items: center;
+}
+
+.categoryIconFilter {
+  padding: 20%;
+  max-height: 100%;
+  max-width: 100%;
+}
+
+.searchWrapper {
+  margin: 0 auto 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  width: 60%;
+  border: 2px solid #e9c77c8c;
+  background-color: rgba(255, 255, 255, 0.6);
+}
+
+.searchWrapper:focus {
+  border: 2px solid #92712b;
+}
+
+.searchInput {
+  background-color: none;
+  padding: 2% 2%;
+  border: none;
+  width: 87%;
+}
+
+.searchInput:focus {
+  outline: none;
+}
+
+.searchBtn {
+  background-color: none;
+  border: none;
+  padding: 2%;
+  height: 100%;
+  width: 13%;
+  display: flex;
+  align-items: center;
+}
+
+.searchBtn img {
+  height: 100%;
+  width: 100%;
+}
+
+/*
+How to align a non-fixed div to a fixed div so that it stays responsive (different screen sizes won't affect 
+the height of the non fixed div and cause it to sink under the fixed div)?
+Same for divs fixed at the bottom: How to have the 
+*/
+
 .taskWrapper {
-  margin-top: 25vh;
+  margin-bottom: 20px;
 }
 
 .taskExpanded,
@@ -155,9 +244,9 @@ input[type="range"]::-moz-range-thumb {
   overflow: hidden;
 }
 
-.taskMini:last-of-type {
+/* .taskMini:last-of-type {
   margin-bottom: 250px;
-}
+} */
 
 .taskExpanded img {
   max-height: 15vh;
@@ -242,7 +331,6 @@ input[type="range"]::-moz-range-thumb {
 }
 
 .navWrapper {
-  border-top: 3px solid #e9c77c8c;
   background-color: #f7fae6;
   min-height: 15vh;
   width: 100%;

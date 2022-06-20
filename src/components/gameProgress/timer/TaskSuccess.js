@@ -3,6 +3,7 @@ import canaryhappy from "../../../images/canary-happy.png";
 import applecolor from "../../../images/apple-color.png";
 import appleBW from "../../../images/apple-bw.png";
 import checkicon from "../../../images/check-icon.png";
+import { Link, Outlet } from "react-router-dom";
 
 export default function TaskSuccess() {
   return (
@@ -37,7 +38,9 @@ export default function TaskSuccess() {
             <img className="apple" src={applecolor} alt="apple2" />
           </div>
           <div>
-            <button className="next">Next</button>
+            <button className="next">
+              <Link to="/gamego">Next</Link>
+            </button>
           </div>
         </div>
         <div className="boxpet">
@@ -50,6 +53,7 @@ export default function TaskSuccess() {
           </div>
         </div>
       </div>
+      <Outlet />
     </div>
   );
 }

@@ -1,7 +1,8 @@
-import TaskList from "./taskList";
+import MyList from "./myList";
 import pets from "./mockanimalsDB";
 import reload from "../../../images/change-icon.png";
 import renderApples from "../../../utils/generateApples";
+import { Link, Outlet } from "react-router-dom";
 
 export default function MyTaskList() {
   return (
@@ -15,7 +16,7 @@ export default function MyTaskList() {
         <h1 className="title">Today's task list</h1>
       </div>
       <div className="fixedTaskWrapper">
-        <TaskList fullList={false} />
+        <MyList />
       </div>
       <footer>
         <div className="dailyPet">
@@ -32,15 +33,16 @@ export default function MyTaskList() {
         </div>
         <div className="navWrapper">
           <button type="button" className="fadedBtn">
-            All tasks
+            <Link to="/alltasks">Pick pet</Link>
           </button>
           <button type="button" className="fadedBtn">
             Custom tasks
           </button>
           <button type="button" className="mainBtn">
-            Pick pet
+            <Link to="/petselection">Pick pet</Link>
           </button>
         </div>
+        <Outlet />
       </footer>
     </>
   );

@@ -1,10 +1,12 @@
 @keyframes spin-me {
   0% {
     -webkit-transform: rotateZ(0deg);
+    -moz-transform: rotateZ(0deg);
     transform: rotateZ(0deg);
   }
   100% {
     -webkit-transform: rotateZ(360deg);
+    -moz-transform: rotateZ(360deg);
     transform: rotateZ(360deg);
   }
 }
@@ -27,30 +29,32 @@
   border: 1px black solid;
   width: 13rem;
   margin-top: 14%;
+  position: relative;
 }
-.applebtn:active {
+.start {
+  position: absolute;
+  top: 59%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2rem;
+  text-align: center;
+  color: white;
+}
+.applebtn:focus {
   /*animation-name*/
   -webkit-animation-name: spin-me;
+  -moz-animation-name: spin-me;
   animation-name: spin-me;
   /*animation-iteration-count*/
   -webkit-animation-iteration-count: infinite;
+  -moz-animation-iteration-count: infinite;
   animation-iteration-count: infinite;
   /*animation-duration*/
   -webkit-animation-duration: 3s;
+  -moz-animation-duration: 3s;
   animation-duration: 3s;
   /*animation-timing-function*/
   -webkit-animation-timing-function: ease-in-out;
+  -moz-animation-timing-function: ease-in-out;
   animation-timing-function: ease-in-out;
-}
-.applebtn:active {
-}
-@-webkit-keyframes spin-me {
-  0% {
-    -webkit-transform: rotateZ(0deg);
-    transform: rotateZ(0deg);
-  }
-  100% {
-    -webkit-transform: rotateZ(360deg);
-    transform: rotateZ(360deg);
-  }
 }

@@ -1,11 +1,67 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import "./timer.css";
 import canary from "../../../images/canary-normal.png";
 import apple from "../../../images/apple-color.png";
 import chore from "../../../images/chores-icon.png";
-
+import { useNavigate } from "react-router-dom";
 
 export default function TaskTimer() {
+  const [minutes, setMinutes] = useState(0);
+  const [seconds, setSeconds] = useState(10);
+  const [timerInit, setTimerInit] = useState(false);
+  //To use in setTimeout to navigate to the failure and succes screens.
+  const navigate = useNavigate();
+  //Sets the countdown for the timer and prints it in the screen.
+  useEffect(() => {
+    setTimeout(() => {
+      setTimerInit(true);
+    }, 3000);
+  });
+  useEffect(() => {
+    timerInit === true &&
+      seconds > 0 &&
+      setTimeout(() => {
+        setSeconds((prevS) => prevS - 1);
+      }, 1000);
+  }, [seconds, timerInit]);
+  useEffect(() => {
+    timerInit === true &&
+      seconds === 0 &&
+      minutes > 0 &&
+      setTimeout(() => {
+        setSeconds(59);
+        setMinutes((prevM) => prevM - 1);
+      }, 1000);
+  }, [seconds, minutes, timerInit]);
+  useEffect(() => {
+    timerInit === true &&
+      seconds === 0 &&
+      minutes === 0 &&
+      setTimeout(() => {
+        clearTimeout();
+        navigate("/taskfailure");
+      });
+  });
+  // const timer = () => {
+  //   const timerInterval = setInterval(() => {
+  //     if (seconds > 0) {
+  //       setSeconds((prevS) => prevS - 1);
+  //     }
+  //     if (seconds === 0) {
+  //       if (minutes > 0) {
+  //         setSeconds(59);
+  //         setMinutes((prevM) => prevM - 1);
+  //       }
+  //     }
+  //     if (seconds === 0) {
+  //       if (minutes === 0) {
+  //         clearInterval(timerInterval);
+  //         navigate("/taskfailure");
+  //       }
+  //     }
+  //   }, 1000);
+  // };
+  //setTimeout(timer, 5000);
   return (
     <div className="bodytimer">
       <button className="menu" type="menu">
@@ -15,7 +71,10 @@ export default function TaskTimer() {
         <img className="chicken" src={canary} alt="canary-normal" />
         <div className="box">
           <div className="timer">
-            <h2>10:00</h2>
+            <h2>
+              {minutes < 10 ? `0${minutes}` : minutes}:
+              {seconds < 10 ? `0${seconds}` : seconds}
+            </h2>
             <div className="tasks-options">
               <button className="fadedBtn" type="button">
                 ||{" "}

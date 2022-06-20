@@ -4,6 +4,7 @@ import applecolor from "../../../images/apple-color.png";
 import applebw from "../../../images/apple-bw.png";
 import canarysad from "../../../images/canary-sad.png";
 import failedicon from "../../../images/failed-task-icon.png";
+import { Link, Outlet } from "react-router-dom";
 
 export default function TaskFailure() {
   return (
@@ -38,7 +39,9 @@ export default function TaskFailure() {
             <img className="apple" src={applecolor} alt="apple2" />
           </div>
           <div>
-            <button className="next">Next</button>
+            <button className="next">
+              <Link to="/gamego">Next</Link>
+            </button>
           </div>
         </div>
         <div className="boxpet">
@@ -51,6 +54,7 @@ export default function TaskFailure() {
           </div>
         </div>
       </div>
+      <Outlet />
     </div>
   );
 }

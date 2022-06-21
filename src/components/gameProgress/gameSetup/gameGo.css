@@ -40,6 +40,12 @@
   text-align: center;
   color: white;
 }
+.gottentask {
+  color: black;
+  font-size: 2rem;
+  text-align: center;
+  margin-top: 6%;
+}
 .applebtn:focus {
   /*animation-name*/
   -webkit-animation-name: spin-me;

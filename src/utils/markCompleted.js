@@ -1,7 +1,7 @@
 import redX from "../images/failed-task-icon.png";
 import greenCheck from "../images/check-icon.png";
 
-export default function markCompleted(taskId, successArr, failedArr) {
+export default function completedIcon(taskId, successArr, failedArr) {
   if (successArr.includes(taskId)) {
     return (
       <img

@@ -1,4 +1,5 @@
-import React from "react";
+import { useContext } from "react";
+import { TaskContext } from "./taskContext";
 import "./timer.css";
 import applecolor from "../../../images/apple-color.png";
 import applebw from "../../../images/apple-bw.png";
@@ -6,7 +7,8 @@ import canarysad from "../../../images/canary-sad.png";
 import failedicon from "../../../images/failed-task-icon.png";
 import { Link, Outlet } from "react-router-dom";
 
-export default function TaskFailure() {
+export default function TaskFailure(props) {
+  const gottenTask = useContext(TaskContext);
   return (
     <div className="bodytimer">
       <button className="menu" type="menu">
@@ -23,7 +25,7 @@ export default function TaskFailure() {
             <h6>It seems you needed more time...</h6>
           </div>
           <div className="task">
-            <h5 className="">Book that appointment</h5>
+            <h5 className="">{props.gottenTask.taskName}</h5>
           </div>
           <div className="difficulty">
             <h6 className="category">Difficulty</h6>

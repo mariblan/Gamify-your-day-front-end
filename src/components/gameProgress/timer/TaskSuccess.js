@@ -1,3 +1,5 @@
+import { useContext } from "react";
+import { TaskContext } from "./taskContext";
 import "./timer.css";
 import canaryhappy from "../../../images/canary-happy.png";
 import applecolor from "../../../images/apple-color.png";
@@ -6,6 +8,7 @@ import checkicon from "../../../images/check-icon.png";
 import { Link, Outlet } from "react-router-dom";
 
 export default function TaskSuccess() {
+  const gottenTask = useContext(TaskContext);
   return (
     <div className="bodytimer">
       <button className="menu" type="menu">

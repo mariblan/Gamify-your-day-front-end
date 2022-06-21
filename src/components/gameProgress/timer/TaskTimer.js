@@ -1,21 +1,28 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import "./timer.css";
 import canary from "../../../images/canary-normal.png";
 import apple from "../../../images/apple-color.png";
 import chore from "../../../images/chores-icon.png";
+import social from "../../../images/social-icon.png";
+import work from "../../../images/work-icon.png";
+import care from "../../../images/self-care-icon.png";
+import errand from "../../../images/errands-icon.png";
+import misc from "../../../images/misc-icon.png";
 import { useNavigate } from "react-router-dom";
 
-export default function TaskTimer() {
+export default function TaskTimer({ gottenTask }) {
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(10);
   const [timerInit, setTimerInit] = useState(false);
+  const [taskFailureActive, setTaskFailureActive] = useState(false);
+  const [icon, setIcon] = useState(false);
   //To use in setTimeout to navigate to the failure and succes screens.
   const navigate = useNavigate();
   //Sets the countdown for the timer and prints it in the screen.
   useEffect(() => {
     setTimeout(() => {
       setTimerInit(true);
-    }, 3000);
+    }, 1000);
   });
   useEffect(() => {
     timerInit === true &&
@@ -39,29 +46,28 @@ export default function TaskTimer() {
       minutes === 0 &&
       setTimeout(() => {
         clearTimeout();
-        navigate("/taskfailure");
+        //navigate("/taskfailure");
+        setTaskFailureActive(true);
       });
   });
-  // const timer = () => {
-  //   const timerInterval = setInterval(() => {
-  //     if (seconds > 0) {
-  //       setSeconds((prevS) => prevS - 1);
-  //     }
-  //     if (seconds === 0) {
-  //       if (minutes > 0) {
-  //         setSeconds(59);
-  //         setMinutes((prevM) => prevM - 1);
-  //       }
-  //     }
-  //     if (seconds === 0) {
-  //       if (minutes === 0) {
-  //         clearInterval(timerInterval);
-  //         navigate("/taskfailure");
-  //       }
-  //     }
-  //   }, 1000);
-  // };
-  //setTimeout(timer, 5000);
+  useEffect(() => {
+    setIcon((icon) => {
+      if (gottenTask.category === "chores") {
+        return chore;
+      } else if (gottenTask.category === "social") {
+        return social;
+      } else if (gottenTask.category === "work") {
+        return work;
+      } else if (gottenTask.category === "errands") {
+        return errand;
+      } else if (gottenTask.category === "care") {
+        return care;
+      } else if (gottenTask.category === "miscellaneous") {
+        return misc;
+      }
+    });
+  }, [icon, gottenTask.category]);
+
   return (
     <div className="bodytimer">
       <button className="menu" type="menu">
@@ -82,8 +88,8 @@ export default function TaskTimer() {
             </div>
           </div>
           <div className="task">
-            <img className="icon" src={chore} alt="icon-task" />
-            <h5 className="">Book that appointment</h5>
+            <img className="icon" src={icon} alt="icon-task" />
+            <h5 className="">{gottenTask.taskName}</h5>
           </div>
           <div className="difficulty">
             <h6 className="category">Difficulty</h6>

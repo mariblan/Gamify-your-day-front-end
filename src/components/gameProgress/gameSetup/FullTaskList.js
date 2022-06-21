@@ -9,6 +9,7 @@ import { useState, useEffect, useRef } from "react";
 export default function AllTasks() {
   // Variable that stores an array of strings - the category names the tasks should be filtered by. It
   // starts empty - no filter is in place when the list is first loaded.
+
   const [filter, setFilter] = useState([]);
   const [searchValue, setSearchValue] = useState("");
   const [sortByFavorite, setSortByFavorite] = useState(false);
@@ -61,7 +62,11 @@ export default function AllTasks() {
     if (filter.length === 0) noFilterBtn.current.className += " filterSelected";
   }, [filter]);
 
-  const handleClick = (e) => {
+  // Adds filters to an array so the child component returns only tasks that have the same category
+  // as the ones selected. Also disables filtering by completion or favorites.
+  const filterByCategory = (e) => {
+    setSortByFavorite(false);
+    setSortByComplete(false);
     // If the button that has no name is selected for the filter selection to be cleared,
     // the filtering array is set to empty
     if (!e.target.name) return setFilter([]);
@@ -87,6 +92,19 @@ export default function AllTasks() {
         });
   };
 
+  // Toggles sorting by completion on and off
+  const checkComplete = () => {
+    if (sortByFavorite) setSortByFavorite(false);
+    !sortByComplete ? setSortByComplete(true) : setSortByComplete(false);
+  };
+
+  // Toggles sorting by favorite on and off
+  const checkFavorite = () => {
+    if (sortByComplete) setSortByComplete(false);
+    !sortByFavorite ? setSortByFavorite(true) : setSortByFavorite(false);
+  };
+
+  // handleChange and handleSubmit are meant for the search function (WIP)
   const handleChange = (e) => {
     setSearchValue(e.target.value);
   };
@@ -106,7 +124,7 @@ export default function AllTasks() {
         <h1 className="title">Select your tasks!</h1>
         <div className="filterWrapper">
           <ul className="filterCategory">
-            <li onClick={handleClick}>
+            <li onClick={filterByCategory}>
               <img
                 ref={noFilterBtn}
                 src={noFilter}
@@ -116,7 +134,7 @@ export default function AllTasks() {
               />
             </li>
             {categories.map((category, index) => (
-              <li key={index} onClick={handleClick}>
+              <li key={index} onClick={filterByCategory}>
                 <img
                   ref={filterBtns}
                   src={category.icon}
@@ -176,18 +194,10 @@ export default function AllTasks() {
         sortByComplete={sortByComplete}
       />
       <div className="navWrapper">
-        <button
-          type="button"
-          className="fadedBtn"
-          onClick={() => setSortByFavorite(true)}
-        >
+        <button type="button" className="fadedBtn" onClick={checkFavorite}>
           Favorites
         </button>
-        <button
-          type="button"
-          className="fadedBtn"
-          onClick={() => setSortByComplete(true)}
-        >
+        <button type="button" className="fadedBtn" onClick={checkComplete}>
           Completed
         </button>
         <button type="button" className="mainBtn">

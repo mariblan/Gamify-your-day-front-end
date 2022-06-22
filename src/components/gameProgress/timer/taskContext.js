@@ -1,6 +1,8 @@
-import { createContext, useState, useMemo } from "react";
+import { createContext, useState, useContext } from "react";
 
 const TaskContext = createContext();
+
+const useTask = () => useContext(TaskContext);
 
 const TaskProvider = (props) => {
   const [gottenTask, setGottenTask] = useState({
@@ -10,12 +12,11 @@ const TaskProvider = (props) => {
     taskName: "",
     taskTime: {},
   });
-  const value = useMemo(() => ({ gottenTask, setGottenTask }), [gottenTask]);
 
   return (
-    <TaskContext.TaskProvider value={value}>
+    <TaskContext.Provider value={{ gottenTask, setGottenTask }}>
       {props.children}
-    </TaskContext.TaskProvider>
+    </TaskContext.Provider>
   );
 };
-export { TaskContext, TaskProvider };
+export { useTask, TaskContext, TaskProvider };

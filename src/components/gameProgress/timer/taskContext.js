@@ -1,6 +1,6 @@
 import { createContext, useState, useMemo } from "react";
 
-const TaskContext = createContext(null);
+const TaskContext = createContext();
 
 const TaskProvider = (props) => {
   const [gottenTask, setGottenTask] = useState({

@@ -25,7 +25,13 @@ export default function TaskList({
   };
 
   useEffect(() => {
-    getTasks().then((allData) => setAllTasks(allData));
+    getTasks().then((allData) =>
+      setAllTasks(
+        allData.sort((a, b) => {
+          return Math.random() >= 0.5 ? 1 : -1;
+        })
+      )
+    );
   }, []);
 
   // !!! MyTaskList is not rendering with this component because of filterSelection being undefined

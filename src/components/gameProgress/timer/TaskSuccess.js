@@ -1,5 +1,5 @@
-import { useContext } from "react";
-import { TaskContext } from "./taskContext";
+import { useContext, useState, useEffect } from "react";
+import { useTask } from "./taskContext";
 import "./timer.css";
 import canaryhappy from "../../../images/canary-happy.png";
 import applecolor from "../../../images/apple-color.png";
@@ -8,7 +8,15 @@ import checkicon from "../../../images/check-icon.png";
 import { Link, Outlet } from "react-router-dom";
 
 export default function TaskSuccess() {
-  const gottenTask = useContext(TaskContext);
+  const { gottenTask, setGottenTask } = useTask();
+  const [gottenTaskString, setGottenTaskString] = useState(false);
+  const [gottenTaskObj, setGottenTaskObj] = useState(false);
+  useEffect(() => {
+    setGottenTaskString(JSON.stringify(gottenTask.taskName))
+    setGottenTaskObj(JSON.stringify(gottenTask, null, 10))
+    console.log(gottenTaskObj)
+  }, []);
+
   return (
     <div className="bodytimer">
       <button className="menu" type="menu">
@@ -25,7 +33,7 @@ export default function TaskSuccess() {
             <h6>You finished your task with 1:46 minutes remaining</h6>
           </div>
           <div className="task">
-            <h5 className="">Book that appointment</h5>
+            <pre className="">{gottenTaskString}</pre>
           </div>
           <div className="difficulty">
             <h6 className="category">Difficulty</h6>

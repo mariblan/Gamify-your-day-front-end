@@ -1,5 +1,5 @@
-import { useContext } from "react";
-import { TaskContext } from "./taskContext";
+import { useContext, useState, useEffect } from "react";
+import { useTask } from "./taskContext";
 import "./timer.css";
 import applecolor from "../../../images/apple-color.png";
 import applebw from "../../../images/apple-bw.png";
@@ -7,8 +7,21 @@ import canarysad from "../../../images/canary-sad.png";
 import failedicon from "../../../images/failed-task-icon.png";
 import { Link, Outlet } from "react-router-dom";
 
-export default function TaskFailure(props) {
-  const gottenTask = useContext(TaskContext);
+export default function TaskFailure() {
+  const {
+    gottenTask: { taskName },
+    setGottenTask,
+  } = useTask();
+  const [gottenTaskString, setGottenTaskString] = useState(false);
+  const [gottenTaskObj, setGottenTaskObj] = useState(false);
+
+  useEffect(() => {
+    /*   setGottenTaskString(JSON.stringify(gottenTask.taskName))
+    setGottenTaskObj(JSON.stringify(gottenTask, null, 10))
+    console.log(gottenTaskObj) */
+  }, []);
+
+  // setGottenTaskString(JSON.stringify(gottenTask.taskName))
   return (
     <div className="bodytimer">
       <button className="menu" type="menu">
@@ -25,7 +38,7 @@ export default function TaskFailure(props) {
             <h6>It seems you needed more time...</h6>
           </div>
           <div className="task">
-            <h5 className="">{props.gottenTask.taskName}</h5>
+            <h5 className="gottenTask">{taskName}</h5>
           </div>
           <div className="difficulty">
             <h6 className="category">Difficulty</h6>

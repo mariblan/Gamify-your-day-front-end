@@ -46,8 +46,8 @@ export default function GetTask() {
         clearInterval(interval);
         setCounter("GO!");
         setTimeout(() => {
-          //navigate("/tasktimer");
-          setTimerActive(true);
+          navigate("/tasktimer");
+          //setTimerActive(true);
         }, 1000);
       }
     }, 1000);
@@ -62,8 +62,6 @@ export default function GetTask() {
           clicked={clicked}
         />
       )}
-      {/*TaskTimer has to actually get a single task in the userTaskList array, and not the whole thing*/}
-      {timerActive === true && <TaskTimer gottenTask={gottenTask} />}
     </div>
   );
 }

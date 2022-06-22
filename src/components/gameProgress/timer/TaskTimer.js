@@ -1,21 +1,24 @@
-import { useState, useEffect, useContext } from "react";
+import { useContext, useState, useEffect } from "react";
+import { TaskContext } from "./taskContext";
 import "./timer.css";
 import canary from "../../../images/canary-normal.png";
 import apple from "../../../images/apple-color.png";
-import chore from "../../../images/chores-icon.png";
-import social from "../../../images/social-icon.png";
-import work from "../../../images/work-icon.png";
-import care from "../../../images/self-care-icon.png";
-import errand from "../../../images/errands-icon.png";
-import misc from "../../../images/misc-icon.png";
+import checkCategory from "../../../utils/categoryCheck";
+import TaskTimerRender from "./taskTimerRender";
 import { useNavigate } from "react-router-dom";
+import { useTask } from "./taskContext";
 
-export default function TaskTimer({ gottenTask }) {
+export default function TaskTimer() {
   const [minutes, setMinutes] = useState(0);
-  const [seconds, setSeconds] = useState(10);
+  const [seconds, setSeconds] = useState(3);
   const [timerInit, setTimerInit] = useState(false);
-  const [taskFailureActive, setTaskFailureActive] = useState(false);
-  const [icon, setIcon] = useState(false);
+  const [taskIcon, setTaskIcon] = useState(false);
+  const {
+    gottenTask: { category },
+    setGottenTask,
+  } = useTask();
+  const [pauseActive, setPauseActive] = useState(false);
+
   //To use in setTimeout to navigate to the failure and succes screens.
   const navigate = useNavigate();
   //Sets the countdown for the timer and prints it in the screen.
@@ -24,6 +27,8 @@ export default function TaskTimer({ gottenTask }) {
       setTimerInit(true);
     }, 1000);
   });
+
+  console.log(category);
   useEffect(() => {
     timerInit === true &&
       seconds > 0 &&
@@ -46,78 +51,93 @@ export default function TaskTimer({ gottenTask }) {
       minutes === 0 &&
       setTimeout(() => {
         clearTimeout();
-        //navigate("/taskfailure");
-        setTaskFailureActive(true);
+        navigate("/taskfailure");
       });
   });
+  console.log(category);
   useEffect(() => {
-    setIcon((icon) => {
-      if (gottenTask.category === "chores") {
-        return chore;
-      } else if (gottenTask.category === "social") {
-        return social;
-      } else if (gottenTask.category === "work") {
-        return work;
-      } else if (gottenTask.category === "errands") {
-        return errand;
-      } else if (gottenTask.category === "care") {
-        return care;
-      } else if (gottenTask.category === "miscellaneous") {
-        return misc;
-      }
-    });
-  }, [icon, gottenTask.category]);
+    setTaskIcon(checkCategory(category));
+  }, [category]);
 
+  // const pause = () => {
+  //   pauseActive === false ? setPauseActive(true) : setPauseActive(false);
+  //   if (pauseActive === true) {
+  //     clearTimeout();
+  //   } else {
+  //   }
+  //   clearTimeout();
+  // };
+  // const forfeitTask = () => {
+  //   clearTimeout();
+  // };
+  // const imDone = () => {
+  //   navigate("/tasksuccess");
+  //   setTimeout(() => {
+  //     clearTimeout();
+  //   });
+  // };
   return (
-    <div className="bodytimer">
-      <button className="menu" type="menu">
-        Menu
-      </button>
-      <div className="chicken-bg">
-        <img className="chicken" src={canary} alt="canary-normal" />
-        <div className="box">
-          <div className="timer">
-            <h2>
-              {minutes < 10 ? `0${minutes}` : minutes}:
-              {seconds < 10 ? `0${seconds}` : seconds}
-            </h2>
-            <div className="tasks-options">
-              <button className="fadedBtn" type="button">
-                ||{" "}
-              </button>
-            </div>
-          </div>
-          <div className="task">
-            <img className="icon" src={icon} alt="icon-task" />
-            <h5 className="">{gottenTask.taskName}</h5>
-          </div>
-          <div className="difficulty">
-            <h6 className="category">Difficulty</h6>
-            <h6 className="info">Medium</h6>
-          </div>
-          <div className="time">
-            <h6 className="category">Total time</h6>
-            <h6 className="info">10 min</h6>
-          </div>
-          <div className="reward">
-            <h6>Reward</h6>
-            <img className="apple" src={apple} alt="apple1" />
-            <img className="apple" src={apple} alt="apple2" />
-          </div>
-          <div className="tasks-options">
-            <div>
-              <button className="forfeit-task" type="button">
-                Forfeit task
-              </button>
-            </div>
-            <div>
-              <button className="mainBtn" type="button">
-                I'm done
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    console.log(gottenTask.category) && (
+      <TaskTimerRender
+        // onClick={imDone}
+        apple={apple}
+        minutes={minutes}
+        seconds={seconds}
+        icon={taskIcon.icon}
+        alt={taskIcon.alt}
+        image={canary}
+        gottenTaskName={gottenTask.taskName}
+      />
+    )
+    // <div className="bodytimer">
+    //   <button className="menu" type="menu">
+    //     Menu
+    //   </button>
+    //   <div className="chicken-bg">
+    //     <img className="chicken" src={canary} alt="canary-normal" />
+    //     <div className="box">
+    //       <div className="timer">
+    //         <h2>
+    //           {minutes < 10 ? `0${minutes}` : minutes}:
+    //           {seconds < 10 ? `0${seconds}` : seconds}
+    //         </h2>
+    //         <div className="tasks-options">
+    //           <button className="fadedBtn" type="button">
+    //             ||{" "}
+    //           </button>
+    //         </div>
+    //       </div>
+    //       <div className="task">
+    //         <img className="icon" src={icon} alt="icon-task" />
+    //         <h5 className="">{gottenTask.taskName}</h5>
+    //       </div>
+    //       <div className="difficulty">
+    //         <h6 className="category">Difficulty</h6>
+    //         <h6 className="info">Medium</h6>
+    //       </div>
+    //       <div className="time">
+    //         <h6 className="category">Total time</h6>
+    //         <h6 className="info">10 min</h6>
+    //       </div>
+    //       <div className="reward">
+    //         <h6>Reward</h6>
+    //         <img className="apple" src={apple} alt="apple1" />
+    //         <img className="apple" src={apple} alt="apple2" />
+    //       </div>
+    //       <div className="tasks-options">
+    //         <div>
+    //           <button className="forfeit-task" type="button">
+    //             Forfeit task
+    //           </button>
+    //         </div>
+    //         <div>
+    //           <button className="mainBtn" type="button">
+    //             I'm done
+    //           </button>
+    //         </div>
+    //       </div>
+    //     </div>
+    //   </div>
+    // </div>
   );
 }

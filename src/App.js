@@ -12,19 +12,19 @@ import { TaskProvider } from "./components/gameProgress/timer/taskContext";
 
 function App() {
   return (
-    // <TaskProvider>
     <Router>
-      <Routes>
-        <Route path="alltasks" element={<AllTasks />} />
-        <Route path="mytasks" element={<MyTaskList />} />
-        <Route path="petselection" element={<AnimalSelection />} />
-        <Route path="gamego" element={<GetTask />} />
-        <Route path="tasktimer" element={<TaskTimer />} />
-        <Route path="tasksuccess" element={<TaskSuccess />} />
-        <Route path="taskfailure" element={<TaskFailure />} />
-      </Routes>
+      <TaskProvider>
+        <Routes>
+          <Route path="alltasks" element={<AllTasks />} />
+          <Route path="mytasks" element={<MyTaskList />} />
+          <Route path="petselection" element={<AnimalSelection />} />
+          <Route path="gamego" element={<GetTask />} />
+          <Route path="tasktimer" element={<TaskTimer />} />
+          <Route path="tasksuccess" element={<TaskSuccess />} />
+          <Route path="taskfailure" element={<TaskFailure />} />
+        </Routes>
+      </TaskProvider>
     </Router>
-    // </TaskProvider>
   );
 }
 

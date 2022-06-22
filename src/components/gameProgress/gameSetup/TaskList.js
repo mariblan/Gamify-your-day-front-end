@@ -25,7 +25,7 @@ export default function TaskList({
   };
 
   useEffect(() => {
-    (async () => setAllTasks(await getTasks()))();
+    getTasks().then((allData) => setAllTasks(allData));
   }, []);
 
   // !!! MyTaskList is not rendering with this component because of filterSelection being undefined

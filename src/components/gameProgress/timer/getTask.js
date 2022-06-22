@@ -10,7 +10,7 @@ export default function GetTask() {
   const [counter, setCounter] = useState("Start!");
   const [clicked, setClicked] = useState(false);
   const [timerActive, setTimerActive] = useState(false);
-  const [gottenTask, setGottenTask] = useContext(TaskContext);
+  const { gottenTask, setGottenTask } = useContext(TaskContext);
   // const [userTaskList, setUserTaskList] = useState([]);
 
   // useEffect(() => {

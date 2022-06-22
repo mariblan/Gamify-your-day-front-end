@@ -1,5 +1,5 @@
 import TaskMini from "./minifiedTask";
-import getTasks from "../../../fetchDB/fetchDB";
+import { getAllTasks, getUser } from "../../../fetchDB/fetchDB";
 import { taskDB, userDB } from "./mockTaskDB";
 import { useState, useEffect } from "react";
 
@@ -16,6 +16,7 @@ export default function TaskList({
   // that match the filtering
   // console.log(searchValue);
   const [allTasks, setAllTasks] = useState(false);
+  const [user, setUser] = useState(null);
   // const allTasks = [...taskDB];
   const [tasksFiltered, setTasksFiltered] = useState([]);
 
@@ -24,8 +25,12 @@ export default function TaskList({
     console.log(`I've been clicked!`);
   };
 
+  // Get all tasks (server route '/') from the DB, make the order random and store in state
   useEffect(() => {
-    getTasks().then((allData) =>
+    // Getting the user is here for the time being, but it's likely best to save it in context/redux
+    getUser("62b1b57082c8ed601e7094fc").then((user) => setUser(user));
+    // Get all tasks in random order
+    getAllTasks().then((allData) =>
       setAllTasks(
         allData.sort((a, b) => {
           return Math.random() >= 0.5 ? 1 : -1;
@@ -55,7 +60,7 @@ export default function TaskList({
   useEffect(() => {
     if (!sortByFavorite) setTasksFiltered(allTasks);
     if (sortByFavorite) {
-      const sortFav = [...taskDB].sort((a, b) =>
+      const sortFav = [...allTasks].sort((a, b) =>
         userDB[0].favoriteTasks.includes(a.taskId) ? -1 : 1
       );
       setTasksFiltered(sortFav);
@@ -66,7 +71,7 @@ export default function TaskList({
   useEffect(() => {
     if (!sortByComplete) setTasksFiltered(allTasks);
     if (sortByComplete) {
-      const sortComp = [...taskDB].sort((a, b) =>
+      const sortComp = [...allTasks].sort((a, b) =>
         userDB[0].todayCompleted.includes(a.taskId) ? -1 : 1
       );
       setTasksFiltered(sortComp);
@@ -76,8 +81,10 @@ export default function TaskList({
   // !!! WIP: functioning search feature comes here:
 
   return (
-    allTasks && (
+    allTasks &&
+    user && (
       <div className="taskWrapper">
+        {console.log(user)}
         {allTasks.map((task, index) => (
           <TaskMini
             key={index}

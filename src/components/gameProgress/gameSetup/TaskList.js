@@ -20,11 +20,6 @@ export default function TaskList({
   // const allTasks = [...taskDB];
   const [tasksFiltered, setTasksFiltered] = useState([]);
 
-  const expandTask = (node) => {
-    console.log(node);
-    console.log(`I've been clicked!`);
-  };
-
   // Get all tasks (server route '/') from the DB, make the order random and store in state
   useEffect(() => {
     // Getting the user is here for the time being, but it's likely best to save it in context/redux
@@ -84,14 +79,8 @@ export default function TaskList({
     allTasks &&
     user && (
       <div className="taskWrapper">
-        {console.log(user)}
         {allTasks.map((task, index) => (
-          <TaskMini
-            key={index}
-            task={task}
-            user={userDB[0]}
-            expand={expandTask}
-          />
+          <TaskMini key={index} task={task} user={user} />
         ))}
       </div>
     )

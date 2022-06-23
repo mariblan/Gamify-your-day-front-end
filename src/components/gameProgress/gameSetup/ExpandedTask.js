@@ -7,8 +7,8 @@ import renderApples from "../../../utils/generateApples";
 import { useState, useEffect } from "react";
 
 export default function TaskExpanded({
-  task: { taskId, taskName, taskTime, category },
-  user: { favoriteTasks },
+  task: { _id, taskName, taskTime, category },
+  user: { favoriteList },
 }) {
   const [sliderValue, setSliderValue] = useState(taskTime.minMedium);
   const [difficulty, setDifficulty] = useState("");
@@ -49,11 +49,7 @@ export default function TaskExpanded({
       <div className="taskMain">
         <img src={icon} alt={alt} />
         <div className="titleFavoriteWrapper">
-          <img
-            src={favoriteTasks.includes(taskId) ? favTask : notFavTask}
-            alt="favorite"
-            className="favIcon"
-          />
+          <img src={notFavTask} alt="favorite" className="favIcon" />
           <h2>{taskName}</h2>
         </div>
       </div>

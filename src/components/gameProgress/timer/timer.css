@@ -61,6 +61,35 @@ failure and pet*/
   margin: 3% 0% 2% 10%;
   position: relative;
 }
+.confirm-box {
+  width: 70%;
+  background-color: rgb(255, 255, 255);
+  border: solid black 1px;
+  border-radius: 15px;
+  padding: 6%;
+  top: 10%;
+  position: relative;
+  top: 50%;
+  transform: translateY(80%);
+  left: 50%;
+  transform: translateX(-43%);
+  margin: auto;
+  font-size: 1.2rem;
+}
+.confirm-box__overlay {
+  display: none;
+}
+/* .react-confirm-box {
+  width: 100%;
+  background-color: rgb(255, 255, 255);
+  border: solid black 1px;
+  border-radius: 15px;
+  padding: 10%;
+  position: relative;
+  right: 42%;
+  font-size: 1.2rem;
+} */
+
 /* Finish the box for  tasks, success, 
 failure and pet*/
 
@@ -218,7 +247,27 @@ the time and the rewards*/
   border-top: rgb(182, 158, 48) 1px;
   border-right: solid rgba(182, 158, 48, 0.7) 1px;
 }
-
+.react-confirm-box > button {
+  padding: 3%;
+  font-size: 1.1rem;
+  margin: 2%;
+  background-color: aliceblue;
+  border-radius: 3%;
+}
+.react-confirm-box > button > .forfeit {
+  background-color: rgba(182, 158, 48, 0.7);
+  color: white;
+  border-left: rgb(182, 158, 48) 1px;
+  border-top: rgb(182, 158, 48) 1px;
+  border-right: solid rgba(182, 158, 48, 0.7) 1px;
+}
+.react-confirm-box > button > .continue {
+  border-top: 1px solid rgb(112, 218, 112);
+  border-left: 1px solid rgb(58, 155, 58);
+  border-right: 1px solid rgb(66, 165, 66);
+  border-bottom: 1px solid rgb(130, 221, 130);
+  background-color: rgb(66, 165, 66);
+}
 .mainBtn {
   border-top: 1px solid rgb(112, 218, 112);
   border-left: 1px solid rgb(58, 155, 58);

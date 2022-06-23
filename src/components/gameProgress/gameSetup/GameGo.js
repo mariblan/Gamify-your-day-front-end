@@ -1,8 +1,21 @@
 import appleColor from "../../../images/apple-color.png";
 import "./gameGo.css";
+import { useTask } from "../../../taskContext";
 
 export default function GameGo(props) {
   console.log(props);
+  const {
+    user,
+    setUser,
+    todaysList,
+    setTodaysList,
+    gottenTask,
+    setGottenTask,
+    seconds,
+    setSeconds,
+    minutes,
+    setMinutes,
+  } = useTask();
   return (
     <div>
       <button className="menu" type="menu">

@@ -1,4 +1,4 @@
-import { useTask } from "./taskContext";
+import { useTask } from "../../../taskContext";
 
 export default function TaskTimerRender({
   apple,
@@ -7,6 +7,7 @@ export default function TaskTimerRender({
   image,
   pauseClick,
   imDoneClick,
+  forfeitTask,
 }) {
   const {
     gottenTask: { taskName },
@@ -16,7 +17,7 @@ export default function TaskTimerRender({
     seconds,
     setSeconds,
   } = useTask();
-
+  console.log(minutes, seconds);
   return (
     <div className="bodytimer">
       <button className="menu" type="menu">
@@ -59,7 +60,11 @@ export default function TaskTimerRender({
           </div>
           <div className="tasks-options">
             <div>
-              <button className="forfeit-task" type="button">
+              <button
+                onClick={forfeitTask}
+                className="forfeit-task"
+                type="button"
+              >
                 Forfeit task
               </button>
             </div>

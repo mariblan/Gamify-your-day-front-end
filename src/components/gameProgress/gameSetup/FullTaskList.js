@@ -7,53 +7,52 @@ import { categories } from "../../../utils/categoryCheck";
 import { useState, useEffect, useRef } from "react";
 
 export default function AllTasks() {
-  // Variable that stores an array of strings - the category names the tasks should be filtered by. It
-  // starts empty - no filter is in place when the list is first loaded.
-
+  // Initial states for filtering or searching functions for task selection. All filters are false/empty
+  // by default, and some dom nodes are selected for purposes of changing styling upon selection.
   const [filter, setFilter] = useState([]);
   const [searchValue, setSearchValue] = useState("");
   const [sortByFavorite, setSortByFavorite] = useState(false);
   const [sortByComplete, setSortByComplete] = useState(false);
   const noFilterBtn = useRef();
-  const filterBtns = useRef();
+  let filterContainer = useRef();
 
-  // !!! This is mostly working. Once the user selects the no filter button, the filter does not
-  // deselect any other filters and fails to apply the right class to the no fitler button.
-  // Come back to this soon
+  // This onClick event changes className for styling upon selection
   const changeClassName = (e) => {
     // First we get the index of the added class on the selected button, on the no filter button,
     // and on all filter buttons that are not the event target.
     const getIndex = e.target.className.indexOf("filterSelected");
-    const allBtnsClassIndex =
-      filterBtns.current.className.indexOf("filterSelected");
     const noFilterClassIndex =
       noFilterBtn.current.className.indexOf("filterSelected");
-    // console.log(noFilterBtn);
-    // console.log(filterBtns.current);
-    // console.log(noFilterBtn.current);
-
-    // If the target of the event is any filter button apart from the no filter, it checks whether
-    // has the filterSelected class. If it does, the class gets removed. If it doesn't, the class
-    // gets added, and the no filter button gets its class removed ("deselecting" it).
 
     // If the no filter button gets selected, it gains the class, and all other buttons lose the class
     // (getting "deselected").
     if (!e.target.name) {
+      for (let i = 1; i < filterContainer.current.children.length; i++) {
+        let iconClass =
+          filterContainer.current.children[i].children[0].className;
+        if (iconClass.includes("filterSelected")) {
+          let getClassIndex = iconClass.indexOf("filterSelected");
+          filterContainer.current.children[i].children[0].className =
+            iconClass.substring(0, getClassIndex - 1);
+        }
+      }
+
       if (!e.target.className.includes("filterSelected")) {
         e.target.className += " filterSelected";
       }
-      filterBtns.current.className.substring(0, allBtnsClassIndex);
       return;
     }
 
+    // If any other filter is selected, the no filter button gets deselected and the selected
+    // button gains the class
     if (e.target.className.includes("filterSelected")) {
-      e.target.className = e.target.className.substring(0, getIndex);
+      e.target.className = e.target.className.substring(0, getIndex - 1);
     } else {
       e.target.className += " filterSelected";
       if (noFilterBtn.current.className.includes("filterSelected")) {
         noFilterBtn.current.className = noFilterBtn.current.className.substring(
           0,
-          noFilterClassIndex
+          noFilterClassIndex - 1
         );
       }
     }
@@ -126,7 +125,7 @@ export default function AllTasks() {
         <button className="profileBtn fadedBtn smallBtn">Profile</button>
         <h1 className="title">Select your tasks!</h1>
         <div className="filterWrapper">
-          <ul className="filterCategory">
+          <ul className="filterCategory" ref={filterContainer}>
             <li onClick={filterByCategory}>
               <img
                 ref={noFilterBtn}
@@ -139,7 +138,6 @@ export default function AllTasks() {
             {categories.map((category, index) => (
               <li key={index} onClick={filterByCategory}>
                 <img
-                  ref={filterBtns}
                   src={category.icon}
                   alt={category.alt}
                   className={`categoryIconFilter ${category.name}`}

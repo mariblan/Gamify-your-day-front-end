@@ -101,6 +101,7 @@ body {
 }
 
 .categoryIconFilter {
+  border: 1px solid transparent;
   padding: 20%;
   max-height: 100%;
   max-width: 100%;

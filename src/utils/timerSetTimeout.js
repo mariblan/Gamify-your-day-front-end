@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useTask } from "../components/gameProgress/timer/taskContext";
+import { useTask } from "../taskContext";
 
 function TimerSeconds(timerInit, paused, setPaused, done, setDone) {
   const {
@@ -48,7 +48,7 @@ function TimerSeconds(timerInit, paused, setPaused, done, setDone) {
     timerInit === true &&
       seconds > 0 &&
       minutes >= 0 &&
-      paused === false &&
+      (paused === false || paused === true) &&
       done === true &&
       setTimeout(() => {
         clearTimeout();

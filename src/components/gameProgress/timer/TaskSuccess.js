@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useTask } from "./taskContext";
+import { useTask } from "../../../taskContext";
 import "./timer.css";
 import canaryhappy from "../../../images/canary-happy.png";
 import applecolor from "../../../images/apple-color.png";
@@ -10,6 +10,8 @@ import { Link, Outlet } from "react-router-dom";
 
 export default function TaskSuccess() {
   const {
+    user,
+    setUser,
     gottenTask: { taskName, category },
     setGottenTask,
     minutes,
@@ -35,8 +37,8 @@ export default function TaskSuccess() {
             </div>
             <h6>
               You finished your task with{" "}
-              {minutes < 10 ? `0${minutes}` : minutes}:
-              {seconds < 10 ? `0${seconds}` : seconds} minutes remaining
+              {minutes === 0 ? "" : `${minutes} minutes and`}
+              {seconds < 10 ? `0${seconds}` : seconds} seconds remaining
             </h6>
           </div>
           <div className="task">

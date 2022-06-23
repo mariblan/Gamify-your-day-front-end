@@ -2,11 +2,19 @@ import MyList from "./myList";
 import pets from "./mockanimalsDB";
 import reload from "../../../images/change-icon.png";
 import renderApples from "../../../utils/generateApples";
+import { getUser } from "../../../fetchDB/fetchDB";
 import { Link, Outlet } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function MyTaskList() {
-  const [userList, setUserList] = useState([]);
+  const [user, setUser] = useState([]);
+
+  useEffect(() => {
+    getUser("62b1b57082c8ed601e7094fc").then((userData) => {
+      // setDisplayedTasks(userData);
+      setUser(userData);
+    });
+  }, []);
 
   return (
     <>
@@ -19,7 +27,7 @@ export default function MyTaskList() {
         <h1 className="title">Today's task list</h1>
       </div>
       <div className="fixedTaskWrapper">
-        <MyList userList={userList} />
+        <MyList />
       </div>
       <footer>
         <div className="dailyPet">

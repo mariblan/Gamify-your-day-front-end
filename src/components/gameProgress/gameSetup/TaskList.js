@@ -1,7 +1,7 @@
 import TaskMini from "./minifiedTask";
 import { getAllTasks, getUser } from "../../../fetchDB/fetchDB";
-import { taskDB, userDB } from "./mockTaskDB";
 import { useState, useEffect } from "react";
+// import { useTask } from "../timer/taskContext";
 
 // If tasklist is rendered in fulltasklist, no taskexpanded components are called
 // if tasklist is rendered in mytasklist, only one taskexpanded component can be called
@@ -17,7 +17,6 @@ export default function TaskList({
   // console.log(searchValue);
   const [allTasks, setAllTasks] = useState(false);
   const [user, setUser] = useState(null);
-  // const allTasks = [...taskDB];
   const [tasksFiltered, setTasksFiltered] = useState([]);
 
   // Get all tasks (server route '/') from the DB, make the order random and store in state
@@ -25,20 +24,27 @@ export default function TaskList({
     // Getting the user is here for the time being, but it's likely best to save it in context/redux
     getUser("62b1b57082c8ed601e7094fc").then((user) => setUser(user));
     // Get all tasks in random order
-    getAllTasks().then((allData) =>
+    getAllTasks().then((allData) => {
       setAllTasks(
         allData.sort((a, b) => {
           return Math.random() >= 0.5 ? 1 : -1;
         })
-      )
-    );
+      );
+      setTasksFiltered(allData);
+      //!!! If time allows, order the task categories by the reverse order in which they were
+      // inputted in the array (last category selection shows first in list)
+      // setTasksFiltered(allData.sort((a,b) => {
+      //   const filterSelectionOrder = filterSelection
+      // }));
+    });
   }, []);
 
-  // !!! MyTaskList is not rendering with this component because of filterSelection being undefined
-  // in this case. Find a way around.
+  // This useEffect checks the filter array and filters the displayed tasks to show only the tasks
+  // whose category match the category selected in the filter (in parent component)
   useEffect(() => {
     // ??? When filterSelection is an empty array, it (correctly) considers filterSelection.length = 0
     // ??? and yet filterSelection === [] is false. Wth, why???
+    // console.log(filterSelection);
     // filterSelection === [] ? console.log(true) : console.log(false);
     if (filterSelection.length >= 1) {
       const filterTasks = [...allTasks];
@@ -49,25 +55,37 @@ export default function TaskList({
     } else {
       setTasksFiltered(allTasks);
     }
-  }, [filterSelection]);
+  }, [allTasks, filterSelection]);
 
   // Sorts all tasks by favorite (based on user settings)
-  useEffect(() => {
-    if (!sortByFavorite) setTasksFiltered(allTasks);
-    if (sortByFavorite) {
-      const sortFav = [...allTasks].sort((a, b) =>
-        userDB[0].favoriteTasks.includes(a.taskId) ? -1 : 1
-      );
-      setTasksFiltered(sortFav);
-    }
-  }, [sortByFavorite]);
+  // useEffect(() => {
+  //   /*
+  //   For reference fav tasks on the user are:
+  //   Do the dishes id 62b1b21207f92f43f06dae3c
+  //   Send an email id 62b1b900b8fd5e697e14516a
+  //   Prepare a presentation id 62b1bd8eb8fd5e697e145170
+  //   Check in with your parent(s) id 62b1b6d9b8fd5e697e145165
+  //   Do a workout id 62b1c2033ee384607516f8f3
+  //   Prepare your luggage id 62b1c268b8fd5e697e145178
+  //   */
+  //   if (!sortByFavorite) setTasksFiltered(allTasks);
+  //   if (sortByFavorite) {
+  //     // All tasks have to be sorted between those that are favorite and those that are not.
+  //     //
+  //     const sortFav = [...allTasks].sort((a, b) =>
+  //       // if () {}
+  //       user.favoriteList.filter((task) => task._id === a.taskId)
+  //     );
+  //     setTasksFiltered(sortFav);
+  //   }
+  // }, [allTasks, user, sortByFavorite]);
 
   // Sorts all tasks by completion (based on user's daily progress)
   useEffect(() => {
     if (!sortByComplete) setTasksFiltered(allTasks);
     if (sortByComplete) {
       const sortComp = [...allTasks].sort((a, b) =>
-        userDB[0].todayCompleted.includes(a.taskId) ? -1 : 1
+        user.todayCompleted.includes(a.taskId) ? -1 : 1
       );
       setTasksFiltered(sortComp);
     }
@@ -79,7 +97,7 @@ export default function TaskList({
     allTasks &&
     user && (
       <div className="taskWrapper">
-        {allTasks.map((task, index) => (
+        {tasksFiltered.map((task, index) => (
           <TaskMini key={index} task={task} user={user} />
         ))}
       </div>

@@ -1,16 +1,23 @@
 // import { useEffect, useContext } from "react";
-import { useTask } from "./taskContext";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { taskDB } from "../gameSetup/mockTaskDB";
 import GameGo from "../gameSetup/gameGo";
-import TaskTimer from "./taskTimer";
+import { useTask } from "../../../taskContext";
 
 export default function GetTask() {
   const [counter, setCounter] = useState("Start!");
   const [clicked, setClicked] = useState(false);
   const [timerActive, setTimerActive] = useState(false);
   const {
+    user,
+    setUser,
+    todaysList,
+    setTodaysList,
+    todaysCompleted,
+    setTodaysCompleted,
+    todaysFailed,
+    setTodaysFailed,
     gottenTask,
     setGottenTask,
     minutes,
@@ -20,17 +27,17 @@ export default function GetTask() {
   } = useTask();
 
   const navigate = useNavigate();
-  //const [countdownInit, setcountdownInit] = useState(3);
+  user && console.log(user);
   function getTask() {
-    const index = Math.floor(Math.random() * taskDB.length);
+    const index = Math.floor(Math.random() * todaysList.length);
     //return arraytasks[index];
     //console.log(taskDB[index].taskName);
     //setInterval();
     setClicked(true);
     setCounter(5);
     countDown();
-    console.log(taskDB[index]);
-    setGottenTask(taskDB[index]);
+    console.log(todaysList[index]);
+    setGottenTask(todaysList[index]);
   }
 
   const countDown = () => {

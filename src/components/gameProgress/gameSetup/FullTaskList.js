@@ -36,6 +36,16 @@ export default function AllTasks() {
     // has the filterSelected class. If it does, the class gets removed. If it doesn't, the class
     // gets added, and the no filter button gets its class removed ("deselecting" it).
 
+    // If the no filter button gets selected, it gains the class, and all other buttons lose the class
+    // (getting "deselected").
+    if (!e.target.name) {
+      if (!e.target.className.includes("filterSelected")) {
+        e.target.className += " filterSelected";
+      }
+      filterBtns.current.className.substring(0, allBtnsClassIndex);
+      return;
+    }
+
     if (e.target.className.includes("filterSelected")) {
       e.target.className = e.target.className.substring(0, getIndex);
     } else {
@@ -46,13 +56,6 @@ export default function AllTasks() {
           noFilterClassIndex
         );
       }
-    }
-
-    // If the no filter button gets selected, it gains the class, and all other buttons lose the class
-    // (getting "deselected").
-    if (!e.target.name) {
-      e.target.className += " filterSelected";
-      filterBtns.current.className.substring(0, allBtnsClassIndex);
     }
   };
 

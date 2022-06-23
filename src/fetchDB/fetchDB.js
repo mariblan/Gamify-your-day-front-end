@@ -11,13 +11,27 @@ const getAllTasks = async () => {
 };
 
 const getUser = async (id) => {
-  // instead of get ('/user') path, in the future post an :id param and get the info for that user back
   const oneUser = await axios
     .get(`${port}user/${id}`)
-    // .get(`/user/${id}`)
     .then(({ data }) => data)
     .catch((err) => console.error(`Error: ${err}`));
   return oneUser;
 };
 
-export { getAllTasks, getUser };
+const addFavorite = async (id, taskId) => {
+  const updatedFavorite = await axios
+    .put(`${port}user/${id}/${taskId}`)
+    .then(({ data }) => data)
+    .catch((err) => console.error(`Error: ${err}`));
+  return updatedFavorite;
+};
+
+const removeFavorite = async (id, taskId) => {
+  const updatedFavorite = await axios
+    .put(`${port}user/${id}/${taskId}`)
+    .then(({ data }) => data)
+    .catch((err) => console.error(`Error: ${err}`));
+  return updatedFavorite;
+};
+
+export { getAllTasks, getUser, addFavorite, removeFavorite };

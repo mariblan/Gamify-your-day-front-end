@@ -1,26 +1,80 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTask } from "../components/gameProgress/timer/taskContext";
 
-// const timerSeconds = () => {
-//   const [minutes, setMinutes] = useState(0);
-//   const [seconds, setSeconds] = useState(3);
-//   const [timerInit, setTimerInit] = useState(false);
-//   const navigate = useNavigate();
-//   if (timerInit === true && seconds > 0) {
-//     setTimeout(() => {
-//       setSeconds((prevS) => prevS - 1);
-//     }, 1000);
-//   } else if (timerInit === true && seconds === 0 && minutes > 0) {
-//     setTimeout(() => {
-//       setSeconds(59);
-//       setMinutes((prevM) => prevM - 1);
-//     }, 1000);
-//   } else if (timerInit === true && seconds === 0 && minutes === 0) {
-//     setTimeout(() => {
-//       clearTimeout();
-//       navigate("/taskfailure");
-//     });
-//   }
+function TimerSeconds(timerInit, paused, setPaused, done, setDone) {
+  const {
+    gottenTask,
+    setGottenTask,
+    seconds,
+    setSeconds,
+    minutes,
+    setMinutes,
+  } = useTask();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    timerInit === true &&
+      seconds > 0 &&
+      paused === false &&
+      done === false &&
+      setTimeout(() => {
+        setSeconds((prevS) => prevS - 1);
+      }, 1000);
+  }, [seconds, setSeconds, timerInit, paused, done]);
+  useEffect(() => {
+    timerInit === true &&
+      seconds === 0 &&
+      minutes > 0 &&
+      paused === false &&
+      done === false &&
+      setTimeout(() => {
+        setSeconds(59);
+        setMinutes((prevM) => prevM - 1);
+      }, 1000);
+  }, [seconds, setSeconds, minutes, setMinutes, timerInit, paused, done]);
+  useEffect(() => {
+    timerInit === true &&
+      seconds === 0 &&
+      minutes === 0 &&
+      paused === false &&
+      done === false &&
+      setTimeout(() => {
+        clearTimeout();
+        navigate("/taskfailure");
+      });
+  });
+  useEffect(() => {
+    timerInit === true &&
+      seconds > 0 &&
+      minutes >= 0 &&
+      paused === false &&
+      done === true &&
+      setTimeout(() => {
+        clearTimeout();
+        navigate("/tasksuccess");
+      });
+  });
+  useEffect(() => {
+    timerInit === true &&
+      seconds >= 0 &&
+      minutes >= 0 &&
+      paused === true &&
+      done === false &&
+      setTimeout(() => {
+        clearTimeout();
+      });
+  }, [seconds, minutes, timerInit, paused, done]);
+}
+
+// const forfeitTask = () => {
+//   clearTimeout();
+// };
+// const imDone = () => {
+//   navigate("/tasksuccess");
+//   setTimeout(() => {
+//     clearTimeout();
+//   });
 // };
 
-// export { timerSeconds };
+export { TimerSeconds };

@@ -1,5 +1,4 @@
-import { useContext, useState, useEffect } from "react";
-import { TaskContext } from "./taskContext";
+import { useState, useEffect } from "react";
 import "./timer.css";
 import canary from "../../../images/canary-normal.png";
 import apple from "../../../images/apple-color.png";
@@ -7,17 +6,21 @@ import checkCategory from "../../../utils/categoryCheck";
 import TaskTimerRender from "./taskTimerRender";
 import { useNavigate } from "react-router-dom";
 import { useTask } from "./taskContext";
+import { TimerSeconds } from "../../../utils/timerSetTimeout";
 
 export default function TaskTimer() {
-  const [minutes, setMinutes] = useState(0);
-  const [seconds, setSeconds] = useState(3);
   const [timerInit, setTimerInit] = useState(false);
-  const [taskIcon, setTaskIcon] = useState(false);
   const {
-    gottenTask: { category },
+    gottenTask,
     setGottenTask,
+    minutes,
+    setMinutes,
+    seconds,
+    setSeconds,
   } = useTask();
-  const [pauseActive, setPauseActive] = useState(false);
+  const [paused, setPaused] = useState(false);
+  const [done, setDone] = useState(false);
+  const { icon, alt } = checkCategory(gottenTask.category);
 
   //To use in setTimeout to navigate to the failure and succes screens.
   const navigate = useNavigate();
@@ -28,67 +31,28 @@ export default function TaskTimer() {
     }, 1000);
   });
 
-  console.log(category);
-  useEffect(() => {
-    timerInit === true &&
-      seconds > 0 &&
-      setTimeout(() => {
-        setSeconds((prevS) => prevS - 1);
-      }, 1000);
-  }, [seconds, timerInit]);
-  useEffect(() => {
-    timerInit === true &&
-      seconds === 0 &&
-      minutes > 0 &&
-      setTimeout(() => {
-        setSeconds(59);
-        setMinutes((prevM) => prevM - 1);
-      }, 1000);
-  }, [seconds, minutes, timerInit]);
-  useEffect(() => {
-    timerInit === true &&
-      seconds === 0 &&
-      minutes === 0 &&
-      setTimeout(() => {
-        clearTimeout();
-        navigate("/taskfailure");
-      });
-  });
-  console.log(category);
-  useEffect(() => {
-    setTaskIcon(checkCategory(category));
-  }, [category]);
+  TimerSeconds(timerInit, paused, setPaused, done, setDone);
+  console.log(gottenTask.category);
 
-  // const pause = () => {
-  //   pauseActive === false ? setPauseActive(true) : setPauseActive(false);
-  //   if (pauseActive === true) {
-  //     clearTimeout();
-  //   } else {
-  //   }
-  //   clearTimeout();
-  // };
-  // const forfeitTask = () => {
-  //   clearTimeout();
-  // };
-  // const imDone = () => {
-  //   navigate("/tasksuccess");
-  //   setTimeout(() => {
-  //     clearTimeout();
-  //   });
-  // };
+  const pause = () => {
+    paused === false ? setPaused(true) : setPaused(false);
+  };
+  const imDone = () => {
+    done === false ? setDone(true) : setPaused(false);
+  };
+
+  console.log(paused);
+  console.log(done);
   return (
-    console.log(gottenTask.category) && (
-      <TaskTimerRender
-        // onClick={imDone}
-        apple={apple}
-        minutes={minutes}
-        seconds={seconds}
-        icon={taskIcon.icon}
-        alt={taskIcon.alt}
-        image={canary}
-        gottenTaskName={gottenTask.taskName}
-      />
-    )
+    <TaskTimerRender
+      pauseClick={pause}
+      imDoneClick={imDone}
+      apple={apple}
+      icon={icon}
+      alt={alt}
+      image={canary}
+      gottenTaskName={gottenTask.taskName}
+    />
     // <div className="bodytimer">
     //   <button className="menu" type="menu">
     //     Menu

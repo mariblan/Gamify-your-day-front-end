@@ -12,9 +12,20 @@ const TaskProvider = (props) => {
     taskName: "",
     taskTime: {},
   });
+  const [minutes, setMinutes] = useState(0);
+  const [seconds, setSeconds] = useState(0);
 
   return (
-    <TaskContext.Provider value={{ gottenTask, setGottenTask }}>
+    <TaskContext.Provider
+      value={{
+        gottenTask,
+        setGottenTask,
+        minutes,
+        setMinutes,
+        seconds,
+        setSeconds,
+      }}
+    >
       {props.children}
     </TaskContext.Provider>
   );

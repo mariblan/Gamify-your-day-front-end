@@ -1,21 +1,24 @@
-import { useContext, useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useTask } from "./taskContext";
 import "./timer.css";
 import canaryhappy from "../../../images/canary-happy.png";
 import applecolor from "../../../images/apple-color.png";
 import appleBW from "../../../images/apple-bw.png";
 import checkicon from "../../../images/check-icon.png";
+import checkCategory from "../../../utils/categoryCheck";
 import { Link, Outlet } from "react-router-dom";
 
 export default function TaskSuccess() {
-  const { gottenTask, setGottenTask } = useTask();
-  const [gottenTaskString, setGottenTaskString] = useState(false);
-  const [gottenTaskObj, setGottenTaskObj] = useState(false);
-  useEffect(() => {
-    setGottenTaskString(JSON.stringify(gottenTask.taskName))
-    setGottenTaskObj(JSON.stringify(gottenTask, null, 10))
-    console.log(gottenTaskObj)
-  }, []);
+  const {
+    gottenTask: { taskName, category },
+    setGottenTask,
+    minutes,
+    setMinutes,
+    seconds,
+    setSeconds,
+  } = useTask();
+  const { icon, alt } = checkCategory(category);
+  useEffect(() => {}, []);
 
   return (
     <div className="bodytimer">
@@ -30,10 +33,15 @@ export default function TaskSuccess() {
               <img className="checkicon" src={checkicon} alt="" />
               <h2 id="congrat">Well done!</h2>
             </div>
-            <h6>You finished your task with 1:46 minutes remaining</h6>
+            <h6>
+              You finished your task with{" "}
+              {minutes < 10 ? `0${minutes}` : minutes}:
+              {seconds < 10 ? `0${seconds}` : seconds} minutes remaining
+            </h6>
           </div>
           <div className="task">
-            <pre className="">{gottenTaskString}</pre>
+            <img className="icon" src={icon} alt={alt} />
+            <h5 className="">{taskName}</h5>
           </div>
           <div className="difficulty">
             <h6 className="category">Difficulty</h6>

@@ -2,16 +2,21 @@ import { useTask } from "./taskContext";
 
 export default function TaskTimerRender({
   apple,
-  minutes,
-  seconds,
   icon,
   alt,
   image,
+  pauseClick,
+  imDoneClick,
 }) {
   const {
     gottenTask: { taskName },
     setGottenTask,
+    minutes,
+    setMinutes,
+    seconds,
+    setSeconds,
   } = useTask();
+
   return (
     <div className="bodytimer">
       <button className="menu" type="menu">
@@ -30,7 +35,7 @@ export default function TaskTimerRender({
               {seconds < 10 ? `0${seconds}` : seconds}
             </h2>
             <div className="tasks-options">
-              <button className="fadedBtn" type="button">
+              <button onClick={pauseClick} className="fadedBtn" type="button">
                 ||{" "}
               </button>
             </div>
@@ -59,7 +64,7 @@ export default function TaskTimerRender({
               </button>
             </div>
             <div>
-              <button className="mainBtn" type="button">
+              <button onClick={imDoneClick} className="mainBtn" type="button">
                 I'm done
               </button>
             </div>

@@ -3,9 +3,6 @@ import { getAllTasks, getUser } from "../../../fetchDB/fetchDB";
 import { useState, useEffect } from "react";
 // import { useTask } from "../timer/taskContext";
 
-// If tasklist is rendered in fulltasklist, no taskexpanded components are called
-// if tasklist is rendered in mytasklist, only one taskexpanded component can be called
-
 export default function TaskList({
   filterSelection,
   searchValue,
@@ -25,11 +22,12 @@ export default function TaskList({
     getUser("62b1b57082c8ed601e7094fc").then((user) => setUser(user));
     // Get all tasks in random order
     getAllTasks().then((allData) => {
-      setAllTasks(
-        allData.sort((a, b) => {
-          return Math.random() >= 0.5 ? 1 : -1;
-        })
-      );
+      // setAllTasks(
+      //   allData.sort((a, b) => {
+      //     return Math.random() >= 0.5 ? 1 : -1;
+      //   })
+      // );
+      setAllTasks(allData);
       setTasksFiltered(allData);
       //!!! If time allows, order the task categories by the reverse order in which they were
       // inputted in the array (last category selection shows first in list)
@@ -58,34 +56,34 @@ export default function TaskList({
   }, [allTasks, filterSelection]);
 
   // Sorts all tasks by favorite (based on user settings)
-  // useEffect(() => {
-  //   /*
-  //   For reference fav tasks on the user are:
-  //   Do the dishes id 62b1b21207f92f43f06dae3c
-  //   Send an email id 62b1b900b8fd5e697e14516a
-  //   Prepare a presentation id 62b1bd8eb8fd5e697e145170
-  //   Check in with your parent(s) id 62b1b6d9b8fd5e697e145165
-  //   Do a workout id 62b1c2033ee384607516f8f3
-  //   Prepare your luggage id 62b1c268b8fd5e697e145178
-  //   */
-  //   if (!sortByFavorite) setTasksFiltered(allTasks);
-  //   if (sortByFavorite) {
-  //     // All tasks have to be sorted between those that are favorite and those that are not.
-  //     //
-  //     const sortFav = [...allTasks].sort((a, b) =>
-  //       // if () {}
-  //       user.favoriteList.filter((task) => task._id === a.taskId)
-  //     );
-  //     setTasksFiltered(sortFav);
-  //   }
-  // }, [allTasks, user, sortByFavorite]);
+  useEffect(() => {
+    //   /*
+    //   For reference fav tasks on the user are:
+    //   Do the dishes id 62b1b21207f92f43f06dae3c
+    //   Send an email id 62b1b900b8fd5e697e14516a
+    //   Prepare a presentation id 62b1bd8eb8fd5e697e145170
+    //   Check in with your parent(s) id 62b1b6d9b8fd5e697e145165
+    //   Do a workout id 62b1c2033ee384607516f8f3
+    //   Prepare your luggage id 62b1c268b8fd5e697e145178
+    //   */
+    // console.log(sortByFavorite);
+    user && console.log(user.favoriteList);
+    if (!sortByFavorite) setTasksFiltered(allTasks);
+    if (sortByFavorite) {
+      const sortFav = [...allTasks].sort((a, b) =>
+        user.favoriteList._id === a.taskId ? -1 : 1
+      );
+      setTasksFiltered(sortFav);
+    }
+  }, [sortByFavorite]);
 
   // Sorts all tasks by completion (based on user's daily progress)
   useEffect(() => {
+    // console.log(sortByComplete);
     if (!sortByComplete) setTasksFiltered(allTasks);
     if (sortByComplete) {
       const sortComp = [...allTasks].sort((a, b) =>
-        user.todayCompleted.includes(a.taskId) ? -1 : 1
+        user.todayCompleted._id === a.taskId ? -1 : 1
       );
       setTasksFiltered(sortComp);
     }
@@ -97,6 +95,9 @@ export default function TaskList({
     allTasks &&
     user && (
       <div className="taskWrapper">
+        {console.log(user.todayCompleted)}
+        {/* {console.log(user.todaySuccess)} */}
+        {/* {console.log(user.todayFailed)} */}
         {tasksFiltered.map((task, index) => (
           <TaskMini key={index} task={task} user={user} />
         ))}

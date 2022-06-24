@@ -2,23 +2,49 @@ import checkCategory from "../../../utils/categoryCheck";
 import redX from "../../../images/failed-task-icon.png";
 import greenCheck from "../../../images/check-icon.png";
 import notFavTask from "../../../images/fav-icon.png";
-import favTask from "../../../images/fav-filled-icon.png";
 import renderApples from "../../../utils/generateApples";
 import { useState, useEffect } from "react";
 
 export default function TaskExpanded({
   task: { _id, taskName, taskTime, category },
-  user: { favoriteList },
+  user: { favoriteList, todaySuccess, todayFailed },
+  sendTaskSetting,
+  nextClicked,
 }) {
   const [sliderValue, setSliderValue] = useState(taskTime.minMedium);
   const [difficulty, setDifficulty] = useState("");
   const [reward, setReward] = useState(2);
-  const taskConcluded = false; //This goes to the persistence layer!
+  const [taskConcluded, setTaskConcluded] = useState(false); //This goes to the persistence layer!
 
   // Function that checks the category of a task and saves the relevant
   // icon and alt description for a mapping component call (to save from
   // having to import all icons in multiple files)
   const { icon, alt } = checkCategory(category);
+
+  //!!! Have this work. Check if the task is in the success or failed array and change state
+  // of variable to render checks/xs conditionally
+  useEffect(() => {
+    for (let success of todaySuccess) {
+      if (success._id === _id) return setTaskConcluded("success");
+    }
+
+    for (let failure of todayFailed) {
+      if (failure._id === _id) return setTaskConcluded("failed");
+    }
+  }, [todaySuccess, todayFailed]);
+
+  const checkCompletion = () => {
+    if (taskConcluded === "failed")
+      return <img src={redX} alt="An x icon" className="taskConcluded" />;
+    if (taskConcluded === "success")
+      return (
+        <img
+          src={greenCheck}
+          alt="A green check icon"
+          className="taskConcluded"
+        />
+      );
+  };
 
   // This useEffect checks the value of the slider and compares it to the
   // difficulty threshold, to change the difficulty text and reward
@@ -41,11 +67,24 @@ export default function TaskExpanded({
     setSliderValue(e.target.value);
   };
 
+  // Builds an object with all the states and data relevant to the task
+  const taskSetting = {
+    _id,
+    taskName,
+    sliderValue,
+    difficulty,
+    reward,
+    category,
+  };
+
+  // Sends the task settings tp the parent component
+  useEffect(() => {
+    sendTaskSetting(taskSetting);
+  }, [nextClicked]);
+
   return (
     <div className="taskExpanded">
-      {taskConcluded && (
-        <img src={redX} alt="An x icon" className="taskConcluded" />
-      )}
+      {checkCompletion()}
       <div className="taskMain">
         <img src={icon} alt={alt} />
         <div className="titleFavoriteWrapper">

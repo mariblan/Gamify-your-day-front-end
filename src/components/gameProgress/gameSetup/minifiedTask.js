@@ -1,14 +1,17 @@
 import checkCategory from "../../../utils/categoryCheck";
 import notFavIcon from "../../../images/fav-icon.png";
+import redX from "../../../images/failed-task-icon.png";
+import greenCheck from "../../../images/check-icon.png";
 import { loadFavorites, toggleFavorites } from "../../../utils/displayFavorite";
-import completedIcon from "../../../utils/markCompleted";
 import { useState, useEffect, useRef } from "react";
+import selectTask from "../../../utils/selectTask";
 import { addFavorite, removeFavorite } from "../../../fetchDB/fetchDB";
 
 export default function TaskMini({
+  task,
   task: { _id, taskName, category },
   user,
-  user: { favoriteList, todaySuccess, todayFailed },
+  user: { favoriteList, todayList, todaySuccess, todayFailed },
 }) {
   //??? Same component is being called in different components, and not all of them pass
   // the same props. However, if a prop is undefined, the whole thing breaks. How to go around?
@@ -17,12 +20,9 @@ export default function TaskMini({
   const [favorite, setFavorite] = useState(notFavIcon);
   const [spreadFavTasks, setSpreadFavTasks] = useState([...favoriteList]);
   const [changeUserFavs, setChangeUserFavs] = useState(false);
+  const [taskConcluded, setTaskConcluded] = useState(false);
+  const [taskSelected, setTaskSelected] = useState("taskMini");
 
-  //!!! Since MyTaskList component will need this too, probably pass this into an util file
-  // This onClick function will check whether the icon is the filled or empty heart.
-  // It will change to the other icon on click, and make changeUserFavs state
-  // to true or false, which will trigger db querying to update user infos
-  // in the db
   // const toggleFavorite = () => {
   // This function checks whether a task id is present in the user's favorite array. If not,
   // the task is added to the array and the icon changes to match. If it is, the id is removed
@@ -32,33 +32,62 @@ export default function TaskMini({
   // setFavorite((prev) => (prev === favIcon ? notFavIcon : favIcon));
   // };
 
-  // This useEffect checks the user's favorite tasks and see if it matches
-  // with the id of this task. If it does, the correct icon renders
+  useEffect(() => {
+    setSpreadFavTasks([...favoriteList]);
+  }, [user.favoriteList]);
+
+  // Checks whether the task is present in the today's selection list. If it is, it loads with the
+  // correct class
+  useEffect(() => {
+    todayList.forEach((task) => {
+      if (task._id === _id) {
+        minifiedTask.current.className = "taskMiniSelected";
+      }
+    });
+  }, [minifiedTask]);
+
+  // Checks the success and failure arrays from the user and sets the trigger to render the check marks
+  useEffect(() => {
+    for (let success of todaySuccess) {
+      if (success._id === _id) setTaskConcluded("success");
+    }
+
+    for (let failure of todayFailed) {
+      if (failure._id === _id) setTaskConcluded("failed");
+    }
+  }, [todaySuccess, todayFailed]);
+
+  // Checks the state of the task and if it was succeeded or failed, it renders the adequate mark
+  const checkCompletion = () => {
+    if (taskConcluded === "failed") {
+      return <img src={redX} alt="An x icon" className="taskConcluded" />;
+    }
+    if (taskConcluded === "success") {
+      return (
+        <img
+          src={greenCheck}
+          alt="A green check icon"
+          className="taskConcluded"
+        />
+      );
+    }
+  };
+
   useEffect(() => {
     setFavorite(loadFavorites(_id, spreadFavTasks));
-  }, []);
-
-  //??? This useEffect is meant to add or remove objectIds from the user's
-  // favorite tasks in the db. However it also runs upon mount, meaning it
-  // would remove all tasks in the db. How to get around it?
-  // useEffect(() => {
-  //   if (changeUserFavs) addFavorite("62b1b57082c8ed601e7094fc", _id);
-  //   // setFavorite(spreadFavTasks.includes(taskId) ? favIcon : notFavIcon);
-  // }, [changeUserFavs]);
-
-  // upon mount and when a task gets added to the success or failure arrays, the classname of the
-  // parent container has to add "successTask" or "failedTask" so it can be sorted by classname.
-  // useEffect(() => {}, [todaySuccess, todayFailed]);
+  }, [spreadFavTasks]);
 
   return (
-    <div className="taskMini" ref={minifiedTask}>
-      {console.log(spreadFavTasks)}
-      {/* {console.log(_id)} */}
-      {/* {favoriteList.forEach((ea) => console.log(ea._id, ea.taskName))} */}
-      {/* {completedIcon(_id, todaySuccess, todayFailed)} */}
+    <div
+      className="taskMini"
+      ref={minifiedTask}
+      onClick={(e) => selectTask(e, todayList)}
+    >
+      {checkCompletion()}
       <img src={icon} alt={alt} />
       <h3>{taskName}</h3>
       <img
+        name="favIcon"
         src={favorite}
         alt="A heart favorite icon"
         className="favIcon"

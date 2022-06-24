@@ -8,13 +8,19 @@ import { useEffect, useState } from "react";
 
 export default function MyTaskList() {
   const [user, setUser] = useState([]);
+  const [nextClicked, setNextClicked] = useState(false);
 
   useEffect(() => {
     getUser("62b1b57082c8ed601e7094fc").then((userData) => {
-      // setDisplayedTasks(userData);
       setUser(userData);
     });
   }, []);
+
+  // Sets the trigger for the values of each task in the today
+  // to be stored and be passable to the task randomizer
+  const giveSignal = () => {
+    setNextClicked(true);
+  };
 
   return (
     <>
@@ -27,7 +33,7 @@ export default function MyTaskList() {
         <h1 className="title">Today's task list</h1>
       </div>
       <div className="fixedTaskWrapper">
-        <MyList />
+        <MyList next={nextClicked} />
       </div>
       <footer>
         <div className="dailyPet">
@@ -38,9 +44,7 @@ export default function MyTaskList() {
               <img src={reload} alt="A reload icon" />
             </div>
           </div>
-          <div className="appleWrapper">
-            {renderApples(pets[1].hungerlevel, "appleIcon")}
-          </div>
+          <div className="appleWrapper">{renderApples("appleIcon", 1, 4)}</div>
         </div>
         <div className="navWrapper">
           <button type="button" className="fadedBtn">
@@ -49,8 +53,9 @@ export default function MyTaskList() {
           {/* <button type="button" className="fadedBtn">
             Custom tasks
           </button> */}
-          <button type="button" className="mainBtn">
+          <button type="button" className="mainBtn" onClick={giveSignal}>
             <Link to="/petselection">Pick pet</Link>
+            {/* Pick pet */}
           </button>
         </div>
         <Outlet />

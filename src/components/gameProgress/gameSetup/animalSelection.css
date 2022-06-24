@@ -127,9 +127,31 @@
 }
 .petbtn {
   width: 50%;
-  background-color: transparent;
-  border: none;
+  background-color: rgba(255, 255, 255, 0.3);
+  border: 1px solid #e9c77c8c;
+  border-radius: 15px;
+  margin-bottom: 2%;
 }
+.petbtn:last-child {
+  margin-bottom: 0%;
+}
+.petbtnactive {
+  width: 50%;
+  background-color: rgba(255, 255, 255, 0.3);
+  border: 1px solid #816425;
+  border-radius: 15px;
+  margin-bottom: 2%;
+}
+/* .taskMiniSelected {
+  position: relative;
+  background-color: rgba(255, 255, 255, 0.6);
+  border-radius: 15px;
+  width: 80%;
+  margin: 0 auto 1.5rem;
+  display: flex;
+  align-items: center;
+  border: 1px solid #816425;
+} */
 #tortoisebtn {
   width: 7rem;
 }
@@ -146,8 +168,8 @@
   box-shadow: -1px 3px 4px rgba(0, 0, 0, 0.3);
 }
 
-.petbtn:active {
+/* .petbtn:active {
   transform: translate(2px, 2px);
   border-radius: 10px;
   box-shadow: inset 2px 3px 4px rgba(0, 0, 0, 0.3);
-}
+} */

@@ -27,7 +27,7 @@ export default function GetTask() {
   } = useTask();
 
   const navigate = useNavigate();
-  user && console.log(user);
+  //user && console.log(user);
   function getTask() {
     const index = Math.floor(Math.random() * todaysList.length);
     //return arraytasks[index];

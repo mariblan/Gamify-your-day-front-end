@@ -172,10 +172,17 @@ Same for divs fixed at the bottom: How to have the
 }
 
 .taskExpanded {
-  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+/* .taskExpanded img {
+  padding: 10%;
+} */
+
+.taskExpanded h2 {
+  width: 90%;
 }
 
 .taskConcluded {
@@ -244,7 +251,19 @@ input[type="range"]::-moz-range-thumb {
   align-items: center;
 }
 
-.taskMini h3 {
+.taskMiniSelected {
+  position: relative;
+  background-color: rgba(255, 255, 255, 0.6);
+  border-radius: 15px;
+  width: 80%;
+  margin: 0 auto 1.5rem;
+  display: flex;
+  align-items: center;
+  border: 1px solid #816425;
+}
+
+.taskMini h3,
+.taskMiniSelected h3 {
   text-overflow: ellipsis;
   width: 65%;
   overflow: hidden;
@@ -259,7 +278,8 @@ input[type="range"]::-moz-range-thumb {
   padding: 10px;
 }
 
-.taskMini img {
+.taskMini img,
+.taskMiniSelected img {
   max-height: 10vh;
   padding: 10px;
 }

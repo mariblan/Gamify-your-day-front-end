@@ -15,13 +15,19 @@ export default function TaskList({
   const [allTasks, setAllTasks] = useState(false);
   // const [user, setUser] = useState(null);
   const [tasksFiltered, setTasksFiltered] = useState([]);
-  const { user } = useTask();
+  const {
+    user,
+    user: { favoriteList },
+  } = useTask();
 
+  // This is how to get around derived state, just for reference if that's what I happen to be doing...
   // const favoriteTasks = user.find((user) => {
   //   return user.id === selectedUserId;
   // });
 
   // Get all tasks (server route '/') from the DB, make the order random and store in state
+  // Here because this is the only place in the app that displays all tasks, so storing in context
+  // is unnecessary data being distributed to the whole of the app.
   useEffect(() => {
     //   // Get all tasks in random order
     getAllTasks().then((allData) => {
@@ -58,6 +64,10 @@ export default function TaskList({
     }
   }, [allTasks, filterSelection]);
 
+  // useEffect(() => {
+  //   favoriteList && console.log(favoriteList);
+  // }, [favoriteList]);
+
   // Sorts all tasks by favorite (based on user settings)
   useEffect(() => {
     // console.log(sortByFavorite);
@@ -88,6 +98,8 @@ export default function TaskList({
     allTasks &&
     user && (
       <div className="taskWrapper">
+        {console.log("These are the favorites:")}
+        {console.log(favoriteList)}
         {/* {console.log(user.todayList)} */}
         {/* {console.log(user.todaySuccess)} */}
         {/* {console.log(user.todayFailed)} */}

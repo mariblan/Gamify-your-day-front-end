@@ -10,21 +10,17 @@ export default function GetTask() {
   const [clicked, setClicked] = useState(false);
   const [timerActive, setTimerActive] = useState(false);
   const {
-    user,
-    setUser,
+    selectedPet,
+    setSelectedPet,
+    userSettings,
     todaysList,
     setTodaysList,
-    userSettings,
     todaysCompleted,
     setTodaysCompleted,
     todaysFailed,
     setTodaysFailed,
     gottenTask,
     setGottenTask,
-    minutes,
-    setMinutes,
-    seconds,
-    setSeconds,
   } = useTask();
 
   const navigate = useNavigate();

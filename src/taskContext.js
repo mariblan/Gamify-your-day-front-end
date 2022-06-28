@@ -60,17 +60,18 @@ const TaskProvider = (props) => {
   }, []);
 
   const [favoriteList, setFavoriteList] = useState(false);
+
   useEffect(() => {
     user && setFavoriteList(user.favoriteList);
-    //console.log(todaysList);
-  }, [user, favoriteList]);
+    // console.log(favoriteList);
+  }, [user]);
 
   const [userSettings, setUserSettings] = useState([]);
 
   const [todaysList, setTodaysList] = useState([]);
   useEffect(() => {
     user && setTodaysList(user.todayList);
-    //console.log(todaysList);
+    // console.log(todaysList);
   }, [user, todaysList]);
 
   const [todaysCompleted, setTodaysCompleted] = useState([]);

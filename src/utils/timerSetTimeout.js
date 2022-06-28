@@ -6,6 +6,7 @@ function TimerSeconds(timerInit, paused, setPaused, done, setDone) {
   const {
     gottenTask,
     setGottenTask,
+    userSettings: { slidervalue, difficulty, reward },
     seconds,
     setSeconds,
     minutes,

@@ -9,7 +9,7 @@ export default function AnimalSelection(index, id) {
   const { pets, selectedPet, setSelectedPet, userSettings } = useTask();
   let animalContainer = useRef();
   const navigate = useNavigate();
-  const goToGame = () => setTimeout(navigate("../gamego"), 150);
+  const goToGame = () => setTimeout(navigate("../mytasks"), 150);
 
   const pickPetClick = ({ target, currentTarget }) => {
     //console.log(target.id);
@@ -30,12 +30,14 @@ export default function AnimalSelection(index, id) {
     selectedPet && console.log(currentTarget);
   };
 
+  const navigateToTasks = () => setTimeout(navigate("/alltasks"), 150);
+
   return (
     console.log(selectedPet) || (
       <>
         <div className="bodyselection">
-          <button className="menu" type="menu">
-            Menu
+          <button className="menu" type="menu" onClick={navigateToTasks}>
+            Tasks
           </button>
           <div className="animalselection">
             <div className="petselection" ref={animalContainer}>
@@ -76,7 +78,7 @@ export default function AnimalSelection(index, id) {
             </div>
           </div>
           <button className="confirmbtn" onClick={goToGame}>
-            Confirm
+            My task list
           </button>
         </div>
       </>

@@ -50,10 +50,34 @@ const removeFavorite = async (id, taskId) => {
   return updatedFavorite;
 };
 
-const addToProgress = async (id, userProgress) => {
+const addCompleted = async (id, taskId) => {
+  const updatedCompleted = await axios
+    .put(`${port}user/${id}/completed/${taskId}`)
+    .then(({ data }) => data.todayCompleted)
+    .catch((err) => console.error(`Error: ${err}`));
+  return updatedCompleted;
+};
+
+const addFailed = async (id, taskId) => {
+  const updatedFailed = await axios
+    .put(`${port}user/${id}/failed/${taskId}`)
+    .then(({ data }) => data.todayFailed)
+    .catch((err) => console.error(`Error: ${err}`));
+  return updatedFailed;
+};
+
+const addSuccess = async (id, taskId) => {
+  const updatedSuccess = await axios
+    .put(`${port}user/${id}/success/${taskId}`)
+    .then(({ data }) => data.todaySuccess)
+    .catch((err) => console.error(`Error: ${err}`));
+  return updatedSuccess;
+};
+
+const addToProgress = async (id, newUserProgress) => {
   const updatedProgress = await axios
-    .put(`${port}user/${id}/progress/${userProgress}`)
-    .then(({ data }) => data)
+    .put(`${port}user/${id}/${newUserProgress}`)
+    .then(({ data }) => data.progress)
     .catch((err) => console.error(`Error: ${err}`));
   return updatedProgress;
 };
@@ -65,5 +89,8 @@ export {
   removeFromToday,
   addFavorite,
   removeFavorite,
+  addCompleted,
+  addFailed,
+  addSuccess,
   addToProgress,
 };

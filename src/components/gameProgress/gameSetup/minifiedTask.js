@@ -2,10 +2,7 @@ import checkCategory from "../../../utils/categoryCheck";
 import notFavIcon from "../../../images/fav-icon.png";
 import redX from "../../../images/failed-task-icon.png";
 import greenCheck from "../../../images/check-icon.png";
-import SetFavorite, {
-  loadFavorites,
-  toggleFavorites,
-} from "../../../utils/displayFavorite";
+import { loadFavorites, toggleFavorites } from "../../../utils/displayFavorite";
 import { useState, useEffect, useRef } from "react";
 import selectTask from "../../../utils/selectTask";
 import {
@@ -23,12 +20,9 @@ export default function TaskMini({ task: { _id, taskName, category } }) {
   const { icon, alt } = checkCategory(category);
   const minifiedTask = useRef();
   const [favorite, setFavorite] = useState(notFavIcon);
-  // const [spreadFavTasks, setSpreadFavTasks] = useState([...user.favoriteList]);
-  const [changeUserFavs, setChangeUserFavs] = useState(false);
   const [taskConcluded, setTaskConcluded] = useState(false);
 
   useEffect(() => {
-    // setSpreadFavTasks([...user.favoriteList]);
     favoriteList && setFavorite(loadFavorites(_id, [...favoriteList]));
   }, [_id, favoriteList]);
 
@@ -76,10 +70,10 @@ export default function TaskMini({ task: { _id, taskName, category } }) {
     <div
       className="taskMini"
       ref={minifiedTask}
-      onClick={(e) => selectTask(e, user.todayList)}
+      onClick={(e) => selectTask(e, _id, user.todayList)}
     >
       {/* {console.log(user)} */}
-      {/* {console.log(todayList)} */}
+      {/* {console.log(user.todayList)} */}
       {/* {console.log("These are the favorites:")} */}
       {/* {console.log(user.favoriteList)} */}
       {checkCompletion()}

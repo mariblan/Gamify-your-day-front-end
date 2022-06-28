@@ -8,18 +8,37 @@ import failedicon from "../../../images/failed-task-icon.png";
 import checkCategory from "../../../utils/categoryCheck";
 import { useNavigate } from "react-router-dom";
 import renderApples from "../../../utils/generateApples";
+import { addFailed, addSuccess } from "../../../fetchDB/fetchDB";
 
 export default function TaskFailure() {
   const {
-    gottenTask: { taskName, category, sliderValue, difficulty, reward },
+    user,
+    setUser,
+    gottenTask: { taskId, taskName, category, sliderValue, difficulty, reward },
     setGottenTask,
     selectedPet,
     setSelectedPet,
     userProgress,
     setUserProgress,
+    todaysCompleted,
+    setTodaysCompleted,
+    todaysSuccess,
+    setTodaysSuccess,
+    todaysFailed,
+    setTodaysFailed,
   } = useTask();
   const { icon, alt } = checkCategory(category);
-  useEffect(() => {}, []);
+
+  addFailed(user._id, taskId).then((todaysSuccess) => {
+    setTodaysCompleted(todaysSuccess);
+    setTodaysSuccess(todaysSuccess);
+  });
+
+  addSuccess(user._id, taskId).then((todaysSuccess) => {
+    setTodaysFailed(todaysSuccess);
+    setTodaysSuccess(todaysSuccess);
+  });
+
   const navigate = useNavigate();
   return (
     <div className="bodytimer">

@@ -9,16 +9,10 @@ export default function TaskList({
   sortByFavorite,
   sortByComplete,
 }) {
-  // filter category will take the tasbDB mock and the filter name (if any) and return only objects
-  // that match the filtering
   // console.log(searchValue);
   const [allTasks, setAllTasks] = useState(false);
-  // const [user, setUser] = useState(null);
   const [tasksFiltered, setTasksFiltered] = useState([]);
-  const {
-    user,
-    user: { favoriteList },
-  } = useTask();
+  const { user } = useTask();
 
   // This is how to get around derived state, just for reference if that's what I happen to be doing...
   // const favoriteTasks = user.find((user) => {
@@ -29,20 +23,19 @@ export default function TaskList({
   // Here because this is the only place in the app that displays all tasks, so storing in context
   // is unnecessary data being distributed to the whole of the app.
   useEffect(() => {
-    //   // Get all tasks in random order
+    // Get all tasks in random order
     getAllTasks().then((allData) => {
-      //     // setAllTasks(
-      //     //   allData.sort((a, b) => {
-      //     //     return Math.random() >= 0.5 ? 1 : -1;
-      //     //   })
-      //     // );
-      setAllTasks(allData);
+      setAllTasks(
+        allData.sort((a, b) => {
+          return Math.random() >= 0.5 ? 1 : -1;
+        })
+      );
       setTasksFiltered(allData);
-      //     //!!! If time allows, order the task categories by the reverse order in which they were
-      //     // inputted in the array (last category selection shows first in list)
-      //     // setTasksFiltered(allData.sort((a,b) => {
-      //     //   const filterSelectionOrder = filterSelection
-      //     // }));
+      //!!! If time allows, order the task categories by the reverse order in which they were
+      // inputted in the array (last category selection shows first in list)
+      // setTasksFiltered(allData.sort((a,b) => {
+      //   const filterSelectionOrder = filterSelection
+      // }));
     });
   }, []);
 
@@ -63,10 +56,6 @@ export default function TaskList({
       setTasksFiltered(allTasks);
     }
   }, [allTasks, filterSelection]);
-
-  // useEffect(() => {
-  //   favoriteList && console.log(favoriteList);
-  // }, [favoriteList]);
 
   // Sorts all tasks by favorite (based on user settings)
   useEffect(() => {
@@ -98,8 +87,8 @@ export default function TaskList({
     allTasks &&
     user && (
       <div className="taskWrapper">
-        {console.log("These are the favorites:")}
-        {console.log(favoriteList)}
+        {/* {console.log("These are the favorites:")} */}
+        {/* {console.log(favoriteList)} */}
         {/* {console.log(user.todayList)} */}
         {/* {console.log(user.todaySuccess)} */}
         {/* {console.log(user.todayFailed)} */}

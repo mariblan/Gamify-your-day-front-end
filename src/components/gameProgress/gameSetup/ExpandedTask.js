@@ -1,13 +1,15 @@
 import checkCategory from "../../../utils/categoryCheck";
 import redX from "../../../images/failed-task-icon.png";
 import greenCheck from "../../../images/check-icon.png";
-import notFavTask from "../../../images/fav-icon.png";
+import notFavIcon from "../../../images/fav-icon.png";
+import { loadFavorites, toggleFavorites } from "../../../utils/displayFavorite";
 import renderApples from "../../../utils/generateApples";
 import { useState, useEffect } from "react";
+import { useTask } from "../../../taskContext";
 
 export default function TaskExpanded({
   task: { _id, taskName, taskTime, category },
-  user: { favoriteList, todaySuccess, todayFailed },
+  user: { todaySuccess, todayFailed },
   sendTaskSetting,
   nextClicked,
 }) {
@@ -15,11 +17,12 @@ export default function TaskExpanded({
   const [difficulty, setDifficulty] = useState("");
   const [reward, setReward] = useState(2);
   const [taskConcluded, setTaskConcluded] = useState(false); //This goes to the persistence layer!
-
+  const [favorite, setFavorite] = useState(notFavIcon);
   // Function that checks the category of a task and saves the relevant
   // icon and alt description for a mapping component call (to save from
   // having to import all icons in multiple files)
   const { icon, alt } = checkCategory(category);
+  const { user, favoriteList, setFavoriteList } = useTask();
 
   //!!! Have this work. Check if the task is in the success or failed array and change state
   // of variable to render checks/xs conditionally
@@ -45,6 +48,10 @@ export default function TaskExpanded({
         />
       );
   };
+
+  useEffect(() => {
+    favoriteList && setFavorite(loadFavorites(_id, [...favoriteList]));
+  }, [_id, favoriteList]);
 
   // This useEffect checks the value of the slider and compares it to the
   // difficulty threshold, to change the difficulty text and reward
@@ -88,7 +95,17 @@ export default function TaskExpanded({
       <div className="taskMain">
         <img src={icon} alt={alt} />
         <div className="titleFavoriteWrapper">
-          <img src={notFavTask} alt="favorite" className="favIcon" />
+          <img
+            src={favorite}
+            alt="favorite"
+            className="favIcon"
+            onClick={() =>
+              toggleFavorites(_id, user, favoriteList).then((data) => {
+                setFavoriteList(data[0]);
+                setFavorite(data[1]);
+              })
+            }
+          />
           <h2>{taskName}</h2>
         </div>
       </div>
@@ -115,10 +132,6 @@ export default function TaskExpanded({
       <div className="rewardDisplay">
         <div className="rewardText">Reward: </div>
         <div className="rewardWrapper">
-          {/* renderApples is a placeholder function that needs rework once a 
-          proper persistence layer is added to the project and renders the right
-          amount of apples based on user progress.
-           */}
           {renderApples("appleExpanded", reward)}
         </div>
       </div>

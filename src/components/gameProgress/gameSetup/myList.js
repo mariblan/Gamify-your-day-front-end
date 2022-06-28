@@ -34,7 +34,7 @@ export default function MyList({ next }) {
   return (
     todaysList && (
       <div className="taskWrapper">
-        {console.log(userSettings)}
+        {/* {console.log(userSettings)} */}
         {todaysList.map((task, index) => (
           <TaskExpanded
             key={index}

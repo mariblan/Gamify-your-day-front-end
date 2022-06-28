@@ -48,11 +48,16 @@ export default function TaskTimer() {
   const pause = () => {
     paused === false ? setPaused(true) : setPaused(false);
   };
-  const imDone = () => {
+  const imDone = async () => {
     done === false ? setDone(true) : setPaused(false);
-    setUserProgress((prevProgres) => prevProgres + reward);
-    addToProgress(user._id, userProgress);
-    navigate("/tasksuccess");
+    // setUserProgress((prevProgres) => prevProgres + reward);
+    if (userProgress >= 0) {
+      const newUserProgress = userProgress + reward;
+      await addToProgress(user._id, newUserProgress).then((progress) => {
+        setUserProgress(progress);
+        navigate("/tasksuccess");
+      });
+    }
   };
 
   const options = {

@@ -84,12 +84,17 @@ const TaskProvider = (props) => {
     user && setTodaysFailed(user.todayFailed);
     //console.log(todaysFailed);
   }, [user, todaysFailed]);
+  const [todaysSuccess, setTodaysSuccess] = useState([]);
+  useEffect(() => {
+    user && setTodaysFailed(user.todayFailed);
+    //console.log(todaysFailed);
+  }, [user, todaysFailed]);
 
   const [userProgress, setUserProgress] = useState(0);
+
   useEffect(() => {
     user && setUserProgress(user.progress);
-    console.log(user.progress);
-  }, [user, userProgress]);
+  }, [user]);
 
   const [gottenTask, setGottenTask] = useState({
     category: "",

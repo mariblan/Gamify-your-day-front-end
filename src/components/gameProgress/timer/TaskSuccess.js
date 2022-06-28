@@ -8,33 +8,42 @@ import checkicon from "../../../images/check-icon.png";
 import checkCategory from "../../../utils/categoryCheck";
 import { useNavigate } from "react-router-dom";
 import renderApples from "../../../utils/generateApples";
+import { addSuccess } from "../../../fetchDB/fetchDB";
 export default function TaskSuccess() {
   const {
     user,
     setUser,
-    gottenTask: { taskName, category, sliderValue, difficulty, reward },
+    gottenTask: { taskId, taskName, category, sliderValue, difficulty, reward },
     setGottenTask,
     selectedPet,
     setSelectedPet,
     userProgress,
     setUserProgress,
+    todaysCompleted,
+    setTodaysCompleted,
+    todaysSuccess,
+    setTodaysSuccess,
     minutes,
     setMinutes,
     seconds,
     setSeconds,
   } = useTask();
+
   const { icon, alt } = checkCategory(category);
   useEffect(() => {}, []);
   const navigate = useNavigate();
-  useEffect(() => {
-    setUserProgress((prevProgres) => prevProgres + reward);
-  }, [userProgress]);
+  addSuccess(user._id, taskId).then((todaysuccess) => {
+    setTodaysCompleted(todaysuccess);
+    setTodaysSuccess(todaysuccess);
+  });
+
+  const navigateToList = () => setTimeout(navigate("/mytasks"), 150);
 
   return (
     console.log(userProgress) || (
       <div className="bodytimer">
-        <button className="menu" type="menu">
-          Menu
+        <button className="menu" type="menu" onClick={navigateToList}>
+          My list
         </button>
         <div className="success">
           <img

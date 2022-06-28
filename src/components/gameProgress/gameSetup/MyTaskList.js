@@ -11,7 +11,7 @@ export default function MyTaskList() {
   // const [user, setUser] = useState([]);
   const [nextClicked, setNextClicked] = useState(false);
   const {
-    user,
+    userProgress,
     selectedPet,
     selectedPet: { name, mood, hungerlevel },
   } = useTask();
@@ -25,11 +25,15 @@ export default function MyTaskList() {
   // to be stored and be passable to the task randomizer
   const giveSignal = async () => {
     await setNextClicked(true);
-    setTimeout(() => navigate("../petselection"), 150);
+    setTimeout(() => navigate("../gamego"), 150);
   };
 
   const navigateToTasks = () => {
     setTimeout(() => navigate("../alltasks"), 150);
+  };
+
+  const navigateToPets = () => {
+    setTimeout(() => navigate("../petselection"), 150);
   };
 
   return (
@@ -56,11 +60,11 @@ export default function MyTaskList() {
               className="animal"
             />
             <div className="changeAnimal">
-              <img src={reload} alt="A reload icon" />
+              <img src={reload} alt="A reload icon" onClick={navigateToPets} />
             </div>
           </div>
           <div className="appleWrapper">
-            {renderApples("appleIcon", 1, hungerlevel)}
+            {renderApples("appleIcon", userProgress, hungerlevel)}
           </div>
         </div>
         <div className="navWrapper">
@@ -71,7 +75,7 @@ export default function MyTaskList() {
             Custom tasks
           </button> */}
           <button type="button" className="mainBtn" onClick={giveSignal}>
-            Pick pet
+            Start!
           </button>
         </div>
       </footer>

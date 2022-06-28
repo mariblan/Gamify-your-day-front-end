@@ -7,7 +7,11 @@ export default function renderApples(className, progress, maxcap) {
     apples.push(
       <img src={appleColor} alt="A red apple" className={className} />
     );
+    if (maxcap && apples.length === maxcap) {
+      return apples;
+    }
   }
+
   if (maxcap) {
     for (let i = progress; i < maxcap; i++) {
       apples.push(

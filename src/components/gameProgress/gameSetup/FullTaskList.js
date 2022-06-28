@@ -67,7 +67,7 @@ export default function AllTasks() {
   };
 
   const goToMyList = () => {
-    setTimeout(() => navigate("../mytasks"), 150);
+    setTimeout(() => navigate("../petselection"), 150);
   };
 
   // // handleChange and handleSubmit are meant for the search function (WIP)
@@ -83,10 +83,6 @@ export default function AllTasks() {
   //   // ??? of a db query as the body a response. Ask to confirm.
   // };
 
-  // I have an onclick function that requires the target and also variables
-  // in a higher scope. the function is really big and I wanted to transfer
-  // it to a different file. how do I pass the event AND the variables as
-  // arguments?
   return (
     <>
       <nav className="headerWrapper">
@@ -174,7 +170,7 @@ export default function AllTasks() {
           Completed
         </button>
         <button type="button" className="mainBtn" onClick={goToMyList}>
-          My list
+          Select pet
         </button>
       </div>
       <div className="hidden">

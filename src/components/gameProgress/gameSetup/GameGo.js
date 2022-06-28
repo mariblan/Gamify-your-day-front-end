@@ -25,7 +25,7 @@ export default function GameGo(props) {
         className="menu"
         type="menu"
       >
-        Menu
+        My list
       </button>
       <div className="gamegobody">
         {props.clicked === false ? (

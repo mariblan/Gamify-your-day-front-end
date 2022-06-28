@@ -21,7 +21,7 @@ const getUser = async (id) => {
 const addToToday = async (id, taskId) => {
   const updatedFavorite = await axios
     .put(`${port}user/${id}/todayList/${taskId}`)
-    .then(({ data }) => data)
+    .then(({ data }) => data.todayList)
     .catch((err) => console.error(`Error: ${err}`));
   return updatedFavorite;
 };
@@ -29,7 +29,7 @@ const addToToday = async (id, taskId) => {
 const removeFromToday = async (id, taskId) => {
   const updatedFavorite = await axios
     .put(`${port}user/${id}/todayList/${taskId}`)
-    .then(({ data }) => data)
+    .then(({ data }) => data.todayList)
     .catch((err) => console.error(`Error: ${err}`));
   return updatedFavorite;
 };
@@ -37,7 +37,7 @@ const removeFromToday = async (id, taskId) => {
 const addFavorite = async (id, taskId) => {
   const updatedFavorite = await axios
     .put(`${port}user/${id}/favorites/${taskId}`)
-    .then(({ data }) => data)
+    .then(({ data }) => data.favoriteList)
     .catch((err) => console.error(`Error: ${err}`));
   return updatedFavorite;
 };
@@ -45,7 +45,7 @@ const addFavorite = async (id, taskId) => {
 const removeFavorite = async (id, taskId) => {
   const updatedFavorite = await axios
     .delete(`${port}user/${id}/favorites/${taskId}`)
-    .then(({ data }) => data)
+    .then(({ data }) => data.favoriteList)
     .catch((err) => console.error(`Error: ${err}`));
   return updatedFavorite;
 };

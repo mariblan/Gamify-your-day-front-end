@@ -1,7 +1,7 @@
 // This function changes class name of the mini div if in the
 // full task list screen, or unmounts the div and mounts an expanded div in it's place
 const selectTask = (e, userDailyList) => {
-  console.log(userDailyList);
+  // console.log(userDailyList);
   if (e.target.nodeName === "DIV") {
     // console.log(userDailyList);
     return e.target.className === "taskMini"
@@ -15,9 +15,9 @@ const selectTask = (e, userDailyList) => {
   }
 
   // Upon click, the task object needs to be pushed to the db
-  if (userDailyList) {
-    console.log(userDailyList);
-  }
+  // if (userDailyList) {
+  //   console.log(userDailyList);
+  // }
 };
 
 export default selectTask;

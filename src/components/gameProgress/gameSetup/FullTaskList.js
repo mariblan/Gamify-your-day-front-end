@@ -2,7 +2,7 @@ import "./taskList.css";
 import TaskList from "./taskList";
 import searchIcon from "../../../images/search-icon.png";
 import noFilter from "../../../images/nofilter-icon.png";
-import { Link, Outlet } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { categories } from "../../../utils/categoryCheck";
 import { useState, useEffect, useRef } from "react";
 import changeClassName from "../../../utils/filterBtnsClassChange";
@@ -16,6 +16,7 @@ export default function AllTasks() {
   const [sortByComplete, setSortByComplete] = useState(false);
   const noFilterBtn = useRef();
   let filterContainer = useRef();
+  const navigate = useNavigate();
 
   // This checks if there's any filter applied to the task list. If there's no filter selected,
   // the no filter button gets automatically selected again
@@ -63,6 +64,10 @@ export default function AllTasks() {
   const checkFavorite = () => {
     if (sortByComplete) setSortByComplete(false);
     !sortByFavorite ? setSortByFavorite(true) : setSortByFavorite(false);
+  };
+
+  const goToMyList = () => {
+    setTimeout(() => navigate("../mytasks"), 150);
   };
 
   // // handleChange and handleSubmit are meant for the search function (WIP)
@@ -168,8 +173,8 @@ export default function AllTasks() {
         <button type="button" className="fadedBtn" onClick={checkComplete}>
           Completed
         </button>
-        <button type="button" className="mainBtn">
-          <Link to="/mytasks">My list</Link>
+        <button type="button" className="mainBtn" onClick={goToMyList}>
+          My list
         </button>
       </div>
       <div className="hidden">
@@ -177,7 +182,6 @@ export default function AllTasks() {
           My list
         </button>
       </div>
-      <Outlet />
     </>
   );
 }

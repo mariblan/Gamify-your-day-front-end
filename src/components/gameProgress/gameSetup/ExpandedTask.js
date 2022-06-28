@@ -79,7 +79,7 @@ export default function TaskExpanded({
 
   // Sends the task settings tp the parent component
   useEffect(() => {
-    sendTaskSetting(taskSetting);
+    if (taskConcluded === false) sendTaskSetting(taskSetting);
   }, [nextClicked]);
 
   return (
@@ -119,7 +119,7 @@ export default function TaskExpanded({
           proper persistence layer is added to the project and renders the right
           amount of apples based on user progress.
            */}
-          {renderApples(reward, "appleExpanded")}
+          {renderApples("appleExpanded", reward)}
         </div>
       </div>
     </div>

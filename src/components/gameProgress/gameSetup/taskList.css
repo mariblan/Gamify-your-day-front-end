@@ -356,6 +356,14 @@ input[type="range"]::-moz-range-thumb {
   margin-left: 1vw;
 }
 
+.appleExpanded {
+  padding: 50%;
+}
+
+.appleWrapper {
+  max-width: 30%;
+}
+
 .navWrapper {
   background-color: #f7fae6;
   min-height: 15vh;

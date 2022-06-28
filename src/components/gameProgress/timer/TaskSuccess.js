@@ -26,10 +26,12 @@ export default function TaskSuccess() {
   const { icon, alt } = checkCategory(category);
   useEffect(() => {}, []);
   const navigate = useNavigate();
-  console.log(userProgress);
+  useEffect(() => {
+    setUserProgress((prevProgres) => prevProgres + reward);
+  }, [userProgress]);
 
   return (
-    console.log(userProgress) && (
+    console.log(userProgress) || (
       <div className="bodytimer">
         <button className="menu" type="menu">
           Menu

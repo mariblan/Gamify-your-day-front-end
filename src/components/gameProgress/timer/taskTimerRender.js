@@ -16,17 +16,16 @@ export default function TaskTimerRender({
     selectedPet,
     setSelectedPet,
     userSettings,
+    userProgress,
+    setUserProgress,
     minutes,
     setMinutes,
     seconds,
     setSeconds,
   } = useTask();
   const navigate = useNavigate();
-  console.log(minutes, seconds);
-  console.log(taskName);
-  console.log(sliderValue);
-  console.log(difficulty);
   console.log(reward);
+  console.log(userProgress);
   return (
     <div className="bodytimer">
       <button

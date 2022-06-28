@@ -53,7 +53,6 @@ function TimerSeconds(timerInit, paused, setPaused, done, setDone) {
       done === true &&
       setTimeout(() => {
         clearTimeout();
-        navigate("/tasksuccess");
       });
   });
   useEffect(() => {
@@ -67,15 +66,5 @@ function TimerSeconds(timerInit, paused, setPaused, done, setDone) {
       });
   }, [seconds, minutes, timerInit, paused, done]);
 }
-
-// const forfeitTask = () => {
-//   clearTimeout();
-// };
-// const imDone = () => {
-//   navigate("/tasksuccess");
-//   setTimeout(() => {
-//     clearTimeout();
-//   });
-// };
 
 export { TimerSeconds };

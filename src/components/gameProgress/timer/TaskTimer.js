@@ -8,12 +8,17 @@ import { useNavigate } from "react-router-dom";
 import { useTask } from "../../../taskContext";
 import { TimerSeconds } from "../../../utils/timerSetTimeout";
 import { confirm } from "react-confirm-box";
+import { addToProgress } from "../../../fetchDB/fetchDB";
 
 export default function TaskTimer() {
   const [timerInit, setTimerInit] = useState(false);
   const {
     selectedPet,
     setSelectedPet,
+    user,
+    setUser,
+    userProgress,
+    setUserProgress,
     userSettings,
     gottenTask: { taskName, category, sliderValue, difficulty, reward },
     setGottenTask,
@@ -38,14 +43,18 @@ export default function TaskTimer() {
   }, [setMinutes, setSeconds]);
 
   TimerSeconds(timerInit, paused, setPaused, done, setDone);
-  console.log(category);
-  console.log(minutes, seconds);
+  //console.log(category);
+  //console.log(minutes, seconds);
   const pause = () => {
     paused === false ? setPaused(true) : setPaused(false);
   };
   const imDone = () => {
     done === false ? setDone(true) : setPaused(false);
+    setUserProgress((prevProgres) => prevProgres + reward);
+    addToProgress(user._id, userProgress);
+    navigate("/tasksuccess");
   };
+
   const options = {
     render: (message, onConfirm, onCancel) => {
       return (
@@ -89,19 +98,20 @@ export default function TaskTimer() {
     console.log("You click No!");
   };
 
-  console.log(paused);
-  console.log(done);
-  console.log(selectedPet);
-
+  //console.log(paused);
+  //console.log(done);
+  //console.log(selectedPet);
   return (
-    <TaskTimerRender
-      pauseClick={pause}
-      imDoneClick={imDone}
-      forfeitTask={forfeitTask}
-      apple={apple}
-      icon={icon}
-      alt={alt}
-      image={selectedPet.mood[0]}
-    />
+    console.log(userProgress) || (
+      <TaskTimerRender
+        pauseClick={pause}
+        imDoneClick={imDone}
+        forfeitTask={forfeitTask}
+        apple={apple}
+        icon={icon}
+        alt={alt}
+        image={selectedPet.mood[0]}
+      />
+    )
   );
 }

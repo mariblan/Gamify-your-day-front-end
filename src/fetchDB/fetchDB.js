@@ -50,6 +50,14 @@ const removeFavorite = async (id, taskId) => {
   return updatedFavorite;
 };
 
+const addToProgress = async (id, userProgress) => {
+  const updatedProgress = await axios
+    .put(`${port}user/${id}/progress/${userProgress}`)
+    .then(({ data }) => data)
+    .catch((err) => console.error(`Error: ${err}`));
+  return updatedProgress;
+};
+
 export {
   getAllTasks,
   getUser,
@@ -57,4 +65,5 @@ export {
   removeFromToday,
   addFavorite,
   removeFavorite,
+  addToProgress,
 };

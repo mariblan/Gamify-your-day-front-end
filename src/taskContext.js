@@ -54,7 +54,6 @@ const TaskProvider = (props) => {
   const [selectedPet, setSelectedPet] = useState(false);
 
   const [user, setUser] = useState(false);
-
   useEffect(() => {
     getUser("62b1b57082c8ed601e7094fc").then((user) => setUser(user));
   }, []);
@@ -89,7 +88,7 @@ const TaskProvider = (props) => {
   const [userProgress, setUserProgress] = useState(0);
   useEffect(() => {
     user && setUserProgress(user.progress);
-    //console.log(todaysList);
+    console.log(user.progress);
   }, [user, userProgress]);
 
   const [gottenTask, setGottenTask] = useState({
@@ -110,6 +109,8 @@ const TaskProvider = (props) => {
         setSelectedPet,
         user,
         setUser,
+        userProgress,
+        setUserProgress,
         favoriteList,
         setFavoriteList,
         todaysList,

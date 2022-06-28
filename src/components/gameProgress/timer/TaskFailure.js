@@ -6,23 +6,38 @@ import applebw from "../../../images/apple-bw.png";
 import canarysad from "../../../images/canary-sad.png";
 import failedicon from "../../../images/failed-task-icon.png";
 import checkCategory from "../../../utils/categoryCheck";
-import { Link, Outlet } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import renderApples from "../../../utils/generateApples";
 
 export default function TaskFailure() {
   const {
-    gottenTask: { taskName, category },
+    gottenTask: { taskName, category, sliderValue, difficulty, reward },
     setGottenTask,
+    selectedPet,
+    setSelectedPet,
+    userProgress,
+    setUserProgress,
   } = useTask();
   const { icon, alt } = checkCategory(category);
   useEffect(() => {}, []);
-
+  const navigate = useNavigate();
   return (
     <div className="bodytimer">
-      <button className="menu" type="menu">
-        Menu
+      <button
+        onClick={() => {
+          setTimeout(navigate("/mytasks"), 150);
+        }}
+        className="menu"
+        type="menu"
+      >
+        My list
       </button>
       <div className="success">
-        <img className="chicken" src={canarysad} alt="canary-normal" />
+        <img
+          className="chicken"
+          src={selectedPet.mood[2]}
+          alt="canary-normal"
+        />
         <div className="boxsuccess">
           <div className="congrats">
             <div className="title-congrats">
@@ -37,34 +52,36 @@ export default function TaskFailure() {
           </div>
           <div className="difficulty">
             <h6 className="category">Difficulty</h6>
-            <h6 className="info">Medium</h6>
+            <h6 className="info">{difficulty}</h6>
           </div>
           <div className="time">
             <h6 className="category">Total time</h6>
-            <h6 className="info">10 min</h6>
+            <h6 className="info">
+              {sliderValue} {sliderValue === 1 ? "minutes" : "minute"}
+            </h6>
           </div>
           <div className="reward">
             <h6>Reward</h6>
-            <img className="apple" src={applecolor} alt="apple1" />
-            <img className="apple" src={applecolor} alt="apple2" />
+            {renderApples("apple", reward)}
           </div>
           <div>
-            <button className="next">
-              <Link to="/gamego">Next</Link>
+            <button
+              onClick={() => {
+                setTimeout(navigate("/gamego"), 150);
+              }}
+              className="next"
+            >
+              Next
             </button>
           </div>
         </div>
         <div className="boxpet">
-          <img className="pet" src={canarysad} alt="" />
+          <img className="pet" src={selectedPet.mood[2]} alt="" />
           <div className="petfood">
-            <img className="applereward" src={applecolor} alt="" />
-            <img className="applereward" src={applecolor} alt="" />
-            <img className="applereward" src={applebw} alt="" />
-            <img className="applereward" src={applebw} alt="" />
+            {renderApples("applereward", userProgress, selectedPet.hungerlevel)}
           </div>
         </div>
       </div>
-      <Outlet />
     </div>
   );
 }

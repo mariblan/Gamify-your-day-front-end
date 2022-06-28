@@ -1,11 +1,28 @@
 import "./animalSelection.css";
+import { useRef } from "react";
 import renderApples from "../../../utils/generateApples";
-import { Link, Outlet } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useTask } from "../../../taskContext";
 
 export default function AnimalSelectionRender({ onClick, onChange, selected }) {
   const { pets, selectedPet, setSelectedPet } = useTask();
   // console.log(pets);
+  let animalContainer = useRef();
+  const navigate = useNavigate();
+
+  const goToGame = () => setTimeout(navigate("../gamego"), 150);
+
+  const selectPet = ({ currentTarget }) => {
+    for (let i = 1; i < animalContainer.current.children.length; i++) {
+      if (currentTarget !== animalContainer.current.children[i])
+        animalContainer.current.children[i].className = "petbtn";
+    }
+    currentTarget.className === "petbtn"
+      ? (currentTarget.className = "petbtnactive")
+      : (currentTarget.className = "petbtn");
+    //Get pet here
+  };
+
   return (
     <>
       <div className="bodyselection">
@@ -13,15 +30,15 @@ export default function AnimalSelectionRender({ onClick, onChange, selected }) {
           Menu
         </button>
         <div className="animalselection">
-          <div className="petselection">
+          <div className="petselection" ref={animalContainer}>
             <h6 className="pets">Pets</h6>
             {pets.map((pet, index) => {
               return (
                 <button
-                  onClick={onClick}
-                  selected={selected.includes(item.id)}
+                  onClick={selectPet}
+                  selected={pet.petId}
                   key={pet.id}
-                  className={petClicked ? "petbtnactive" : "petbtn"}
+                  className={`petbtn`}
                   name={pet.name}
                   id={pet.btn}
                 >
@@ -36,30 +53,6 @@ export default function AnimalSelectionRender({ onClick, onChange, selected }) {
                 </button>
               );
             })}
-            {/* <button className="petbtn" id="tortoisebtn">
-              <img
-                className="petselect"
-                id={pets[0].name}
-                src={pets[0].mood[0]}
-                alt={pets[0].name}
-              />
-            </button>
-            <button className="petbtn" id="canarybtn">
-              <img
-                className="petselect"
-                id={pets[1].name}
-                src={pets[1].mood[0]}
-                alt={pets[1].name}
-              />
-            </button>
-            <button className="petbtn" id="hamsterbtn">
-              <img
-                className="petselect"
-                id={pets[2].name}
-                src={pets[2].mood[0]}
-                alt={pets[2].name}
-              />
-            </button> */}
           </div>
           <div className="hungerlevel">
             <h6 className="class">Hunger level</h6>
@@ -74,11 +67,10 @@ export default function AnimalSelectionRender({ onClick, onChange, selected }) {
             </div>
           </div>
         </div>
-        <button className="confirmbtn">
-          <Link to="/gamego">Confirm</Link>
+        <button className="confirmbtn" onClick={goToGame}>
+          Confirm
         </button>
       </div>
-      <Outlet />
     </>
   );
 }

@@ -6,14 +6,18 @@ import applecolor from "../../../images/apple-color.png";
 import appleBW from "../../../images/apple-bw.png";
 import checkicon from "../../../images/check-icon.png";
 import checkCategory from "../../../utils/categoryCheck";
-import { Link, Outlet } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
+import renderApples from "../../../utils/generateApples";
 export default function TaskSuccess() {
   const {
     user,
     setUser,
-    gottenTask: { taskName, category },
+    gottenTask: { taskName, category, sliderValue, difficulty, reward },
     setGottenTask,
+    selectedPet,
+    setSelectedPet,
+    userProgress,
+    setUserProgress,
     minutes,
     setMinutes,
     seconds,
@@ -21,60 +25,74 @@ export default function TaskSuccess() {
   } = useTask();
   const { icon, alt } = checkCategory(category);
   useEffect(() => {}, []);
+  const navigate = useNavigate();
+  console.log(userProgress);
 
   return (
-    <div className="bodytimer">
-      <button className="menu" type="menu">
-        Menu
-      </button>
-      <div className="success">
-        <img className="chicken" src={canaryhappy} alt="canary-normal" />
-        <div className="boxsuccess">
-          <div className="congrats">
-            <div className="title-congrats">
-              <img className="checkicon" src={checkicon} alt="" />
-              <h2 id="congrat">Well done!</h2>
+    console.log(userProgress) && (
+      <div className="bodytimer">
+        <button className="menu" type="menu">
+          Menu
+        </button>
+        <div className="success">
+          <img
+            className="chicken"
+            src={selectedPet.mood[1]}
+            alt="canary-normal"
+          />
+          <div className="boxsuccess">
+            <div className="congrats">
+              <div className="title-congrats">
+                <img className="checkicon" src={checkicon} alt="" />
+                <h2 id="congrat">Well done!</h2>
+              </div>
+              <h6>
+                You finished your task with{" "}
+                {minutes === 0 ? "" : `${minutes} minutes and `}
+                {seconds < 10 ? `0${seconds}` : seconds} seconds remaining
+              </h6>
             </div>
-            <h6>
-              You finished your task with{" "}
-              {minutes === 0 ? "" : `${minutes} minutes and`}
-              {seconds < 10 ? `0${seconds}` : seconds} seconds remaining
-            </h6>
+            <div className="task">
+              <img className="icon" src={icon} alt={alt} />
+              <h5 className="">{taskName}</h5>
+            </div>
+            <div className="difficulty">
+              <h6 className="category">Difficulty</h6>
+              <h6 className="info">{difficulty}</h6>
+            </div>
+            <div className="time">
+              <h6 className="category">Total time</h6>
+              <h6 className="info">
+                {sliderValue} {sliderValue === 1 ? "minute" : "minutes"}
+              </h6>
+            </div>
+            <div className="reward">
+              <h6>Reward</h6>
+              {renderApples("apple", reward)}
+            </div>
+            <div>
+              <button
+                onClick={() => {
+                  setTimeout(navigate("/gamego"), 150);
+                }}
+                className="next"
+              >
+                Next
+              </button>
+            </div>
           </div>
-          <div className="task">
-            <img className="icon" src={icon} alt={alt} />
-            <h5 className="">{taskName}</h5>
-          </div>
-          <div className="difficulty">
-            <h6 className="category">Difficulty</h6>
-            <h6 className="info">Medium</h6>
-          </div>
-          <div className="time">
-            <h6 className="category">Total time</h6>
-            <h6 className="info">10 min</h6>
-          </div>
-          <div className="reward">
-            <h6>Reward</h6>
-            <img className="apple" src={applecolor} alt="apple1" />
-            <img className="apple" src={applecolor} alt="apple2" />
-          </div>
-          <div>
-            <button className="next">
-              <Link to="/gamego">Next</Link>
-            </button>
-          </div>
-        </div>
-        <div className="boxpet">
-          <img className="pet" src={canaryhappy} alt="" />
-          <div className="petfood">
-            <img className="applereward" src={applecolor} alt="" />
-            <img className="applereward" src={applecolor} alt="" />
-            <img className="applereward" src={appleBW} alt="" />
-            <img className="applereward" src={appleBW} alt="" />
+          <div className="boxpet">
+            <img className="pet" src={selectedPet.mood[1]} alt="" />
+            <div className="petfood">
+              {renderApples(
+                "applereward",
+                userProgress,
+                selectedPet.hungerlevel
+              )}
+            </div>
           </div>
         </div>
       </div>
-      <Outlet />
-    </div>
+    )
   );
 }

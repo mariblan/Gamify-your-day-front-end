@@ -1,7 +1,7 @@
 import TaskMini from "./minifiedTask";
 import { getAllTasks, getUser } from "../../../fetchDB/fetchDB";
 import { useState, useEffect } from "react";
-// import { useTask } from "../timer/taskContext";
+import { useTask } from "../../../taskContext.js";
 
 export default function TaskList({
   filterSelection,
@@ -13,27 +13,30 @@ export default function TaskList({
   // that match the filtering
   // console.log(searchValue);
   const [allTasks, setAllTasks] = useState(false);
-  const [user, setUser] = useState(null);
+  // const [user, setUser] = useState(null);
   const [tasksFiltered, setTasksFiltered] = useState([]);
+  const { user } = useTask();
+
+  // const favoriteTasks = user.find((user) => {
+  //   return user.id === selectedUserId;
+  // });
 
   // Get all tasks (server route '/') from the DB, make the order random and store in state
   useEffect(() => {
-    // Getting the user is here for the time being, but it's likely best to save it in context/redux
-    getUser("62b1b57082c8ed601e7094fc").then((user) => setUser(user));
-    // Get all tasks in random order
+    //   // Get all tasks in random order
     getAllTasks().then((allData) => {
-      // setAllTasks(
-      //   allData.sort((a, b) => {
-      //     return Math.random() >= 0.5 ? 1 : -1;
-      //   })
-      // );
+      //     // setAllTasks(
+      //     //   allData.sort((a, b) => {
+      //     //     return Math.random() >= 0.5 ? 1 : -1;
+      //     //   })
+      //     // );
       setAllTasks(allData);
       setTasksFiltered(allData);
-      //!!! If time allows, order the task categories by the reverse order in which they were
-      // inputted in the array (last category selection shows first in list)
-      // setTasksFiltered(allData.sort((a,b) => {
-      //   const filterSelectionOrder = filterSelection
-      // }));
+      //     //!!! If time allows, order the task categories by the reverse order in which they were
+      //     // inputted in the array (last category selection shows first in list)
+      //     // setTasksFiltered(allData.sort((a,b) => {
+      //     //   const filterSelectionOrder = filterSelection
+      //     // }));
     });
   }, []);
 
@@ -57,17 +60,7 @@ export default function TaskList({
 
   // Sorts all tasks by favorite (based on user settings)
   useEffect(() => {
-    //   /*
-    //   For reference fav tasks on the user are:
-    //   Do the dishes id 62b1b21207f92f43f06dae3c
-    //   Send an email id 62b1b900b8fd5e697e14516a
-    //   Prepare a presentation id 62b1bd8eb8fd5e697e145170
-    //   Check in with your parent(s) id 62b1b6d9b8fd5e697e145165
-    //   Do a workout id 62b1c2033ee384607516f8f3
-    //   Prepare your luggage id 62b1c268b8fd5e697e145178
-    //   */
     // console.log(sortByFavorite);
-    user && console.log(user.favoriteList);
     if (!sortByFavorite) setTasksFiltered(allTasks);
     if (sortByFavorite) {
       const sortFav = [...allTasks].sort((a, b) =>
@@ -95,7 +88,7 @@ export default function TaskList({
     allTasks &&
     user && (
       <div className="taskWrapper">
-        {console.log(user.todayCompleted)}
+        {/* {console.log(user.todayList)} */}
         {/* {console.log(user.todaySuccess)} */}
         {/* {console.log(user.todayFailed)} */}
         {tasksFiltered.map((task, index) => (

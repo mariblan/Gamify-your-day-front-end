@@ -12,7 +12,10 @@ import { confirm } from "react-confirm-box";
 export default function TaskTimer() {
   const [timerInit, setTimerInit] = useState(false);
   const {
-    gottenTask,
+    selectedPet,
+    setSelectedPet,
+    userSettings,
+    gottenTask: { taskName, category, sliderValue, difficulty, reward },
     setGottenTask,
     minutes,
     setMinutes,
@@ -21,21 +24,21 @@ export default function TaskTimer() {
   } = useTask();
   const [paused, setPaused] = useState(false);
   const [done, setDone] = useState(false);
-  const { icon, alt } = checkCategory(gottenTask.category);
+  const { icon, alt } = checkCategory(category);
 
   //To use in setTimeout to navigate to the failure and succes screens.
   const navigate = useNavigate();
   //Sets the countdown for the timer and prints it in the screen.
   useEffect(() => {
-    setMinutes(0);
-    setSeconds(33);
+    setMinutes(sliderValue);
+    setSeconds(0);
     setTimeout(() => {
       setTimerInit(true);
     }, 1000);
   }, [setMinutes, setSeconds]);
 
   TimerSeconds(timerInit, paused, setPaused, done, setDone);
-  console.log(gottenTask.category);
+  console.log(category);
   console.log(minutes, seconds);
   const pause = () => {
     paused === false ? setPaused(true) : setPaused(false);
@@ -88,6 +91,7 @@ export default function TaskTimer() {
 
   console.log(paused);
   console.log(done);
+  console.log(selectedPet);
   return (
     <TaskTimerRender
       pauseClick={pause}
@@ -96,8 +100,7 @@ export default function TaskTimer() {
       apple={apple}
       icon={icon}
       alt={alt}
-      image={canary}
-      gottenTaskName={gottenTask.taskName}
+      image={selectedPet.mood[0]}
     />
     // <div className="bodytimer">
     //   <button className="menu" type="menu">

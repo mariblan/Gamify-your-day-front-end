@@ -14,6 +14,7 @@ export default function GetTask() {
     setUser,
     todaysList,
     setTodaysList,
+    userSettings,
     todaysCompleted,
     setTodaysCompleted,
     todaysFailed,
@@ -29,15 +30,16 @@ export default function GetTask() {
   const navigate = useNavigate();
   //user && console.log(user);
   function getTask() {
-    const index = Math.floor(Math.random() * todaysList.length);
+    const index = Math.floor(Math.random() * userSettings.length);
     //return arraytasks[index];
     //console.log(taskDB[index].taskName);
     //setInterval();
     setClicked(true);
     setCounter(5);
     countDown();
-    console.log(todaysList[index]);
-    setGottenTask(todaysList[index]);
+    // console.log(todaysList[index]);
+    console.log(userSettings);
+    setGottenTask(userSettings[index]);
   }
 
   const countDown = () => {
@@ -58,6 +60,7 @@ export default function GetTask() {
 
   return (
     <div>
+      {console.log(userSettings)}
       <GameGo
         onClick={getTask}
         counter={counter}

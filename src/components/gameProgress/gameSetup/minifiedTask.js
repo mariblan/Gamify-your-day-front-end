@@ -2,26 +2,33 @@ import checkCategory from "../../../utils/categoryCheck";
 import notFavIcon from "../../../images/fav-icon.png";
 import redX from "../../../images/failed-task-icon.png";
 import greenCheck from "../../../images/check-icon.png";
-import { loadFavorites, toggleFavorites } from "../../../utils/displayFavorite";
+import {
+  loadFavorites /*toggleFavorites*/,
+} from "../../../utils/displayFavorite";
 import { useState, useEffect, useRef } from "react";
 import selectTask from "../../../utils/selectTask";
-import { addFavorite, removeFavorite } from "../../../fetchDB/fetchDB";
+import {
+  addToToday,
+  removeFromToday,
+  addFavorite,
+  removeFavorite,
+} from "../../../fetchDB/fetchDB";
+import { useTask } from "../../../taskContext";
 
 export default function TaskMini({
   task,
   task: { _id, taskName, category },
-  user,
-  user: { favoriteList, todayList, todaySuccess, todayFailed },
+  // user: { favoriteList, todayList, todaySuccess, todayFailed },
 }) {
   //??? Same component is being called in different components, and not all of them pass
   // the same props. However, if a prop is undefined, the whole thing breaks. How to go around?
+  const { user } = useTask();
   const { icon, alt } = checkCategory(category);
   const minifiedTask = useRef();
   const [favorite, setFavorite] = useState(notFavIcon);
-  const [spreadFavTasks, setSpreadFavTasks] = useState([...favoriteList]);
+  const [spreadFavTasks, setSpreadFavTasks] = useState([...user.favoriteList]);
   const [changeUserFavs, setChangeUserFavs] = useState(false);
   const [taskConcluded, setTaskConcluded] = useState(false);
-  const [taskSelected, setTaskSelected] = useState("taskMini");
 
   // const toggleFavorite = () => {
   // This function checks whether a task id is present in the user's favorite array. If not,
@@ -33,13 +40,13 @@ export default function TaskMini({
   // };
 
   useEffect(() => {
-    setSpreadFavTasks([...favoriteList]);
+    setSpreadFavTasks([...user.favoriteList]);
   }, [user.favoriteList]);
 
   // Checks whether the task is present in the today's selection list. If it is, it loads with the
   // correct class
   useEffect(() => {
-    todayList.forEach((task) => {
+    user.todayList.forEach((task) => {
       if (task._id === _id) {
         minifiedTask.current.className = "taskMiniSelected";
       }
@@ -48,14 +55,16 @@ export default function TaskMini({
 
   // Checks the success and failure arrays from the user and sets the trigger to render the check marks
   useEffect(() => {
-    for (let success of todaySuccess) {
+    for (let success of user.todaySuccess) {
+      // console.log(success);
       if (success._id === _id) setTaskConcluded("success");
     }
 
-    for (let failure of todayFailed) {
+    for (let failure of user.todayFailed) {
+      // console.log(failure);
       if (failure._id === _id) setTaskConcluded("failed");
     }
-  }, [todaySuccess, todayFailed]);
+  }, [user.todaySuccess, user.todayFailed]);
 
   // Checks the state of the task and if it was succeeded or failed, it renders the adequate mark
   const checkCompletion = () => {
@@ -81,8 +90,12 @@ export default function TaskMini({
     <div
       className="taskMini"
       ref={minifiedTask}
-      onClick={(e) => selectTask(e, todayList)}
+      onClick={(e) => selectTask(e, user.todayList)}
     >
+      {/* {console.log(user)} */}
+      {/* {console.log(todayList)} */}
+      {/* {console.log("These are the favorites:")} */}
+      {/* {console.log(user.favoriteList)} */}
       {checkCompletion()}
       <img src={icon} alt={alt} />
       <h3>{taskName}</h3>
@@ -91,7 +104,7 @@ export default function TaskMini({
         src={favorite}
         alt="A heart favorite icon"
         className="favIcon"
-        onClick={() => toggleFavorites(_id, [...favoriteList])}
+        // onClick={() => toggleFavorites(_id, [...user.favoriteList])}
       />
     </div>
   );

@@ -18,9 +18,25 @@ const getUser = async (id) => {
   return oneUser;
 };
 
+const addToToday = async (id, taskId) => {
+  const updatedFavorite = await axios
+    .put(`${port}user/${id}/todayList/${taskId}`)
+    .then(({ data }) => data)
+    .catch((err) => console.error(`Error: ${err}`));
+  return updatedFavorite;
+};
+
+const removeFromToday = async (id, taskId) => {
+  const updatedFavorite = await axios
+    .put(`${port}user/${id}/todayList/${taskId}`)
+    .then(({ data }) => data)
+    .catch((err) => console.error(`Error: ${err}`));
+  return updatedFavorite;
+};
+
 const addFavorite = async (id, taskId) => {
   const updatedFavorite = await axios
-    .put(`${port}user/${id}/${taskId}`)
+    .put(`${port}user/${id}/favorites/${taskId}`)
     .then(({ data }) => data)
     .catch((err) => console.error(`Error: ${err}`));
   return updatedFavorite;
@@ -28,10 +44,17 @@ const addFavorite = async (id, taskId) => {
 
 const removeFavorite = async (id, taskId) => {
   const updatedFavorite = await axios
-    .delete(`${port}user/${id}/${taskId}`)
+    .delete(`${port}user/${id}/favorites/${taskId}`)
     .then(({ data }) => data)
     .catch((err) => console.error(`Error: ${err}`));
   return updatedFavorite;
 };
 
-export { getAllTasks, getUser, addFavorite, removeFavorite };
+export {
+  getAllTasks,
+  getUser,
+  addToToday,
+  removeFromToday,
+  addFavorite,
+  removeFavorite,
+};

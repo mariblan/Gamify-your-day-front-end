@@ -1,5 +1,6 @@
 import { useTask } from "../../../taskContext";
-
+import { useNavigate } from "react-router-dom";
+import renderApples from "../../../utils/generateApples";
 export default function TaskTimerRender({
   apple,
   icon,
@@ -10,18 +11,32 @@ export default function TaskTimerRender({
   forfeitTask,
 }) {
   const {
-    gottenTask: { taskName },
+    gottenTask: { taskName, sliderValue, difficulty, reward },
     setGottenTask,
+    selectedPet,
+    setSelectedPet,
+    userSettings,
     minutes,
     setMinutes,
     seconds,
     setSeconds,
   } = useTask();
+  const navigate = useNavigate();
   console.log(minutes, seconds);
+  console.log(taskName);
+  console.log(sliderValue);
+  console.log(difficulty);
+  console.log(reward);
   return (
     <div className="bodytimer">
-      <button className="menu" type="menu">
-        Menu
+      <button
+        onClick={() => {
+          setTimeout(navigate("/mytasks"), 150);
+        }}
+        className="menu"
+        type="menu"
+      >
+        My list
       </button>
       <div className="chicken-bg">
         <img
@@ -47,16 +62,17 @@ export default function TaskTimerRender({
           </div>
           <div className="difficulty">
             <h6 className="category">Difficulty</h6>
-            <h6 className="info">Medium</h6>
+            <h6 className="info">{difficulty}</h6>
           </div>
           <div className="time">
             <h6 className="category">Total time</h6>
-            <h6 className="info">10 min</h6>
+            <h6 className="info">
+              {sliderValue} {sliderValue === 1 ? "minutes" : "minute"}
+            </h6>
           </div>
           <div className="reward">
             <h6>Reward</h6>
-            <img className="apple" src={apple} alt="apple1" />
-            <img className="apple" src={apple} alt="apple2" />
+            {renderApples("apple", reward)}
           </div>
           <div className="tasks-options">
             <div>

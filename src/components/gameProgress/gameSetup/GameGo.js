@@ -1,24 +1,30 @@
 import appleColor from "../../../images/apple-color.png";
 import "./gameGo.css";
 import { useTask } from "../../../taskContext";
+import { useNavigate } from "react-router-dom";
 
 export default function GameGo(props) {
   console.log(props);
   const {
-    user,
-    setUser,
+    selectedPet,
+    setSelectedPet,
+    userSettings,
     todaysList,
     setTodaysList,
     gottenTask,
     setGottenTask,
-    seconds,
-    setSeconds,
-    minutes,
-    setMinutes,
   } = useTask();
+  console.log(selectedPet);
+  const navigate = useNavigate();
   return (
     <div>
-      <button className="menu" type="menu">
+      <button
+        onClick={() => {
+          setTimeout(navigate("/mytasks"), 150);
+        }}
+        className="menu"
+        type="menu"
+      >
         Menu
       </button>
       <div className="gamegobody">
@@ -27,7 +33,6 @@ export default function GameGo(props) {
         ) : (
           <h2 className="title">Your next task is...</h2>
         )}
-        {/* How to change the pivot point of the image spinning?*/}
         <button
           id="a"
           className="applebtn"

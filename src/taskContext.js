@@ -50,30 +50,46 @@ const TaskProvider = (props) => {
         "After so many apples, the hamster seems to be finally full as it snoozes peacefully. It wasn't easy but you did it!",
     },
   ];
-  const [selectedPet, setSelectedPet] = useState({});
-  const [user, setUser] = useState({});
+
+  const [selectedPet, setSelectedPet] = useState(false);
+
+  const [user, setUser] = useState(false);
+
   useEffect(() => {
-    // Getting the user is here for the time being, but it's likely best to save it in context/redux
     getUser("62b1b57082c8ed601e7094fc").then((user) => setUser(user));
-  }, [setUser]);
+  }, []);
+
+  const [favoriteList, setFavoriteList] = useState(false);
+  useEffect(() => {
+    user && setFavoriteList(user.favoriteList);
+    //console.log(todaysList);
+  }, [user, favoriteList]);
+
+  const [userSettings, setUserSettings] = useState([]);
 
   const [todaysList, setTodaysList] = useState([]);
   useEffect(() => {
     user && setTodaysList(user.todayList);
     //console.log(todaysList);
-  }, [user, todaysList, setTodaysList]);
+  }, [user, todaysList]);
 
   const [todaysCompleted, setTodaysCompleted] = useState([]);
   useEffect(() => {
     user && setTodaysCompleted(user.todayCompleted);
     //console.log(todaysCompleted);
-  }, [user, todaysCompleted, setTodaysCompleted]);
+  }, [user, todaysCompleted]);
 
   const [todaysFailed, setTodaysFailed] = useState([]);
   useEffect(() => {
     user && setTodaysFailed(user.todayFailed);
     //console.log(todaysFailed);
-  }, [user, todaysFailed, setTodaysFailed]);
+  }, [user, todaysFailed]);
+
+  const [userProgress, setUserProgress] = useState(0);
+  useEffect(() => {
+    user && setUserProgress(user.progress);
+    //console.log(todaysList);
+  }, [user, userProgress]);
 
   const [gottenTask, setGottenTask] = useState({
     category: "",
@@ -93,8 +109,12 @@ const TaskProvider = (props) => {
         setSelectedPet,
         user,
         setUser,
+        favoriteList,
+        setFavoriteList,
         todaysList,
         setTodaysList,
+        userSettings,
+        setUserSettings,
         todaysCompleted,
         setTodaysCompleted,
         todaysFailed,

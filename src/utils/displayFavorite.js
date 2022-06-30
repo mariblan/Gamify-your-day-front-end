@@ -19,9 +19,9 @@ export const toggleFavorites = async (taskId, user, favoriteList) => {
   return [newFavs, notFavIcon];
 };
 
-export const loadFavorites = (taskId, userFavorites) => {
-  for (let eachFavorite of userFavorites) {
-    if (eachFavorite._id === taskId) return favIcon;
+export const loadFavorites = (taskId, todaysList) => {
+  for (let eachTask of todaysList) {
+    if (eachTask._id === taskId) return favIcon;
   }
   return notFavIcon;
 };

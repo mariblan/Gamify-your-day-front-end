@@ -1,26 +1,34 @@
 import { addToToday, removeFromToday } from "../fetchDB/fetchDB";
 
-// This function changes class name of the mini div if in the
-// full task list screen, or unmounts the div and mounts an expanded div in it's place
-const selectTask = async (e, taskId, userDailyList) => {
-  // console.log(userDailyList);
+export const selectTask = async (e, taskId, userId, todaysList) => {
+  if (e.target.name === "favIcon") return [];
   if (e.target.name !== "favIcon") {
-    e.currentTarget.className === "taskMini"
-      ? (e.currentTarget.className = "taskMiniSelected")
-      : (e.currentTarget.className = "taskMini");
-  }
-
-  for (let task of userDailyList) {
-    if (task._id === taskId) {
-      return await removeFromToday();
+    for (let task of todaysList) {
+      // console.log(`This is the id of the iterated task:`);
+      // console.log(task._id);
+      // console.log(`This is the id of the selected task:`);
+      // console.log(taskId);
+      if (task._id === taskId) {
+        console.log(`I exist in today's list! My ID is ${task._id}`);
+        const newToday = await removeFromToday(userId, taskId).then(
+          (updatedToday) => updatedToday
+        );
+        console.log(newToday);
+        return [newToday, "taskMini"];
+      }
     }
-    return addToToday();
+    // console.log(`I don't exist in today's list yet! My ID is ${task._id}`);
+    const newToday = await addToToday(userId, taskId).then(
+      (updatedToday) => updatedToday
+    );
+    console.log(newToday);
+    return [newToday, "taskMiniSelected"];
   }
-
-  // Upon click, the task object needs to be pushed to the db
-  // if (userDailyList) {
-  //   console.log(userDailyList);
-  // }
 };
 
-export default selectTask;
+export const loadSelected = (taskId, userFavorites) => {
+  for (let eachFavorite of userFavorites) {
+    if (eachFavorite._id === taskId) return "taskMiniSelected";
+  }
+  return "taskMini";
+};

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useTask } from "../../../taskContext";
 import "./timer.css";
 import applecolor from "../../../images/apple-color.png";
@@ -14,6 +14,8 @@ export default function TaskFailure() {
   const {
     user,
     setUser,
+    userSettings,
+    gottenTask,
     gottenTask: { taskId, taskName, category, sliderValue, difficulty, reward },
     setGottenTask,
     selectedPet,
@@ -29,78 +31,106 @@ export default function TaskFailure() {
   } = useTask();
   const { icon, alt } = checkCategory(category);
 
-  addFailed(user._id, taskId).then((todaysSuccess) => {
-    setTodaysCompleted(todaysSuccess);
-    setTodaysSuccess(todaysSuccess);
-  });
+  const [failedTask, setFailedTask] = useState(false);
 
-  addSuccess(user._id, taskId).then((todaysSuccess) => {
-    setTodaysFailed(todaysSuccess);
-    setTodaysSuccess(todaysSuccess);
-  });
+  useEffect(() => {
+    setGottenTask((prev) => ({ ...prev, reward: 0 }));
+    setFailedTask(gottenTask);
+  }, []);
 
+  const failedAndCompleted = async (userId, failedSettings) => {
+    const taskFailed = await addFailed(userId, failedSettings).then(
+      (updatedFailed) => updatedFailed
+    );
+    console.log(taskFailed);
+    return setTodaysFailed(taskFailed);
+  };
+
+  useEffect(() => {
+    failedTask && failedAndCompleted(user._id, failedTask);
+  }, [failedTask]);
+
+  const takeAwayCompleted = (arr) => {
+    const newUserSettings = [];
+    arr.filter((task) => {
+      if (task.taskId === failedTask.taskId) {
+        newUserSettings.push(task);
+      }
+      return arr;
+    });
+    console.log(newUserSettings);
+  };
+
+  takeAwayCompleted(userSettings);
+  console.log(userSettings);
   const navigate = useNavigate();
   return (
-    <div className="bodytimer">
-      <button
-        onClick={() => {
-          setTimeout(navigate("/mytasks"), 150);
-        }}
-        className="menu"
-        type="menu"
-      >
-        My list
-      </button>
-      <div className="success">
-        <img
-          className="chicken"
-          src={selectedPet.mood[2]}
-          alt="canary-normal"
-        />
-        <div className="boxsuccess">
-          <div className="congrats">
-            <div className="title-congrats">
-              <img className="checkicon" src={failedicon} alt="" />
-              <h2 id="congrat">Time's up!</h2>
+    console.log(userSettings) || (
+      <div className="bodytimer">
+        <button
+          onClick={() => {
+            setTimeout(navigate("/mytasks"), 150);
+          }}
+          className="menu"
+          type="menu"
+        >
+          My list
+        </button>
+        <div className="success">
+          <img
+            className="chicken"
+            src={selectedPet.mood[2]}
+            alt="canary-normal"
+          />
+          <div className="boxsuccess">
+            <div className="congrats">
+              <div className="title-congrats">
+                <img className="checkicon" src={failedicon} alt="" />
+                <h2 id="congrat">Time's up!</h2>
+              </div>
+              <h6>It seems you needed more time...</h6>
             </div>
-            <h6>It seems you needed more time...</h6>
+            <div className="task">
+              <img className="icon" src={icon} alt={alt} />
+              <h5 className="">{taskName}</h5>
+            </div>
+            <div className="difficulty">
+              <h6 className="category">Difficulty</h6>
+              <h6 className="info">{difficulty}</h6>
+            </div>
+            <div className="time">
+              <h6 className="category">Total time</h6>
+              <h6 className="info">
+                {sliderValue} {sliderValue === 1 ? "minutes" : "minute"}
+              </h6>
+            </div>
+            <div className="reward">
+              <h6>Reward</h6>
+              {renderApples("apple", reward)}
+            </div>
+            <div>
+              <button
+                onClick={() => {
+                  setTimeout(navigate("../gamego"), 150);
+                }}
+                className="next"
+              >
+                Next
+              </button>
+            </div>
           </div>
-          <div className="task">
-            <img className="icon" src={icon} alt={alt} />
-            <h5 className="">{taskName}</h5>
-          </div>
-          <div className="difficulty">
-            <h6 className="category">Difficulty</h6>
-            <h6 className="info">{difficulty}</h6>
-          </div>
-          <div className="time">
-            <h6 className="category">Total time</h6>
-            <h6 className="info">
-              {sliderValue} {sliderValue === 1 ? "minutes" : "minute"}
-            </h6>
-          </div>
-          <div className="reward">
-            <h6>Reward</h6>
-            {renderApples("apple", reward)}
-          </div>
-          <div>
-            <button
-              onClick={() => {
-                setTimeout(navigate("/gamego"), 150);
-              }}
-              className="next"
-            >
-              Next
-            </button>
-          </div>
-        </div>
-        <div className="boxpet">
-          <img className="pet" src={selectedPet.mood[2]} alt="" />
-          <div className="petfood">
-            {renderApples("applereward", userProgress, selectedPet.hungerlevel)}
+          <div className="boxpet">
+            <img className="pet" src={selectedPet.mood[2]} alt="" />
+            <div className="petfood">
+              {renderApples(
+                "applereward",
+                userProgress,
+                selectedPet.hungerlevel
+              )}
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    )
   );
 }

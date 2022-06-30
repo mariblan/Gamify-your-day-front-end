@@ -4,38 +4,28 @@ import redX from "../../../images/failed-task-icon.png";
 import greenCheck from "../../../images/check-icon.png";
 import { loadFavorites, toggleFavorites } from "../../../utils/displayFavorite";
 import { useState, useEffect, useRef } from "react";
-import selectTask from "../../../utils/selectTask";
-import {
-  addToToday,
-  removeFromToday,
-  addFavorite,
-  removeFavorite,
-} from "../../../fetchDB/fetchDB";
+import { selectTask, loadSelected } from "../../../utils/selectTask";
 import { useTask } from "../../../taskContext";
 
 export default function TaskMini({ task: { _id, taskName, category } }) {
   //??? Same component is being called in different components, and not all of them pass
   // the same props. However, if a prop is undefined, the whole thing breaks. How to go around?
-  const { user, favoriteList, setFavoriteList } = useTask();
+  const { user, favoriteList, setFavoriteList, todaysList, setTodaysList } =
+    useTask();
   const { icon, alt } = checkCategory(category);
-  const minifiedTask = useRef();
   const [favorite, setFavorite] = useState(notFavIcon);
+  const [taskClass, setTaskClass] = useState("taskMini");
   const [taskConcluded, setTaskConcluded] = useState(false);
 
+  // These two useEffects check the favorite and selected arrays from the user and
+  // render selecton and favorite icons adequately.
   useEffect(() => {
     favoriteList && setFavorite(loadFavorites(_id, [...favoriteList]));
   }, [_id, favoriteList]);
 
-  // Checks whether the task is present in the today's selection list. If it is, it loads with the
-  // correct class
   useEffect(() => {
-    user &&
-      user.todayList.forEach((task) => {
-        if (task._id === _id) {
-          minifiedTask.current.className = "taskMiniSelected";
-        }
-      });
-  }, [minifiedTask]);
+    todaysList && setTaskClass(loadSelected(_id, [...todaysList]));
+  }, [_id, todaysList]);
 
   // Checks the success and failure arrays from the user and sets the trigger to render the check marks
   useEffect(() => {
@@ -67,30 +57,38 @@ export default function TaskMini({ task: { _id, taskName, category } }) {
   };
 
   return (
-    <div
-      className="taskMini"
-      ref={minifiedTask}
-      onClick={(e) => selectTask(e, _id, user.todayList)}
-    >
-      {/* {console.log(user)} */}
-      {/* {console.log(user.todayList)} */}
-      {/* {console.log("These are the favorites:")} */}
-      {/* {console.log(user.favoriteList)} */}
-      {checkCompletion()}
-      <img src={icon} alt={alt} />
-      <h3>{taskName}</h3>
-      <img
-        name="favIcon"
-        src={favorite}
-        alt="A heart favorite icon"
-        className="favIcon"
-        onClick={() =>
-          toggleFavorites(_id, user, favoriteList).then((data) => {
-            setFavoriteList(data[0]);
-            setFavorite(data[1]);
+    todaysList &&
+    favoriteList && (
+      <div
+        className={taskClass}
+        onClick={(e) =>
+          selectTask(e, _id, user._id, todaysList).then((taskSelection) => {
+            setTodaysList(taskSelection[0]);
+            setTaskClass(taskSelection[1]);
           })
         }
-      />
-    </div>
+      >
+        {/* {console.log(minifiedTask.current)} */}
+        {/* {console.log(user)} */}
+        {/* {console.log(user.todayList)} */}
+        {/* {console.log("These are the favorites:")} */}
+        {/* {console.log(user.favoriteList)} */}
+        {checkCompletion()}
+        <img src={icon} alt={alt} />
+        <h3>{taskName}</h3>
+        <img
+          name="favIcon"
+          src={favorite}
+          alt="A heart favorite icon"
+          className="favIcon"
+          onClick={() =>
+            toggleFavorites(_id, user, favoriteList).then((data) => {
+              setFavoriteList(data[0]);
+              setFavorite(data[1]);
+            })
+          }
+        />
+      </div>
+    )
   );
 }

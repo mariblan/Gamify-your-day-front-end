@@ -4,7 +4,7 @@ import { useTask } from "../../../taskContext";
 import { useNavigate } from "react-router-dom";
 
 export default function GameGo(props) {
-  console.log(props);
+  // console.log(props);
   const {
     selectedPet,
     setSelectedPet,
@@ -14,13 +14,13 @@ export default function GameGo(props) {
     gottenTask,
     setGottenTask,
   } = useTask();
-  console.log(selectedPet);
+  // console.log(selectedPet);
   const navigate = useNavigate();
   return (
     <div>
       <button
         onClick={() => {
-          setTimeout(navigate("/mytasks"), 150);
+          setTimeout(navigate("../mytasks"), 150);
         }}
         className="menu"
         type="menu"
@@ -51,7 +51,7 @@ export default function GameGo(props) {
       </div>
       {props.clicked === true && (
         <div className="gottentask">
-          <h4>{props.gottenTask.taskName}</h4>
+          <h4>{gottenTask.taskName}</h4>
         </div>
       )}
     </div>

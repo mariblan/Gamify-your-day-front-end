@@ -14,7 +14,15 @@ const TaskContext = createContext();
 
 const useTask = () => useContext(TaskContext);
 
-const TaskProvider = (props) => {
+const TaskProvider = ({
+  isAuthenticated,
+  setIsAuthenticated,
+  user,
+  token,
+  setToken,
+  logOut,
+  children,
+}) => {
   const pets = [
     {
       petId: 1,
@@ -53,10 +61,10 @@ const TaskProvider = (props) => {
 
   const [selectedPet, setSelectedPet] = useState(false);
 
-  const [user, setUser] = useState(false);
-  useEffect(() => {
-    getUser("62b1b57082c8ed601e7094fc").then((user) => setUser(user));
-  }, []);
+  // const [currentUser, setCurrentUser] = useState(false);
+  // useEffect(() => {
+  //   user && getUser(user._id).then((user) => setCurrentUser(user));
+  // }, [user]);
 
   const [favoriteList, setFavoriteList] = useState(false);
 
@@ -71,19 +79,20 @@ const TaskProvider = (props) => {
   useEffect(() => {
     user && setTodaysList(user.todayList);
     // console.log(todaysList);
-  }, [user, todaysList]);
+  }, [user]);
 
   const [todaysCompleted, setTodaysCompleted] = useState([]);
   useEffect(() => {
     user && setTodaysCompleted(user.todayCompleted);
     //console.log(todaysCompleted);
-  }, [user, todaysCompleted]);
+  }, [user]);
 
   const [todaysFailed, setTodaysFailed] = useState([]);
   useEffect(() => {
     user && setTodaysFailed(user.todayFailed);
     //console.log(todaysFailed);
   }, [user, todaysFailed]);
+
   const [todaysSuccess, setTodaysSuccess] = useState([]);
   useEffect(() => {
     user && setTodaysFailed(user.todayFailed);
@@ -109,11 +118,15 @@ const TaskProvider = (props) => {
   return (
     <TaskContext.Provider
       value={{
+        isAuthenticated,
+        setIsAuthenticated,
+        token,
+        setToken,
+        logOut,
         pets,
         selectedPet,
         setSelectedPet,
         user,
-        setUser,
         userProgress,
         setUserProgress,
         favoriteList,
@@ -124,6 +137,8 @@ const TaskProvider = (props) => {
         setUserSettings,
         todaysCompleted,
         setTodaysCompleted,
+        todaysSuccess,
+        setTodaysSuccess,
         todaysFailed,
         setTodaysFailed,
         gottenTask,
@@ -134,7 +149,7 @@ const TaskProvider = (props) => {
         setSeconds,
       }}
     >
-      {props.children}
+      {children}
     </TaskContext.Provider>
   );
 };

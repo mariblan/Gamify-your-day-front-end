@@ -1,11 +1,12 @@
 import "./taskList.css";
-import TaskList from "./taskList";
+import { useState, useEffect, useRef } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
 import searchIcon from "../../../images/search-icon.png";
 import noFilter from "../../../images/nofilter-icon.png";
-import { useNavigate } from "react-router-dom";
 import { categories } from "../../../utils/categoryCheck";
-import { useState, useEffect, useRef } from "react";
 import changeClassName from "../../../utils/filterBtnsClassChange";
+import TaskList from "./taskList";
+import { useTask } from "../../../taskContext";
 
 export default function AllTasks() {
   // Initial states for filtering or searching functions for task selection. All filters are false/empty
@@ -17,6 +18,19 @@ export default function AllTasks() {
   const noFilterBtn = useRef();
   let filterContainer = useRef();
   const navigate = useNavigate();
+  const {
+    favoriteList,
+    isAuthenticated,
+    setIsAuthenticated,
+    setToken,
+    logOut,
+  } = useTask();
+
+  // const logOut = () => {
+  //   setIsAuthenticated(false);
+  //   setToken('');
+  //   setTimeout(() => <Navigate to={"../login"} />, 150);
+  // };
 
   // This checks if there's any filter applied to the task list. If there's no filter selected,
   // the no filter button gets automatically selected again
@@ -56,12 +70,15 @@ export default function AllTasks() {
 
   // Toggles sorting by completion on and off
   const checkComplete = () => {
+    setFilter([]);
     if (sortByFavorite) setSortByFavorite(false);
     !sortByComplete ? setSortByComplete(true) : setSortByComplete(false);
   };
 
   // Toggles sorting by favorite on and off
   const checkFavorite = () => {
+    console.log(favoriteList);
+    setFilter([]);
     if (sortByComplete) setSortByComplete(false);
     !sortByFavorite ? setSortByFavorite(true) : setSortByFavorite(false);
   };
@@ -86,31 +103,44 @@ export default function AllTasks() {
   return (
     <>
       <nav className="headerWrapper">
-        <button className="profileBtn fadedBtn smallBtn">Profile</button>
+        <button
+          className="profileBtn fadedBtn smallButton"
+          onClick={() => logOut()}
+        >
+          Log out
+        </button>
         <h1 className="title">Select your tasks!</h1>
         <div className="filterWrapper">
           <ul className="filterCategory" ref={filterContainer}>
             <li onClick={filterByCategory}>
+              {/* <li> */}
               <img
                 ref={noFilterBtn}
                 src={noFilter}
                 alt="A cross icon"
                 className="categoryIconFilter filterSelected"
-                onClick={(e) =>
-                  changeClassName(e, noFilterBtn, filterContainer)
-                }
+                onClick={(e) => {
+                  changeClassName(e, noFilterBtn, filterContainer);
+                  setSortByFavorite(false);
+                  setSortByComplete(false);
+                  // filterByCategory();
+                }}
               />
             </li>
             {categories.map((category, index) => (
               <li key={index} onClick={filterByCategory}>
+                {/* <li key={index}> */}
                 <img
                   src={category.icon}
                   alt={category.alt}
                   className={`categoryIconFilter ${category.name}`}
                   name={category.name}
-                  onClick={(e) =>
-                    changeClassName(e, noFilterBtn, filterContainer)
-                  }
+                  onClick={(e) => {
+                    changeClassName(e, noFilterBtn, filterContainer);
+                    setSortByFavorite(false);
+                    setSortByComplete(false);
+                    // filterByCategory();
+                  }}
                 />
               </li>
             ))}

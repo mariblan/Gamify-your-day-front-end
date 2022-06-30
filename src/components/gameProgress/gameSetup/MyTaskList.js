@@ -3,7 +3,7 @@ import pets from "./mockanimalsDB";
 import reload from "../../../images/change-icon.png";
 import renderApples from "../../../utils/generateApples";
 import { getUser } from "../../../fetchDB/fetchDB";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useTask } from "../../../taskContext";
 
@@ -14,6 +14,9 @@ export default function MyTaskList() {
     userProgress,
     selectedPet,
     selectedPet: { name, mood, hungerlevel },
+    isAuthenticated,
+    setIsAuthenticated,
+    logOut,
   } = useTask();
   const navigate = useNavigate();
 
@@ -38,9 +41,10 @@ export default function MyTaskList() {
 
   return (
     <>
-      {/* {console.log(selectedPet)} */}
       <div className="headerWrapper">
-        <button className="profileBtn fadedBtn">Profile</button>
+        <button className="profileBtn fadedBtn" onClick={() => logOut()}>
+          Log out
+        </button>
         <h1 className="title">Today's task list</h1>
       </div>
       <div className="hidden">

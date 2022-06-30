@@ -24,8 +24,8 @@ export default function TaskTimerRender({
     setSeconds,
   } = useTask();
   const navigate = useNavigate();
-  console.log(reward);
-  console.log(userProgress);
+  // console.log(reward);
+  // console.log(userProgress);
   return (
     <div className="bodytimer">
       <button

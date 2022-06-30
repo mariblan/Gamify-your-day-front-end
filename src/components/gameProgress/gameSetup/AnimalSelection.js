@@ -1,18 +1,26 @@
 import "./animalSelection.css";
 import { useState, useRef } from "react";
-import AnimalSelectionRender from "./animalSelectionRender";
 import renderApples from "../../../utils/generateApples";
 import { useNavigate } from "react-router-dom";
 import { useTask } from "../../../taskContext";
 
 export default function AnimalSelection(index, id) {
   const { pets, selectedPet, setSelectedPet, userSettings } = useTask();
+  const [petWarning, setPetWarning] = useState(false);
   let animalContainer = useRef();
   const navigate = useNavigate();
-  const goToGame = () => setTimeout(navigate("../mytasks"), 150);
+
+  const goToGame = () => {
+    if (selectedPet) setTimeout(navigate("../mytasks"), 150);
+    if (!selectedPet)
+      setPetWarning(
+        <p className="petSelectWarning">
+          Please select a pet before proceeding
+        </p>
+      );
+  };
 
   const pickPetClick = ({ target, currentTarget }) => {
-    //console.log(target.id);
     for (let i = 1; i < animalContainer.current.children.length; i++) {
       if (currentTarget !== animalContainer.current.children[i])
         animalContainer.current.children[i].className = "petbtn";
@@ -26,8 +34,8 @@ export default function AnimalSelection(index, id) {
       }
       return selectedPet;
     });
-    selectedPet && console.log(target);
-    selectedPet && console.log(currentTarget);
+    // selectedPet && console.log(target);
+    // selectedPet && console.log(currentTarget);
   };
 
   const navigateToTasks = () => setTimeout(navigate("/alltasks"), 150);
@@ -47,15 +55,15 @@ export default function AnimalSelection(index, id) {
                   <button
                     onClick={pickPetClick}
                     selected={pet.petId}
-                    key={pet.id}
+                    key={index}
                     className={`petbtn`}
                     name={pet.name}
                     id={pet.btn}
                   >
                     <img
-                      key={pet.id}
+                      key={index}
                       className="petselect"
-                      id={pet.id}
+                      id={pet.petId}
                       name={pet.name}
                       src={pet.mood[0]}
                       alt={pet.name}
@@ -77,6 +85,11 @@ export default function AnimalSelection(index, id) {
               </div>
             </div>
           </div>
+          {petWarning || (
+            <p className="petSelectHidden">
+              Please select a pet before proceeding
+            </p>
+          )}
           <button className="confirmbtn" onClick={goToGame}>
             My task list
           </button>

@@ -55,7 +55,7 @@ export default function TaskTimer() {
       const newUserProgress = userProgress + reward;
       await addToProgress(user._id, newUserProgress).then((progress) => {
         setUserProgress(progress);
-        navigate("/tasksuccess");
+        navigate("../tasksuccess");
       });
     }
   };
@@ -73,7 +73,7 @@ export default function TaskTimer() {
             className="forfeit"
             onClick={() => {
               onConfirm();
-              navigate("/taskfailure");
+              navigate("../taskfailure");
             }}
           >
             {" "}
@@ -107,16 +107,14 @@ export default function TaskTimer() {
   //console.log(done);
   //console.log(selectedPet);
   return (
-    console.log(userProgress) || (
-      <TaskTimerRender
-        pauseClick={pause}
-        imDoneClick={imDone}
-        forfeitTask={forfeitTask}
-        apple={apple}
-        icon={icon}
-        alt={alt}
-        image={selectedPet.mood[0]}
-      />
-    )
+    <TaskTimerRender
+      pauseClick={pause}
+      imDoneClick={imDone}
+      forfeitTask={forfeitTask}
+      apple={apple}
+      icon={icon}
+      alt={alt}
+      image={selectedPet.mood[0]}
+    />
   );
 }

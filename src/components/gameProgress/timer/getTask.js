@@ -48,7 +48,7 @@ export default function GetTask() {
         clearInterval(interval);
         setCounter("GO!");
         setTimeout(() => {
-          navigate("/tasktimer");
+          navigate("../tasktimer");
         }, 1000);
       }
     }, 1000);

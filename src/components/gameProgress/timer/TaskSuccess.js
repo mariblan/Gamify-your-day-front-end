@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useTask } from "../../../taskContext";
 import "./timer.css";
 import canaryhappy from "../../../images/canary-happy.png";
@@ -13,14 +13,14 @@ export default function TaskSuccess() {
   const {
     user,
     setUser,
+    userSettings,
+    gottenTask,
     gottenTask: { taskId, taskName, category, sliderValue, difficulty, reward },
     setGottenTask,
     selectedPet,
     setSelectedPet,
     userProgress,
     setUserProgress,
-    todaysCompleted,
-    setTodaysCompleted,
     todaysSuccess,
     setTodaysSuccess,
     minutes,
@@ -30,17 +30,59 @@ export default function TaskSuccess() {
   } = useTask();
 
   const { icon, alt } = checkCategory(category);
-  useEffect(() => {}, []);
   const navigate = useNavigate();
-  addSuccess(user._id, taskId).then((todaysuccess) => {
-    setTodaysCompleted(todaysuccess);
-    setTodaysSuccess(todaysuccess);
-  });
+  const [taskSuccess, setTaskSuccess] = useState(false);
+  let elapsedTime = "";
+  const getElapsedTime = () => {
+    const secondsto = 60 - seconds;
+    const minutesto = minutes - 1;
+    if (seconds > 0 && minutes === sliderValue - 1) {
+      if (secondsto < 10) {
+        // console.log(`00:0${secondsto}`);
+        elapsedTime = `00:0${secondsto}`;
+      } else {
+        // console.log(`00:${secondsto}`);
+        elapsedTime = `00:${secondsto}`;
+      }
+    } else if (seconds >= 0) {
+      if (secondsto < 10 && minutesto < 10) {
+        // console.log(`0${minutesto}:0${secondsto}`);
+        elapsedTime = `0${minutesto}:0${secondsto}`;
+      } else if (seconds >= 10 && minutes < 10) {
+        // console.log(`0${minutesto}:${secondsto}`);
+        elapsedTime = `0${minutesto}:${secondsto}`;
+      } else if (seconds < 10 && minutes > 10) {
+        // console.log(`${minutesto}:0${secondsto}`);
+        elapsedTime = `${minutesto}:0${secondsto}`;
+      } else {
+        // console.log(`${minutesto}:${secondsto}`);
+        elapsedTime = `${minutesto}:${secondsto}`;
+      }
+    }
+    return elapsedTime;
+  };
+  getElapsedTime();
+  // console.log(elapsedTime);
+  useEffect(() => {
+    setTaskSuccess({ ...gottenTask, time: elapsedTime });
+  }, []);
 
-  const navigateToList = () => setTimeout(navigate("/mytasks"), 150);
+  const successAndCompleted = async (userId, successSettings) => {
+    const taskSucceeded = await addSuccess(userId, successSettings).then(
+      (updatedSuccess) => updatedSuccess
+    );
+    console.log(taskSucceeded);
+    return setTodaysSuccess(taskSucceeded);
+  };
+
+  useEffect(() => {
+    taskSuccess && successAndCompleted(user._id, taskSuccess);
+  }, [taskSuccess]);
+
+  const navigateToList = () => setTimeout(navigate("../mytasks"), 150);
 
   return (
-    console.log(userProgress) || (
+    console.log(taskSuccess) || (
       <div className="bodytimer">
         <button className="menu" type="menu" onClick={navigateToList}>
           My list
@@ -84,7 +126,7 @@ export default function TaskSuccess() {
             <div>
               <button
                 onClick={() => {
-                  setTimeout(navigate("/gamego"), 150);
+                  setTimeout(navigate("../gamego"), 150);
                 }}
                 className="next"
               >

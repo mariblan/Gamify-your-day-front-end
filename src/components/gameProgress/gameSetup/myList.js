@@ -15,6 +15,7 @@ export default function MyList({ next }) {
     setUser,
     todaysList,
     setTodaysList,
+    // todaysCompleted,
     userSettings,
     setUserSettings,
   } = useTask();
@@ -34,8 +35,9 @@ export default function MyList({ next }) {
   return (
     todaysList && (
       <div className="taskWrapper">
-        {/* {console.log(userSettings)} */}
+        {/* {console.log(todaysCompleted)} */}
         {todaysList.map((task, index) => (
+          // if (!todaysCompleted)
           <TaskExpanded
             key={index}
             task={task}

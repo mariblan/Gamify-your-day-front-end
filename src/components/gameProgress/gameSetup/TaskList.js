@@ -1,5 +1,5 @@
 import TaskMini from "./minifiedTask";
-import { getAllTasks, getUser } from "../../../fetchDB/fetchDB";
+import { getAllTasks } from "../../../fetchDB/fetchDB";
 import { useState, useEffect } from "react";
 import { useTask } from "../../../taskContext.js";
 
@@ -84,8 +84,8 @@ export default function TaskList({
   // !!! WIP: functioning search feature comes here:
 
   return (
-    allTasks &&
-    user && (
+    tasksFiltered &&
+    console.log(tasksFiltered) && (
       <div className="taskWrapper">
         {/* {console.log("These are the favorites:")} */}
         {/* {console.log(favoriteList)} */}

@@ -42,7 +42,7 @@ function TimerSeconds(timerInit, paused, setPaused, done, setDone) {
       done === false &&
       setTimeout(() => {
         clearTimeout();
-        navigate("/taskfailure");
+        navigate("../taskfailure");
       });
   });
   useEffect(() => {

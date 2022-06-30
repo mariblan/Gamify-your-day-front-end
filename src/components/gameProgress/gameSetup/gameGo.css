@@ -10,6 +10,7 @@
     transform: rotateZ(360deg);
   }
 }
+
 .gamegobody {
   display: flex;
   flex-direction: column;
@@ -18,12 +19,15 @@
   width: 100%;
   margin-top: 2%;
 }
+
 .title {
   font-size: 2rem;
 }
+
 .applebtnimage {
   width: 100%;
 }
+
 .applebtn {
   background-color: transparent;
   border: none;
@@ -31,6 +35,7 @@
   margin-top: 14%;
   position: relative;
 }
+
 .start {
   position: absolute;
   top: 59%;
@@ -40,12 +45,14 @@
   text-align: center;
   color: white;
 }
+
 .gottentask {
   color: black;
   font-size: 2rem;
   text-align: center;
   margin-top: 6%;
 }
+
 .applebtn:focus {
   /*animation-name*/
   -webkit-animation-name: spin-me;

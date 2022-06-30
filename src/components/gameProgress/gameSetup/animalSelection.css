@@ -173,3 +173,15 @@
   border-radius: 10px;
   box-shadow: inset 2px 3px 4px rgba(0, 0, 0, 0.3);
 } */
+
+.petSelectHidden {
+  color: transparent;
+  font-size: 1rem;
+  margin-top: -2%;
+}
+
+.petSelectWarning {
+  color: red;
+  font-size: 1rem;
+  margin-top: -2%;
+}

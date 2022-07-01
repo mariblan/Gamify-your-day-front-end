@@ -21,6 +21,8 @@ export default function TaskFailure() {
     setGottenTask,
     selectedPet,
     setSelectedPet,
+    nextClicked,
+    setNextClicked,
     userProgress,
     setUserProgress,
     todaysCompleted,
@@ -33,7 +35,7 @@ export default function TaskFailure() {
   const { icon, alt } = checkCategory(category);
 
   const [failedTask, setFailedTask] = useState(false);
-  const [newUsersettings, setNewUserSettings] = useState(false);
+  const [newUserSettings, setNewUserSettings] = useState([]);
 
   useEffect(() => {
     setGottenTask((prev) => ({ ...prev, reward: 0 }));
@@ -53,22 +55,11 @@ export default function TaskFailure() {
   }, [failedTask]);
 
   useEffect(() => {
-    setNewUserSettings(userSettings);
-    const tasksAway = [];
-    newUsersettings.filter((task) => {
-      if (task.taskId !== failedTask.taskId) {
-        tasksAway.push(task);
-      }
-      return tasksAway;
+    userSettings.filter((task) => {
+      return task._id === failedTask.taskId;
     });
-  }, [newUsersettings]);
+  }, [userSettings]);
 
-  useEffect(() => {
-    setUserSettings(newUsersettings);
-  }, [newUsersettings]);
-
-  console.log(newUsersettings);
-  console.log(userSettings);
   const navigate = useNavigate();
 
   return (
@@ -118,6 +109,7 @@ export default function TaskFailure() {
             <div>
               <button
                 onClick={() => {
+                  setNextClicked(false);
                   setTimeout(navigate("../gamego"), 150);
                 }}
                 className="next"

@@ -17,43 +17,45 @@ export default function GameGo(props) {
   // console.log(selectedPet);
   const navigate = useNavigate();
   return (
-    <div>
-      <button
-        onClick={() => {
-          setTimeout(navigate("../mytasks"), 150);
-        }}
-        className="menu"
-        type="menu"
-      >
-        My list
-      </button>
-      <div className="gamegobody">
-        {props.clicked === false ? (
-          <h2 className="title">Give me a random task!</h2>
-        ) : (
-          <h2 className="title">Your next task is...</h2>
-        )}
+    console.log(userSettings) || (
+      <div>
         <button
-          id="a"
-          className="applebtn"
-          type="button"
-          onClick={props.onClick}
-          value="Click"
+          onClick={() => {
+            setTimeout(navigate("../mytasks"), 150);
+          }}
+          className="menu"
+          type="menu"
         >
-          <img
-            id="applebtnimage"
-            className="applebtnimage"
-            src={appleColor}
-            alt="red apple"
-          />
+          My list
         </button>
-        <div className="start">{props.counter}</div>
-      </div>
-      {props.clicked === true && (
-        <div className="gottentask">
-          <h4>{gottenTask.taskName}</h4>
+        <div className="gamegobody">
+          {props.clicked === false ? (
+            <h2 className="title">Give me a random task!</h2>
+          ) : (
+            <h2 className="title">Your next task is...</h2>
+          )}
+          <button
+            id="a"
+            className="applebtn"
+            type="button"
+            onClick={props.onClick}
+            value="Click"
+          >
+            <img
+              id="applebtnimage"
+              className="applebtnimage"
+              src={appleColor}
+              alt="red apple"
+            />
+          </button>
+          <div className="start">{props.counter}</div>
         </div>
-      )}
-    </div>
+        {props.clicked === true && (
+          <div className="gottentask">
+            <h4>{gottenTask.taskName}</h4>
+          </div>
+        )}
+      </div>
+    )
   );
 }

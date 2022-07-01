@@ -11,7 +11,6 @@ export default function TaskExpanded({
   task: { _id, taskName, taskTime, category },
   user: { todaySuccess, todayFailed },
   sendTaskSetting,
-  nextClicked,
 }) {
   const [sliderValue, setSliderValue] = useState(taskTime.minMedium);
   const [difficulty, setDifficulty] = useState("");
@@ -22,7 +21,8 @@ export default function TaskExpanded({
   // icon and alt description for a mapping component call (to save from
   // having to import all icons in multiple files)
   const { icon, alt } = checkCategory(category);
-  const { user, favoriteList, setFavoriteList } = useTask();
+  const { user, favoriteList, setFavoriteList, nextClicked, setNextClicked } =
+    useTask();
 
   //!!! Have this work. Check if the task is in the success or failed array and change state
   // of variable to render checks/xs conditionally

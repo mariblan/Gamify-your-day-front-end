@@ -10,12 +10,13 @@ import { toast } from "react-toastify";
 
 export default function MyTaskList() {
   // const [user, setUser] = useState([]);
-  const [nextClicked, setNextClicked] = useState(false);
   const {
     userProgress,
     todaysList,
     selectedPet,
     selectedPet: { name, mood, hungerlevel },
+    nextClicked,
+    setNextClicked,
     toastErrorSettings,
     logOut,
   } = useTask();
@@ -61,7 +62,7 @@ export default function MyTaskList() {
         <h1 className="title">Today's task list</h1>
       </div>
       <div className="fixedTaskWrapper">
-        <MyList next={nextClicked} />
+        <MyList />
       </div>
       <footer>
         <div className="dailyPet">

@@ -107,14 +107,16 @@ export default function TaskTimer() {
   //console.log(done);
   //console.log(selectedPet);
   return (
-    <TaskTimerRender
-      pauseClick={pause}
-      imDoneClick={imDone}
-      forfeitTask={forfeitTask}
-      apple={apple}
-      icon={icon}
-      alt={alt}
-      image={selectedPet.mood[0]}
-    />
+    console.log(userSettings) || (
+      <TaskTimerRender
+        pauseClick={pause}
+        imDoneClick={imDone}
+        forfeitTask={forfeitTask}
+        apple={apple}
+        icon={icon}
+        alt={alt}
+        image={selectedPet.mood[0]}
+      />
+    )
   );
 }

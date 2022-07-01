@@ -7,7 +7,7 @@ import { loginUser } from "../../fetchDB/fetchDB";
 import { useTask } from "../../taskContext";
 
 export default function Login() {
-  const { isAuthenticated, setToken } = useTask();
+  const { isAuthenticated, setToken, toastErrorSettings } = useTask();
 
   const [{ email, password }, setFormState] = useState({
     email: "",
@@ -23,13 +23,7 @@ export default function Login() {
     try {
       e.preventDefault();
       if (!email || !password)
-        return toast.error("Please fill in all fields", {
-          position: "top-center",
-          autoClose: 2000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          theme: "colored",
-        });
+        return toast.error("Please fill in all fields", toastErrorSettings);
       const res = await loginUser({ email, password });
       const { token, error } = res;
       if (token) {
@@ -39,23 +33,14 @@ export default function Login() {
       if (error)
         return toast.error(
           `Something wrong with getting the token back! ${error}`,
-          {
-            position: "top-center",
-            autoClose: 2000,
-            hideProgressBar: true,
-            closeOnClick: true,
-            theme: "colored",
-          }
+          toastErrorSettings
         );
       if (email && password) setTimeout(() => navigate("/alltasks"), 150);
     } catch (error) {
-      toast.error(`I failed to fetch from the DB! ${error.message}`, {
-        position: "top-center",
-        autoClose: 2000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        theme: "colored",
-      });
+      toast.error(
+        `I failed to fetch from the DB! ${error.message}`,
+        toastErrorSettings
+      );
     }
   };
 
@@ -102,7 +87,6 @@ export default function Login() {
             Register
           </button>
         </span>
-        <ToastContainer />
       </div>
     );
 }

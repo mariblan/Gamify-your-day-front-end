@@ -14,23 +14,11 @@ export default function AllTasks() {
   const [filter, setFilter] = useState([]);
   const [searchValue, setSearchValue] = useState("");
   const [sortByFavorite, setSortByFavorite] = useState(false);
-  const [sortByComplete, setSortByComplete] = useState(false);
+  // const [sortByComplete, setSortByComplete] = useState(false);
   const noFilterBtn = useRef();
   let filterContainer = useRef();
   const navigate = useNavigate();
-  const {
-    favoriteList,
-    isAuthenticated,
-    setIsAuthenticated,
-    setToken,
-    logOut,
-  } = useTask();
-
-  // const logOut = () => {
-  //   setIsAuthenticated(false);
-  //   setToken('');
-  //   setTimeout(() => <Navigate to={"../login"} />, 150);
-  // };
+  const { favoriteList, logOut } = useTask();
 
   // This checks if there's any filter applied to the task list. If there's no filter selected,
   // the no filter button gets automatically selected again
@@ -42,7 +30,7 @@ export default function AllTasks() {
   // as the ones selected. Also disables filtering by completion or favorites.
   const filterByCategory = (e) => {
     setSortByFavorite(false);
-    setSortByComplete(false);
+    // setSortByComplete(false);
     // If the button that has no name is selected for the filter selection to be cleared,
     // the filtering array is set to empty
     if (!e.target.name) return setFilter([]);
@@ -69,17 +57,17 @@ export default function AllTasks() {
   };
 
   // Toggles sorting by completion on and off
-  const checkComplete = () => {
-    setFilter([]);
-    if (sortByFavorite) setSortByFavorite(false);
-    !sortByComplete ? setSortByComplete(true) : setSortByComplete(false);
-  };
+  // const checkComplete = () => {
+  //   setFilter([]);
+  //   if (sortByFavorite) setSortByFavorite(false);
+  //   !sortByComplete ? setSortByComplete(true) : setSortByComplete(false);
+  // };
 
   // Toggles sorting by favorite on and off
   const checkFavorite = () => {
     console.log(favoriteList);
     setFilter([]);
-    if (sortByComplete) setSortByComplete(false);
+    // if (sortByComplete) setSortByComplete(false);
     !sortByFavorite ? setSortByFavorite(true) : setSortByFavorite(false);
   };
 
@@ -113,7 +101,6 @@ export default function AllTasks() {
         <div className="filterWrapper">
           <ul className="filterCategory" ref={filterContainer}>
             <li onClick={filterByCategory}>
-              {/* <li> */}
               <img
                 ref={noFilterBtn}
                 src={noFilter}
@@ -122,7 +109,7 @@ export default function AllTasks() {
                 onClick={(e) => {
                   changeClassName(e, noFilterBtn, filterContainer);
                   setSortByFavorite(false);
-                  setSortByComplete(false);
+                  // setSortByComplete(false);
                   // filterByCategory();
                 }}
               />
@@ -138,7 +125,7 @@ export default function AllTasks() {
                   onClick={(e) => {
                     changeClassName(e, noFilterBtn, filterContainer);
                     setSortByFavorite(false);
-                    setSortByComplete(false);
+                    // setSortByComplete(false);
                     // filterByCategory();
                   }}
                 />
@@ -190,15 +177,15 @@ export default function AllTasks() {
         filterSelection={filter}
         searchValue={searchValue}
         sortByFavorite={sortByFavorite}
-        sortByComplete={sortByComplete}
+        // sortByComplete={sortByComplete}
       />
       <div className="navWrapper">
         <button type="button" className="fadedBtn" onClick={checkFavorite}>
           Favorites
         </button>
-        <button type="button" className="fadedBtn" onClick={checkComplete}>
+        {/* <button type="button" className="fadedBtn" onClick={checkComplete}>
           Completed
-        </button>
+        </button> */}
         <button type="button" className="mainBtn" onClick={goToMyList}>
           Select pet
         </button>

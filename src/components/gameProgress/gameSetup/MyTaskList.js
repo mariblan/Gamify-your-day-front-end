@@ -6,16 +6,17 @@ import { getUser } from "../../../fetchDB/fetchDB";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useTask } from "../../../taskContext";
+import { toast } from "react-toastify";
 
 export default function MyTaskList() {
   // const [user, setUser] = useState([]);
   const [nextClicked, setNextClicked] = useState(false);
   const {
     userProgress,
+    todaysList,
     selectedPet,
     selectedPet: { name, mood, hungerlevel },
-    isAuthenticated,
-    setIsAuthenticated,
+    toastErrorSettings,
     logOut,
   } = useTask();
   const navigate = useNavigate();
@@ -27,8 +28,15 @@ export default function MyTaskList() {
   // Sets the trigger for the values of each task in the today
   // to be stored and be passable to the task randomizer
   const giveSignal = async () => {
-    await setNextClicked(true);
-    setTimeout(() => navigate("../gamego"), 150);
+    if (todaysList.length === 0) {
+      toast.error(
+        "Please select at least one task before proceeding!",
+        toastErrorSettings
+      );
+    } else {
+      await setNextClicked(true);
+      setTimeout(() => navigate("../gamego"), 150);
+    }
   };
 
   const navigateToTasks = () => {
@@ -41,6 +49,7 @@ export default function MyTaskList() {
 
   return (
     <>
+      {console.log(userProgress)}
       <div className="headerWrapper">
         <button className="profileBtn fadedBtn" onClick={() => logOut()}>
           Log out

@@ -15,6 +15,7 @@ export default function TaskFailure() {
     user,
     setUser,
     userSettings,
+    setUserSettings,
     gottenTask,
     gottenTask: { taskId, taskName, category, sliderValue, difficulty, reward },
     setGottenTask,
@@ -32,6 +33,7 @@ export default function TaskFailure() {
   const { icon, alt } = checkCategory(category);
 
   const [failedTask, setFailedTask] = useState(false);
+  const [newUsersettings, setNewUserSettings] = useState(false);
 
   useEffect(() => {
     setGottenTask((prev) => ({ ...prev, reward: 0 }));
@@ -50,20 +52,25 @@ export default function TaskFailure() {
     failedTask && failedAndCompleted(user._id, failedTask);
   }, [failedTask]);
 
-  const takeAwayCompleted = (arr) => {
-    const newUserSettings = [];
-    arr.filter((task) => {
-      if (task.taskId === failedTask.taskId) {
-        newUserSettings.push(task);
+  useEffect(() => {
+    setNewUserSettings(userSettings);
+    const tasksAway = [];
+    newUsersettings.filter((task) => {
+      if (task.taskId !== failedTask.taskId) {
+        tasksAway.push(task);
       }
-      return arr;
+      return tasksAway;
     });
-    console.log(newUserSettings);
-  };
+  }, [newUsersettings]);
 
-  takeAwayCompleted(userSettings);
+  useEffect(() => {
+    setUserSettings(newUsersettings);
+  }, [newUsersettings]);
+
+  console.log(newUsersettings);
   console.log(userSettings);
   const navigate = useNavigate();
+
   return (
     console.log(userSettings) || (
       <div className="bodytimer">

@@ -1,5 +1,5 @@
 import { createContext, useState, useContext, useEffect } from "react";
-import { getUser } from "./fetchDB/fetchDB";
+import { getAllTasks } from "./fetchDB/fetchDB";
 import canaryNorm from "./images/canary-normal.png";
 import canaryHappy from "./images/canary-happy.png";
 import canarySad from "./images/canary-sad.png";
@@ -18,6 +18,7 @@ const TaskProvider = ({
   isAuthenticated,
   setIsAuthenticated,
   user,
+  toastErrorSettings,
   token,
   setToken,
   logOut,
@@ -58,6 +59,17 @@ const TaskProvider = ({
         "After so many apples, the hamster seems to be finally full as it snoozes peacefully. It wasn't easy but you did it!",
     },
   ];
+
+  const [allTasks, setAllTasks] = useState(false);
+  useEffect(() => {
+    getAllTasks().then((allData) => {
+      setAllTasks(
+        allData.sort((a, b) => {
+          return Math.random() >= 0.5 ? 1 : -1;
+        })
+      );
+    });
+  }, []);
 
   const [selectedPet, setSelectedPet] = useState(false);
 
@@ -123,6 +135,8 @@ const TaskProvider = ({
         token,
         setToken,
         logOut,
+        toastErrorSettings,
+        allTasks,
         pets,
         selectedPet,
         setSelectedPet,

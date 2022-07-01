@@ -7,11 +7,11 @@ import { registerUser } from "../../fetchDB/fetchDB";
 import { useTask } from "../../taskContext";
 
 export default function Register() {
-  const { isAuthenticated, setToken } = useTask();
+  const { isAuthenticated, setToken, toastErrorSettings } = useTask();
 
-  const [{ newUsername, newEmail, newPassword }, setFormState] = useState({
-    newUsername: "",
-    newEmail: "",
+  const [{ name, email, password }, setFormState] = useState({
+    name: "",
+    email: "",
     newPassword: "",
   });
 
@@ -23,36 +23,17 @@ export default function Register() {
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
-      if (!newUsername || !newEmail || !newPassword)
-        return toast.error("Fill all the fields", {
-          position: "top-center",
-          closeOnClick: true,
-          hideProgressBar: true,
-          theme: "colored",
-          autoClose: 2000,
-        });
-      const res = await registerUser({ newUsername, newEmail, newPassword });
+      if (!name || !email || !password)
+        return toast.error("Fill all the fields", toastErrorSettings);
+      const res = await registerUser({ name, email, password });
       const { token, error } = res;
       if (token) {
         localStorage.setItem("token", token);
         return setToken(token);
       }
-      if (error)
-        return toast.error(error, {
-          position: "top-center",
-          autoClose: 2000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          theme: "colored",
-        });
+      if (error) return toast.error(error, toastErrorSettings);
     } catch (error) {
-      toast.error(error.message, {
-        position: "top-center",
-        autoClose: 2000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        theme: "colored",
-      });
+      toast.error(error.message, toastErrorSettings);
     }
   };
 
@@ -72,25 +53,25 @@ export default function Register() {
               <input
                 type="text"
                 name="newUsername"
-                id="newUsername"
+                id="name"
                 placeholder="Username"
-                value={newUsername}
+                value={name}
                 onChange={handleChange}
               />
               <input
                 type="text"
                 name="newEmail"
-                id="newEmail"
+                id="email"
                 placeholder="E-mail"
-                value={newEmail}
+                value={email}
                 onChange={handleChange}
               />
               <input
                 type="password"
                 name="newPassword"
-                id="newPassword"
+                id="password"
                 placeholder="Password"
-                value={newPassword}
+                value={password}
                 onChange={handleChange}
               />
             </div>
@@ -108,7 +89,6 @@ export default function Register() {
             Log in
           </button>
         </span>
-        <ToastContainer />
       </div>
     );
 }

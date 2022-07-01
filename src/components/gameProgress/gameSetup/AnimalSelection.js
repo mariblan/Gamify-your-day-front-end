@@ -13,7 +13,6 @@ export default function AnimalSelection(index, id) {
     userSettings,
     toastErrorSettings,
   } = useTask();
-  const [petWarning, setPetWarning] = useState(false);
   let animalContainer = useRef();
   const navigate = useNavigate();
 

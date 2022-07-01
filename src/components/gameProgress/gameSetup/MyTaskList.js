@@ -1,9 +1,7 @@
 import MyList from "./myList";
-import pets from "./mockanimalsDB";
 import reload from "../../../images/change-icon.png";
 import renderApples from "../../../utils/generateApples";
-import { getUser } from "../../../fetchDB/fetchDB";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useTask } from "../../../taskContext";
 import { toast } from "react-toastify";
@@ -14,7 +12,7 @@ export default function MyTaskList() {
   const {
     userProgress,
     todaysList,
-    selectedPet,
+    // selectedPet,
     selectedPet: { name, mood, hungerlevel },
     toastErrorSettings,
     logOut,
@@ -68,7 +66,7 @@ export default function MyTaskList() {
           <h3>My pet for today</h3>
           <div className="imgWrapper">
             <img
-              src={selectedPet ? selectedPet.mood[0] : undefined}
+              src={mood ? mood[0] : undefined}
               alt={`A ${name}` || `A canary`}
               className="animal"
             />

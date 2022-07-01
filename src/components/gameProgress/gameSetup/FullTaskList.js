@@ -1,7 +1,7 @@
 import "./taskList.css";
 import { useState, useEffect, useRef } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
-import searchIcon from "../../../images/search-icon.png";
+import { useNavigate } from "react-router-dom";
+// import searchIcon from "../../../images/search-icon.png";
 import noFilter from "../../../images/nofilter-icon.png";
 import { categories } from "../../../utils/categoryCheck";
 import changeClassName from "../../../utils/filterBtnsClassChange";
@@ -12,7 +12,7 @@ export default function AllTasks() {
   // Initial states for filtering or searching functions for task selection. All filters are false/empty
   // by default, and some dom nodes are selected for purposes of changing styling upon selection.
   const [filter, setFilter] = useState([]);
-  const [searchValue, setSearchValue] = useState("");
+  // const [searchValue, setSearchValue] = useState("");
   const [sortByFavorite, setSortByFavorite] = useState(false);
   // const [sortByComplete, setSortByComplete] = useState(false);
   const noFilterBtn = useRef();
@@ -123,7 +123,12 @@ export default function AllTasks() {
                   className={`categoryIconFilter ${category.name}`}
                   name={category.name}
                   onClick={(e) => {
-                    changeClassName(e, noFilterBtn, filterContainer);
+                    changeClassName(
+                      e,
+                      noFilterBtn,
+                      filterContainer,
+                      sortByFavorite
+                    );
                     setSortByFavorite(false);
                     // setSortByComplete(false);
                     // filterByCategory();
@@ -175,7 +180,7 @@ export default function AllTasks() {
       </div>
       <TaskList
         filterSelection={filter}
-        searchValue={searchValue}
+        // searchValue={searchValue}
         sortByFavorite={sortByFavorite}
         // sortByComplete={sortByComplete}
       />

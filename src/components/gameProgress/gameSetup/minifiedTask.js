@@ -3,7 +3,7 @@ import notFavIcon from "../../../images/fav-icon.png";
 import redX from "../../../images/failed-task-icon.png";
 import greenCheck from "../../../images/check-icon.png";
 import { loadFavorites, toggleFavorites } from "../../../utils/displayFavorite";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { selectTask, loadSelected } from "../../../utils/selectTask";
 import { useTask } from "../../../taskContext";
 
@@ -54,24 +54,28 @@ export default function TaskMini({ task: { _id, taskName, category } }) {
     }
   };
 
+  useEffect(() => {
+    checkCompletion();
+  }, [taskConcluded]);
+
   return (
     todaysList &&
     favoriteList && (
       <div
         className={taskClass}
         onClick={(e) =>
-          selectTask(e, _id, user._id, todaysList).then((taskSelection) => {
+          selectTask(e, _id, user, todaysList).then((taskSelection) => {
             setTodaysList(taskSelection[0]);
             setTaskClass(taskSelection[1]);
           })
         }
       >
+        {checkCompletion()}
         {/* {console.log(minifiedTask.current)} */}
         {/* {console.log(user)} */}
         {/* {console.log(user.todayList)} */}
         {/* {console.log("These are the favorites:")} */}
         {/* {console.log(user.favoriteList)} */}
-        {checkCompletion()}
         <img src={icon} alt={alt} />
         <h3>{taskName}</h3>
         <img
@@ -81,8 +85,10 @@ export default function TaskMini({ task: { _id, taskName, category } }) {
           className="favIcon"
           onClick={() =>
             toggleFavorites(_id, user, favoriteList).then((data) => {
-              setFavoriteList(data[0]);
-              setFavorite(data[1]);
+              if (data) {
+                setFavoriteList(data[0]);
+                setFavorite(data[1]);
+              }
             })
           }
         />

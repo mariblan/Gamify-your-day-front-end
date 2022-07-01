@@ -1,7 +1,7 @@
 import "./userAuth.css";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { loginUser } from "../../fetchDB/fetchDB";
 import { useTask } from "../../taskContext";

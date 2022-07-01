@@ -1,35 +1,21 @@
 import TaskMini from "./minifiedTask";
-import { getAllTasks } from "../../../fetchDB/fetchDB";
 import { useState, useEffect } from "react";
 import { useTask } from "../../../taskContext.js";
 
 export default function TaskList({
   filterSelection,
-  searchValue,
+  // searchValue,
   sortByFavorite,
-  sortByComplete,
+  // sortByComplete,
 }) {
   // console.log(searchValue);
-  // const [allTasks, setAllTasks] = useState(false);
   const [tasksFiltered, setTasksFiltered] = useState([]);
   const { user, allTasks } = useTask();
-
-  // This is how to get around derived state, just for reference if that's what I happen to be doing...
-  // const favoriteTasks = user.find((user) => {
-  //   return user.id === selectedUserId;
-  // });
 
   // Get all tasks (server route '/') from the DB, make the order random and store in state
   // Here because this is the only place in the app that displays all tasks, so storing in context
   // is unnecessary data being distributed to the whole of the app.
   useEffect(() => {
-    // Get all tasks in random order
-    // getAllTasks().then((allData) => {
-    //   setAllTasks(
-    //     allData.sort((a, b) => {
-    //       return Math.random() >= 0.5 ? 1 : -1;
-    //     })
-    //   );
     // setTasksFiltered(allData);
     //!!! If time allows, order the task categories by the reverse order in which they were
     // inputted in the array (last category selection shows first in list)
@@ -46,6 +32,7 @@ export default function TaskList({
     // ??? and yet filterSelection === [] is false. Wth, why???
     // console.log(filterSelection);
     // filterSelection === [] ? console.log(true) : console.log(false);
+    console.log(filterSelection);
     if (filterSelection.length >= 1) {
       const filterTasks = [...allTasks];
       const filteredTasks = filterTasks.filter((task) =>
@@ -67,35 +54,37 @@ export default function TaskList({
       );
       setTasksFiltered(sortFav);
     }
-  }, [sortByFavorite]);
+  }, [allTasks, sortByFavorite]);
 
   // Sorts all tasks by completion (based on user's daily progress)
-  useEffect(() => {
-    // console.log(sortByComplete);
-    if (!sortByComplete) setTasksFiltered(allTasks);
-    if (sortByComplete) {
-      const sortComp = [...allTasks].sort((a, b) =>
-        user.todayCompleted._id === a.taskId ? -1 : 1
-      );
-      setTasksFiltered(sortComp);
-    }
-  }, [sortByComplete]);
+  // useEffect(() => {
+  //   // console.log(sortByComplete);
+  //   if (!sortByComplete) setTasksFiltered(allTasks);
+  //   if (sortByComplete) {
+  //     const sortComp = [...allTasks].sort((a, b) =>
+  //       user.todayCompleted._id === a.taskId ? -1 : 1
+  //     );
+  //     setTasksFiltered(sortComp);
+  //   }
+  // }, [sortByComplete]);
 
   // !!! WIP: functioning search feature comes here:
 
   return (
+    // Console.logging is making it not render the rest of the component. Wth???
     allTasks &&
-    console.log(tasksFiltered) && (
+    tasksFiltered && (
       <div className="taskWrapper">
         {/* {console.log("These are the favorites:")} */}
         {/* {console.log(favoriteList)} */}
         {/* {console.log(user.todayList)} */}
         {/* {console.log(user.todaySuccess)} */}
         {/* {console.log(user.todayFailed)} */}
-        {allTasks.map((task, index) => (
+        {tasksFiltered.map((task, index) => (
           <TaskMini key={index} task={task} user={user} />
         ))}
       </div>
     )
+    // )
   );
 }

@@ -1,5 +1,5 @@
 // FonClick function to change the class name of the target (meant only for the filter buttons)
-const changeClassName = (e, noFilterBtn, filterContainer) => {
+const changeClassName = (e, noFilterBtn, filterContainer, sortedByFavorite) => {
   // First we get the index of the added class on the selected button, on the no filter button,
   // and on all filter buttons that are not the event target.
   const getIndex = e.target.className.indexOf("filterSelected");
@@ -8,6 +8,7 @@ const changeClassName = (e, noFilterBtn, filterContainer) => {
 
   // If the no filter button gets selected, it gains the class, and all other buttons lose the class
   // (getting "deselected").
+  // if (sortedByFavorite) {
   if (!e.target.name) {
     for (let i = 1; i < filterContainer.current.children.length; i++) {
       let iconClass = filterContainer.current.children[i].children[0].className;
@@ -37,6 +38,7 @@ const changeClassName = (e, noFilterBtn, filterContainer) => {
       );
     }
   }
+  // }
 };
 
 export default changeClassName;

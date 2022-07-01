@@ -37,13 +37,13 @@ const registerUser = async (userRegister) => {
   return register;
 };
 
-const getUser = async (id) => {
-  const oneUser = await axios
-    .get(`${port}user/${id}`)
-    .then(({ data }) => data)
-    .catch((err) => console.error(`Error: ${err}`));
-  return oneUser;
-};
+// const getUser = async (id) => {
+//   const oneUser = await axios
+//     .get(`${port}user/${id}`)
+//     .then(({ data }) => data)
+//     .catch((err) => console.error(`Error: ${err}`));
+//   return oneUser;
+// };
 
 const addToToday = async (id, taskId) => {
   const updatedFavorite = await axios
@@ -106,7 +106,7 @@ export {
   checkValidToken,
   loginUser,
   registerUser,
-  getUser,
+  // getUser,
   addToToday,
   removeFromToday,
   addFavorite,

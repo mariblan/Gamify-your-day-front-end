@@ -3,9 +3,16 @@ import { useState, useRef } from "react";
 import renderApples from "../../../utils/generateApples";
 import { useNavigate } from "react-router-dom";
 import { useTask } from "../../../taskContext";
+import { toast } from "react-toastify";
 
 export default function AnimalSelection(index, id) {
-  const { pets, selectedPet, setSelectedPet, userSettings } = useTask();
+  const {
+    pets,
+    selectedPet,
+    setSelectedPet,
+    userSettings,
+    toastErrorSettings,
+  } = useTask();
   const [petWarning, setPetWarning] = useState(false);
   let animalContainer = useRef();
   const navigate = useNavigate();
@@ -13,11 +20,7 @@ export default function AnimalSelection(index, id) {
   const goToGame = () => {
     if (selectedPet) setTimeout(navigate("../mytasks"), 150);
     if (!selectedPet)
-      setPetWarning(
-        <p className="petSelectWarning">
-          Please select a pet before proceeding
-        </p>
-      );
+      toast.error("Please select a pet before proceeding", toastErrorSettings);
   };
 
   const pickPetClick = ({ target, currentTarget }) => {
@@ -38,7 +41,7 @@ export default function AnimalSelection(index, id) {
     // selectedPet && console.log(currentTarget);
   };
 
-  const navigateToTasks = () => setTimeout(navigate("/alltasks"), 150);
+  const navigateToTasks = () => setTimeout(navigate("../alltasks"), 150);
 
   return (
     console.log(selectedPet) || (
@@ -85,11 +88,6 @@ export default function AnimalSelection(index, id) {
               </div>
             </div>
           </div>
-          {petWarning || (
-            <p className="petSelectHidden">
-              Please select a pet before proceeding
-            </p>
-          )}
           <button className="confirmbtn" onClick={goToGame}>
             My task list
           </button>

@@ -82,7 +82,7 @@ export default function TaskSuccess() {
   const navigateToList = () => setTimeout(navigate("../mytasks"), 150);
 
   return (
-    console.log(taskSuccess) || (
+    console.log(userProgress) || (
       <div className="bodytimer">
         <button className="menu" type="menu" onClick={navigateToList}>
           My list

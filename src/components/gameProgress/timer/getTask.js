@@ -13,6 +13,7 @@ export default function GetTask() {
     selectedPet,
     setSelectedPet,
     userSettings,
+    userProgress,
     todaysList,
     setTodaysList,
     todaysCompleted,
@@ -56,7 +57,7 @@ export default function GetTask() {
 
   return (
     <div>
-      {console.log(userSettings)}
+      {console.log(userProgress)}
       <GameGo
         onClick={getTask}
         counter={counter}

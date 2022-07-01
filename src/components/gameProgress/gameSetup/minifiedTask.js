@@ -8,8 +8,6 @@ import { selectTask, loadSelected } from "../../../utils/selectTask";
 import { useTask } from "../../../taskContext";
 
 export default function TaskMini({ task: { _id, taskName, category } }) {
-  //??? Same component is being called in different components, and not all of them pass
-  // the same props. However, if a prop is undefined, the whole thing breaks. How to go around?
   const { user, favoriteList, setFavoriteList, todaysList, setTodaysList } =
     useTask();
   const { icon, alt } = checkCategory(category);

@@ -10,9 +10,9 @@ export default function TaskList({
   sortByComplete,
 }) {
   // console.log(searchValue);
-  const [allTasks, setAllTasks] = useState(false);
+  // const [allTasks, setAllTasks] = useState(false);
   const [tasksFiltered, setTasksFiltered] = useState([]);
-  const { user } = useTask();
+  const { user, allTasks } = useTask();
 
   // This is how to get around derived state, just for reference if that's what I happen to be doing...
   // const favoriteTasks = user.find((user) => {
@@ -24,19 +24,19 @@ export default function TaskList({
   // is unnecessary data being distributed to the whole of the app.
   useEffect(() => {
     // Get all tasks in random order
-    getAllTasks().then((allData) => {
-      setAllTasks(
-        allData.sort((a, b) => {
-          return Math.random() >= 0.5 ? 1 : -1;
-        })
-      );
-      setTasksFiltered(allData);
-      //!!! If time allows, order the task categories by the reverse order in which they were
-      // inputted in the array (last category selection shows first in list)
-      // setTasksFiltered(allData.sort((a,b) => {
-      //   const filterSelectionOrder = filterSelection
-      // }));
-    });
+    // getAllTasks().then((allData) => {
+    //   setAllTasks(
+    //     allData.sort((a, b) => {
+    //       return Math.random() >= 0.5 ? 1 : -1;
+    //     })
+    //   );
+    // setTasksFiltered(allData);
+    //!!! If time allows, order the task categories by the reverse order in which they were
+    // inputted in the array (last category selection shows first in list)
+    // setTasksFiltered(allData.sort((a,b) => {
+    //   const filterSelectionOrder = filterSelection
+    // }));
+    // });
   }, []);
 
   // This useEffect checks the filter array and filters the displayed tasks to show only the tasks
@@ -84,7 +84,7 @@ export default function TaskList({
   // !!! WIP: functioning search feature comes here:
 
   return (
-    tasksFiltered &&
+    allTasks &&
     console.log(tasksFiltered) && (
       <div className="taskWrapper">
         {/* {console.log("These are the favorites:")} */}
@@ -92,7 +92,7 @@ export default function TaskList({
         {/* {console.log(user.todayList)} */}
         {/* {console.log(user.todaySuccess)} */}
         {/* {console.log(user.todayFailed)} */}
-        {tasksFiltered.map((task, index) => (
+        {allTasks.map((task, index) => (
           <TaskMini key={index} task={task} user={user} />
         ))}
       </div>

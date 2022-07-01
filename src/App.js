@@ -25,18 +25,18 @@ function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [token, setToken] = useState(localStorage.getItem("token"));
   const [user, setUser] = useState(null);
+  const toastErrorSettings = {
+    position: "top-center",
+    closeOnClick: true,
+    hideProgressBar: true,
+    theme: "colored",
+    autoClose: 2000,
+  };
 
   useEffect(() => {
     const verifyLogin = async (token) => {
       const res = await checkValidToken(token);
-      if (res.error)
-        return toast.error(res.error, {
-          position: "top-center",
-          closeOnClick: true,
-          hideProgressBar: true,
-          theme: "colored",
-          autoClose: 2000,
-        });
+      if (res.error) return toast.error(res.error, toastErrorSettings);
       setUser(res);
       setIsAuthenticated(true);
     };
@@ -58,6 +58,7 @@ function App() {
         setIsAuthenticated={setIsAuthenticated}
         token={token}
         setToken={setToken}
+        toastErrorSettings={toastErrorSettings}
         user={user}
         logOut={logOut}
       >

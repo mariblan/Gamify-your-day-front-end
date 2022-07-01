@@ -3,13 +3,15 @@ import { getUser } from "../../../fetchDB/fetchDB";
 import { useState, useEffect } from "react";
 import { useTask } from "../../../taskContext";
 
-export default function MyList({ next }) {
+export default function MyList() {
   // console.log(searchValue);
   //!!! displayedTasks needs to have only the tasks inside the user's daily list (if any)
   const [displayedTasks, setDisplayedTasks] = useState(false);
   const {
     user,
     setUser,
+    nextClicked,
+    setNextClicked,
     todaysList,
     setTodaysList,
     userSettings,
@@ -17,7 +19,7 @@ export default function MyList({ next }) {
   } = useTask();
 
   const sendTaskSetting = (taskSetting) => {
-    if (next) {
+    if (nextClicked) {
       setUserSettings((prev) => [...prev, taskSetting]);
     }
   };
@@ -35,7 +37,6 @@ export default function MyList({ next }) {
             task={task}
             user={user}
             sendTaskSetting={sendTaskSetting}
-            nextClicked={next}
           />
         ))}
       </div>

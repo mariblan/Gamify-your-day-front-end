@@ -71,6 +71,8 @@ const TaskProvider = ({
     });
   }, []);
 
+  const [nextClicked, setNextClicked] = useState(false);
+
   const [selectedPet, setSelectedPet] = useState(false);
 
   // const [currentUser, setCurrentUser] = useState(false);
@@ -140,6 +142,8 @@ const TaskProvider = ({
         pets,
         selectedPet,
         setSelectedPet,
+        nextClicked,
+        setNextClicked,
         user,
         userProgress,
         setUserProgress,

@@ -19,7 +19,7 @@ export default function MyList() {
   } = useTask();
 
   const sendTaskSetting = (taskSetting) => {
-    if (nextClicked) {
+    if (nextClicked && userSettings.length === 0) {
       setUserSettings((prev) => [...prev, taskSetting]);
     }
   };

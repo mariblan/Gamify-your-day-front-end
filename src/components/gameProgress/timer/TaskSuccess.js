@@ -14,6 +14,7 @@ export default function TaskSuccess() {
     user,
     setUser,
     userSettings,
+    setUserSettings,
     gottenTask,
     gottenTask: { taskId, taskName, category, sliderValue, difficulty, reward },
     setGottenTask,
@@ -79,73 +80,76 @@ export default function TaskSuccess() {
     taskSuccess && successAndCompleted(user._id, taskSuccess);
   }, [taskSuccess]);
 
+  useEffect(() => {
+    setUserSettings(
+      userSettings.filter((task) => task._id !== taskSuccess._id)
+    );
+  }, [userSettings]);
+
   const navigateToList = () => setTimeout(navigate("../mytasks"), 150);
 
+  const successClick = () => {
+    if (selectedPet.hungerlevel > userProgress) {
+      setTimeout(navigate("../gamego"), 150);
+    } else if (selectedPet.hungerlevel <= userProgress) {
+      setTimeout(navigate("../gameover"), 150);
+    }
+  };
+
   return (
-    console.log(userSettings) || (
-      <div className="bodytimer">
-        <button className="menu" type="menu" onClick={navigateToList}>
-          My list
-        </button>
-        <div className="success">
-          <img
-            className="chicken"
-            src={selectedPet.mood[1]}
-            alt="canary-normal"
-          />
-          <div className="boxsuccess">
-            <div className="congrats">
-              <div className="title-congrats">
-                <img className="checkicon" src={checkicon} alt="" />
-                <h2 id="congrat">Well done!</h2>
-              </div>
-              <h6>
-                You finished your task with{" "}
-                {minutes === 0 ? "" : `${minutes} minutes and `}
-                {seconds < 10 ? `0${seconds}` : seconds} seconds remaining
-              </h6>
+    <div className="bodytimer">
+      <button className="menu" type="menu" onClick={navigateToList}>
+        My list
+      </button>
+      <div className="success">
+        <img
+          className="chicken"
+          src={selectedPet.mood[1]}
+          alt="canary-normal"
+        />
+        <div className="boxsuccess">
+          <div className="congrats">
+            <div className="title-congrats">
+              <img className="checkicon" src={checkicon} alt="" />
+              <h2 id="congrat">Well done!</h2>
             </div>
-            <div className="task">
-              <img className="icon" src={icon} alt={alt} />
-              <h5 className="">{taskName}</h5>
-            </div>
-            <div className="difficulty">
-              <h6 className="category">Difficulty</h6>
-              <h6 className="info">{difficulty}</h6>
-            </div>
-            <div className="time">
-              <h6 className="category">Total time</h6>
-              <h6 className="info">
-                {sliderValue} {sliderValue === 1 ? "minute" : "minutes"}
-              </h6>
-            </div>
-            <div className="reward">
-              <h6>Reward</h6>
-              {renderApples("apple", reward)}
-            </div>
-            <div>
-              <button
-                onClick={() => {
-                  setTimeout(navigate("../gamego"), 150);
-                }}
-                className="next"
-              >
-                Next
-              </button>
-            </div>
+            <h6>
+              You finished your task with{" "}
+              {minutes === 0 ? "" : `${minutes} minutes and `}
+              {seconds < 10 ? `0${seconds}` : seconds} seconds remaining
+            </h6>
           </div>
-          <div className="boxpet">
-            <img className="pet" src={selectedPet.mood[1]} alt="" />
-            <div className="petfood">
-              {renderApples(
-                "applereward",
-                userProgress,
-                selectedPet.hungerlevel
-              )}
-            </div>
+          <div className="task">
+            <img className="icon" src={icon} alt={alt} />
+            <h5 className="">{taskName}</h5>
+          </div>
+          <div className="difficulty">
+            <h6 className="category">Difficulty</h6>
+            <h6 className="info">{difficulty}</h6>
+          </div>
+          <div className="time">
+            <h6 className="category">Total time</h6>
+            <h6 className="info">
+              {sliderValue} {sliderValue === 1 ? "minute" : "minutes"}
+            </h6>
+          </div>
+          <div className="reward">
+            <h6>Reward</h6>
+            {renderApples("apple", reward)}
+          </div>
+          <div>
+            <button onClick={successClick} className="next">
+              Next
+            </button>
+          </div>
+        </div>
+        <div className="boxpet">
+          <img className="pet" src={selectedPet.mood[1]} alt="" />
+          <div className="petfood">
+            {renderApples("applereward", userProgress, selectedPet.hungerlevel)}
           </div>
         </div>
       </div>
-    )
+    </div>
   );
 }

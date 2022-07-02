@@ -1,4 +1,3 @@
-import "./App.css";
 import { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import {
@@ -18,6 +17,7 @@ import TaskTimer from "./components/gameProgress/timer/taskTimer";
 import MyTaskList from "./components/gameProgress/gameSetup/myTaskList";
 import TaskSuccess from "./components/gameProgress/timer/taskSuccess";
 import TaskFailure from "./components/gameProgress/timer/taskFailure";
+import GameOver from "./components/gameProgress/endGame/gameOver";
 import { TaskProvider } from "./taskContext";
 import { checkValidToken } from "./fetchDB/fetchDB";
 
@@ -74,6 +74,7 @@ function App() {
             <Route path="tasktimer" element={<TaskTimer />} />
             <Route path="tasksuccess" element={<TaskSuccess />} />
             <Route path="taskfailure" element={<TaskFailure />} />
+            <Route path="gameover" element={<GameOver />} />
           </Route>
         </Routes>
       </TaskProvider>

@@ -1,0 +1,65 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+.gameoverscreen {
+  width: 100%;
+}
+.gameovercontainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+.completiontext {
+  font-size: 1.2rem;
+  text-align: center;
+  margin: 9% 3% 3%;
+}
+.imagesend {
+  width: 50%;
+  margin: 7% auto 5%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.tortoise,
+.canary,
+.hamster {
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.3);
+  border: 1px solid #e9c77c8c;
+  border-radius: 15px;
+  margin-bottom: 2%;
+}
+.applesend {
+  width: 2.5rem;
+  display: flex;
+  justify-content: center;
+  margin: 4% 0% 6% 3%;
+}
+.applesendimg {
+  width: 2.5rem;
+  margin: 3%;
+}
+.applesendwrap {
+  width: 119%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  flex: 1, 1, 1%;
+  margin: 4% 0% 6% 3%;
+}
+.applesendwrapimg {
+  width: 2.5rem;
+  margin: 3%;
+}
+
+.continue {
+  position: absolute;
+  bottom: 3%;
+  left: 37%;
+}

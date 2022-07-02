@@ -64,9 +64,11 @@ export default function AllTasks() {
   // };
 
   // Toggles sorting by favorite on and off
-  const checkFavorite = () => {
+  const checkFavorite = (e) => {
+    console.log(`This is the favorites list:`);
     console.log(favoriteList);
     setFilter([]);
+    changeClassName(e, noFilterBtn, filterContainer);
     // if (sortByComplete) setSortByComplete(false);
     !sortByFavorite ? setSortByFavorite(true) : setSortByFavorite(false);
   };
@@ -182,10 +184,15 @@ export default function AllTasks() {
         filterSelection={filter}
         // searchValue={searchValue}
         sortByFavorite={sortByFavorite}
+        setSortByFavorite={setSortByFavorite}
         // sortByComplete={sortByComplete}
       />
       <div className="navWrapper">
-        <button type="button" className="fadedBtn" onClick={checkFavorite}>
+        <button
+          type="button"
+          className="fadedBtn"
+          onClick={(e) => checkFavorite(e)}
+        >
           Favorites
         </button>
         {/* <button type="button" className="fadedBtn" onClick={checkComplete}>
@@ -196,8 +203,18 @@ export default function AllTasks() {
         </button>
       </div>
       <div className="hidden">
-        <button type="button" className="mainBtn">
-          My list
+        <button
+          type="button"
+          className="fadedBtn"
+          onClick={(e) => checkFavorite(e)}
+        >
+          Favorites
+        </button>
+        {/* <button type="button" className="fadedBtn" onClick={checkComplete}>
+          Completed
+        </button> */}
+        <button type="button" className="mainBtn" onClick={goToMyList}>
+          Select pet
         </button>
       </div>
     </>

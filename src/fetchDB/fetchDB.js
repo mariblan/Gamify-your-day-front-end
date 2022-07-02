@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const port = process.env.PORT || "http://localhost:5000/";
+const port =
+  process.env.REACT_APP_GAMIFY_BACKEND_URL || "http://localhost:5000/";
 
 const getAllTasks = async () => {
   const allTasks = await axios
@@ -12,7 +13,6 @@ const getAllTasks = async () => {
 
 const checkValidToken = async (token) => {
   const login = axios
-    // .post(`${process.env.REACT_APP_GAMIFY_BACKEND_URL}/auth/me`)
     .post(`${port}auth/me`, {}, { headers: { Authorization: token } })
     .then(({ data }) => data)
     .catch((err) => console.error(`Error: ${err}`));
@@ -21,7 +21,6 @@ const checkValidToken = async (token) => {
 
 const loginUser = async (userSignIn) => {
   const login = axios
-    // .post(`${process.env.REACT_APP_GAMIFY_BACKEND_URL}/auth/login`, { ...userSignIn })
     .post(`${port}auth/login`, { ...userSignIn })
     .then(({ data }) => data)
     .catch((err) => console.error(`Error: ${err}`));
@@ -30,20 +29,11 @@ const loginUser = async (userSignIn) => {
 
 const registerUser = async (userRegister) => {
   const register = axios
-    // .post(`${process.env.REACT_APP_GAMIFY_BACKEND_URL}/auth/register`, { ...userRegister })
     .post(`${port}auth/register`, { ...userRegister })
     .then(({ data }) => data)
     .catch((err) => console.error(`Error: ${err}`));
   return register;
 };
-
-// const getUser = async (id) => {
-//   const oneUser = await axios
-//     .get(`${port}user/${id}`)
-//     .then(({ data }) => data)
-//     .catch((err) => console.error(`Error: ${err}`));
-//   return oneUser;
-// };
 
 const addToToday = async (id, taskId) => {
   const updatedFavorite = await axios
@@ -106,7 +96,6 @@ export {
   checkValidToken,
   loginUser,
   registerUser,
-  // getUser,
   addToToday,
   removeFromToday,
   addFavorite,

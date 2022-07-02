@@ -12,9 +12,6 @@ export default function TaskList({
   const [tasksFiltered, setTasksFiltered] = useState([]);
   const { user, allTasks } = useTask();
 
-  // Get all tasks (server route '/') from the DB, make the order random and store in state
-  // Here because this is the only place in the app that displays all tasks, so storing in context
-  // is unnecessary data being distributed to the whole of the app.
   useEffect(() => {
     // setTasksFiltered(allData);
     //!!! If time allows, order the task categories by the reverse order in which they were

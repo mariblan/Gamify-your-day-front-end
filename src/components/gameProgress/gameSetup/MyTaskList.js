@@ -48,7 +48,6 @@ export default function MyTaskList() {
 
   return (
     <>
-      {console.log(userProgress)}
       <div className="headerWrapper">
         <button className="profileBtn fadedBtn" onClick={() => logOut()}>
           Log out

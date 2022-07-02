@@ -32,7 +32,6 @@ export default function TaskList({
     // ??? and yet filterSelection === [] is false. Wth, why???
     // console.log(filterSelection);
     // filterSelection === [] ? console.log(true) : console.log(false);
-    console.log(filterSelection);
     if (filterSelection.length >= 1) {
       const filterTasks = [...allTasks];
       const filteredTasks = filterTasks.filter((task) =>
@@ -46,15 +45,17 @@ export default function TaskList({
 
   // Sorts all tasks by favorite (based on user settings)
   useEffect(() => {
-    // console.log(sortByFavorite);
     if (!sortByFavorite) setTasksFiltered(allTasks);
     if (sortByFavorite) {
-      const sortFav = [...allTasks].sort((a, b) =>
-        user.favoriteList._id === a.taskId ? -1 : 1
-      );
-      setTasksFiltered(sortFav);
+      const favoriteIds = user.favoriteList.map((favTask) => {
+        return favTask._id;
+      });
+      const sortFavs = [...allTasks].sort((a, b) => {
+        return favoriteIds.includes(a._id) ? -1 : 1;
+      });
+      setTasksFiltered(sortFavs);
     }
-  }, [allTasks, sortByFavorite]);
+  }, [sortByFavorite]);
 
   // Sorts all tasks by completion (based on user's daily progress)
   // useEffect(() => {

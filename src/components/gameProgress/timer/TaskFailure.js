@@ -55,19 +55,25 @@ export default function TaskFailure() {
   }, [failedTask]);
 
   useEffect(() => {
-    userSettings.filter((task) => {
-      return task._id === failedTask.taskId;
-    });
+    setUserSettings(userSettings.filter((task) => task._id !== failedTask._id));
   }, [userSettings]);
 
   const navigate = useNavigate();
+
+  const failureClick = () => {
+    if (selectedPet.hungerlevel > userProgress) {
+      setTimeout(navigate("../gamego"), 150);
+    } else if (selectedPet.hungerlevel === userProgress) {
+      setTimeout(navigate("../gameover"), 150);
+    }
+  };
 
   return (
     console.log(userSettings) || (
       <div className="bodytimer">
         <button
           onClick={() => {
-            setTimeout(navigate("/mytasks"), 150);
+            setTimeout(navigate("../mytasks"), 150);
           }}
           className="menu"
           type="menu"
@@ -107,13 +113,7 @@ export default function TaskFailure() {
               {renderApples("apple", reward)}
             </div>
             <div>
-              <button
-                onClick={() => {
-                  setNextClicked(false);
-                  setTimeout(navigate("../gamego"), 150);
-                }}
-                className="next"
-              >
+              <button onClick={failureClick} className="next">
                 Next
               </button>
             </div>

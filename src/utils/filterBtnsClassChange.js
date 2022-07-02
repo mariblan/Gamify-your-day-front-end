@@ -8,8 +8,8 @@ const changeClassName = (e, noFilterBtn, filterContainer, sortedByFavorite) => {
 
   // If the no filter button gets selected, it gains the class, and all other buttons lose the class
   // (getting "deselected").
-  // if (sortedByFavorite) {
-  if (!e.target.name) {
+
+  if (!e.target.name || sortedByFavorite) {
     for (let i = 1; i < filterContainer.current.children.length; i++) {
       let iconClass = filterContainer.current.children[i].children[0].className;
       if (iconClass.includes("filterSelected")) {
@@ -38,7 +38,6 @@ const changeClassName = (e, noFilterBtn, filterContainer, sortedByFavorite) => {
       );
     }
   }
-  // }
 };
 
 export default changeClassName;

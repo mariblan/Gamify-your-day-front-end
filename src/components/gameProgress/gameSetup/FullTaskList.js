@@ -9,6 +9,7 @@ import TaskList from "./taskList";
 import { useTask } from "../../../taskContext";
 
 export default function AllTasks() {
+  console.log("sup!");
   // Initial states for filtering or searching functions for task selection. All filters are false/empty
   // by default, and some dom nodes are selected for purposes of changing styling upon selection.
   const [filter, setFilter] = useState([]);

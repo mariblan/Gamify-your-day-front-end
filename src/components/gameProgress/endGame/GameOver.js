@@ -4,6 +4,7 @@ import "./gameOver.css";
 
 export default function GameOver() {
   const { selectedPet, setSelectedPet, logOut } = useTask();
+  const continueClick = () => {};
 
   return (
     <div className="gameoverscreen">

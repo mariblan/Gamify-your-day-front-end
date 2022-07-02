@@ -1,5 +1,6 @@
 import { createContext, useState, useContext, useEffect } from "react";
-import { getAllTasks } from "./fetchDB/fetchDB";
+import { getAllTasks, addToProgress } from "./fetchDB/fetchDB";
+import { Navigate } from "react-router-dom";
 import canaryNorm from "./images/canary-normal.png";
 import canaryHappy from "./images/canary-happy.png";
 import canarySad from "./images/canary-sad.png";
@@ -21,7 +22,7 @@ const TaskProvider = ({
   toastErrorSettings,
   token,
   setToken,
-  logOut,
+  setUser,
   children,
 }) => {
   const pets = [
@@ -59,6 +60,16 @@ const TaskProvider = ({
         "After so many apples, the hamster seems to be finally full as it snoozes peacefully. It wasn't easy but you did it!",
     },
   ];
+
+  const logOut = () => {
+    addToProgress(user._id, 0);
+    setUserProgress(0);
+    localStorage.removeItem("token");
+    setIsAuthenticated(false);
+    setToken("");
+    setUser(null);
+    setTimeout(() => <Navigate to={"../login"} />, 150);
+  };
 
   const [allTasks, setAllTasks] = useState(false);
   useEffect(() => {

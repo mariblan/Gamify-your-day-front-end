@@ -80,18 +80,21 @@ export default function TaskSuccess() {
     taskSuccess && successAndCompleted(user._id, taskSuccess);
   }, [taskSuccess]);
 
-  useEffect(() => {
-    setUserSettings(
-      userSettings.filter((task) => task._id !== taskSuccess._id)
-    );
-  }, [userSettings]);
+  // useEffect(() => {
+  // }, []);
 
   const navigateToList = () => setTimeout(navigate("../mytasks"), 150);
 
   const successClick = () => {
     if (selectedPet.hungerlevel > userProgress) {
+      setUserSettings(
+        userSettings.filter((task) => task._id !== taskSuccess._id)
+      );
       setTimeout(navigate("../gamego"), 150);
     } else if (selectedPet.hungerlevel <= userProgress) {
+      setUserSettings(
+        userSettings.filter((task) => task._id !== taskSuccess._id)
+      );
       setTimeout(navigate("../gameover"), 150);
     }
   };

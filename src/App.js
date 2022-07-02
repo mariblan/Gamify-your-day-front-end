@@ -1,11 +1,6 @@
 import { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import GameIntro from "./components/preAuth/gameIntro";
 import Login from "./components/preAuth/login";
 import Register from "./components/preAuth/register";
@@ -43,14 +38,6 @@ function App() {
     token && verifyLogin(token);
   }, [token]);
 
-  const logOut = () => {
-    localStorage.removeItem("token");
-    setIsAuthenticated(false);
-    setToken("");
-    setUser(null);
-    setTimeout(() => <Navigate to={"../login"} />, 150);
-  };
-
   return (
     <Router>
       <TaskProvider
@@ -60,7 +47,7 @@ function App() {
         setToken={setToken}
         toastErrorSettings={toastErrorSettings}
         user={user}
-        logOut={logOut}
+        setUser={setUser}
       >
         <Routes>
           <Route path="/" element={<GameIntro />} />

@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import "./timer.css";
-import canary from "../../../images/canary-normal.png";
 import apple from "../../../images/apple-color.png";
 import checkCategory from "../../../utils/categoryCheck";
 import TaskTimerRender from "./taskTimerRender";
@@ -26,6 +25,8 @@ export default function TaskTimer() {
     setMinutes,
     seconds,
     setSeconds,
+    forfeited,
+    setForfeited,
   } = useTask();
   const [paused, setPaused] = useState(false);
   const [done, setDone] = useState(false);
@@ -39,7 +40,7 @@ export default function TaskTimer() {
     setSeconds(0);
     setTimeout(() => {
       setTimerInit(true);
-    }, 1000);
+    }, 200);
   }, [setMinutes, setSeconds]);
 
   TimerSeconds(timerInit, paused, setPaused, done, setDone);
@@ -69,38 +70,33 @@ export default function TaskTimer() {
             you will lose your reward. Are you sure you want to forfeit the
             task?
           </h4>
-          <button
-            className="forfeit"
-            onClick={() => {
-              onConfirm();
-              navigate("../taskfailure");
-            }}
-          >
-            {" "}
-            Forfeit{" "}
-          </button>
-          <button
-            className="continue"
-            onClick={() => {
-              onCancel();
-              setPaused(false);
-            }}
-          >
-            {" "}
-            Continue{" "}
-          </button>
+          <div className="confirm-box-btnWrapper">
+            <button
+              onClick={() => {
+                onConfirm();
+                navigate("../taskfailure");
+              }}
+            >
+              Forfeit
+            </button>
+            <button
+              onClick={() => {
+                onCancel();
+                setPaused(false);
+              }}
+            >
+              Continue
+            </button>
+          </div>
         </div>
       );
     },
   };
+
   const forfeitTask = async () => {
     setPaused(true);
-    const result = await confirm("Are you sure?", options);
-    if (result) {
-      console.log("You click yes!");
-      return;
-    }
-    console.log("You click No!");
+    setForfeited(true);
+    return await confirm("Are you sure?", options);
   };
 
   //console.log(paused);

@@ -31,9 +31,9 @@ export default function Register() {
         localStorage.setItem("token", token);
         return setToken(token);
       }
-      if (error) return toast.error(error, toastErrorSettings);
+      if (error) return toast.error(`I'm a try error`, toastErrorSettings);
     } catch (error) {
-      toast.error(error.message, toastErrorSettings);
+      toast.error(error.stack, toastErrorSettings);
     }
   };
 

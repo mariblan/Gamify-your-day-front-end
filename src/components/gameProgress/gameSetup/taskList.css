@@ -17,6 +17,11 @@ body {
   padding-bottom: 2%;
 }
 
+.userWelcome {
+  font-size: 1.5rem;
+  padding: 8% 0 0 5%;
+}
+
 .fadedBtn {
   border-top: 1px solid rgb(106, 199, 106);
   border-left: 1px solid rgb(82, 187, 82);
@@ -76,7 +81,7 @@ body {
   text-align: center;
   max-width: 90%;
   margin: 0 auto;
-  padding: 5rem 0 0;
+  padding: 3rem 0 0;
   font-family: "Sansita", sans-serif;
   font-size: 2.7rem;
 }
@@ -378,4 +383,30 @@ input[type="range"]::-moz-range-thumb {
 .fixedTaskWrapper {
   margin-top: 1rem;
   margin-bottom: 15rem;
+}
+
+.react-confirm-box button:first-of-type {
+  font-size: 1.2rem;
+  outline: none;
+  padding: 6%;
+  background-color: rgba(182, 158, 48, 0.7);
+  border-radius: 65% 5%;
+  color: white;
+  border-left: rgb(182, 158, 48) 1px;
+  border-top: rgb(182, 158, 48) 1px;
+  border-right: solid rgba(182, 158, 48, 0.7) 1px;
+  border-bottom: solid rgba(182, 158, 48, 0.7) 1px;
+}
+
+.react-confirm-box button:last-of-type {
+  font-size: 1.2rem;
+  outline: none;
+  padding: 6%;
+  border-top: 1px solid rgb(112, 218, 112);
+  border-left: 1px solid rgb(58, 155, 58);
+  border-right: 1px solid rgb(66, 165, 66);
+  border-bottom: 1px solid rgb(130, 221, 130);
+  background-color: rgb(66, 165, 66);
+  border-radius: 65% 5%;
+  color: white;
 }

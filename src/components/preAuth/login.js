@@ -30,11 +30,7 @@ export default function Login() {
         localStorage.setItem("token", token);
         return setToken(token);
       }
-      if (error)
-        return toast.error(
-          `Something wrong with getting the token back! ${error}`,
-          toastErrorSettings
-        );
+      if (error) return toast.error(error, toastErrorSettings);
       if (email && password) setTimeout(() => navigate("/alltasks"), 150);
     } catch (error) {
       toast.error(

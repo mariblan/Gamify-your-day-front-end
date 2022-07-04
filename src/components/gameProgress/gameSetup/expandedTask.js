@@ -11,6 +11,7 @@ export default function TaskExpanded({
   task: { _id, taskName, taskTime, category },
   user: { todaySuccess, todayFailed },
   sendTaskSetting,
+  // blockCompleted,
 }) {
   const [sliderValue, setSliderValue] = useState(taskTime.minMedium);
   const [difficulty, setDifficulty] = useState("");
@@ -26,15 +27,17 @@ export default function TaskExpanded({
 
   //!!! Have this work. Check if the task is in the success or failed array and change state
   // of variable to render checks/xs conditionally
-  useEffect(() => {
-    for (let success of todaySuccess) {
-      if (success._id === _id) return setTaskConcluded("success");
-    }
+  // useEffect(() => {
+  //   for (let success of todaySuccess) {
+  //     // if (success._id === _id) return setTaskConcluded("success");
+  //     if (success._id === _id) return blockCompleted(_id);
+  //   }
 
-    for (let failure of todayFailed) {
-      if (failure._id === _id) return setTaskConcluded("failed");
-    }
-  }, [todaySuccess, todayFailed]);
+  //   for (let failure of todayFailed) {
+  //     // if (failure._id === _id) return setTaskConcluded("failed");
+  //     if (failure._id === _id) return blockCompleted(_id);
+  //   }
+  // }, [todaySuccess, todayFailed]);
 
   const checkCompletion = () => {
     if (taskConcluded === "failed")
@@ -91,7 +94,7 @@ export default function TaskExpanded({
 
   return (
     <div className="taskExpanded">
-      {checkCompletion()}
+      {/* {checkCompletion()} */}
       <div className="taskMain">
         <img src={icon} alt={alt} />
         <div className="titleFavoriteWrapper">

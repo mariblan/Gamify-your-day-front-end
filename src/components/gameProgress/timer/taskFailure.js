@@ -31,11 +31,14 @@ export default function TaskFailure() {
     setTodaysSuccess,
     todaysFailed,
     setTodaysFailed,
+    forfeited,
+    setForfeited,
+    gameFinalScreen,
+    setGameFinalScreen,
   } = useTask();
   const { icon, alt } = checkCategory(category);
 
   const [failedTask, setFailedTask] = useState(false);
-  const [newUserSettings, setNewUserSettings] = useState([]);
 
   useEffect(() => {
     setGottenTask((prev) => ({ ...prev, reward: 0 }));
@@ -54,17 +57,21 @@ export default function TaskFailure() {
     failedTask && failedAndCompleted(user._id, failedTask);
   }, [failedTask]);
 
-  useEffect(() => {
-    setUserSettings(userSettings.filter((task) => task._id !== failedTask._id));
-  }, [userSettings]);
+  // useEffect(() => {
+  //   setUserSettings(userSettings.filter((task) => task._id !== failedTask._id));
+  // }, [userSettings]);
 
   const navigate = useNavigate();
 
   const failureClick = () => {
+    setUserSettings(userSettings.filter((task) => task._id !== failedTask._id));
+    setForfeited(false);
     if (selectedPet.hungerlevel > userProgress) {
       setTimeout(navigate("../gamego"), 150);
-    } else if (selectedPet.hungerlevel === userProgress) {
+    } else if (selectedPet.hungerlevel <= userProgress && gameFinalScreen) {
       setTimeout(navigate("../gameover"), 150);
+    } else if (selectedPet.hungerlevel <= userProgress && !gameFinalScreen) {
+      setTimeout(navigate("../gamego"), 150);
     }
   };
 
@@ -82,17 +89,23 @@ export default function TaskFailure() {
         </button>
         <div className="success">
           <img
-            className="chicken"
+            className="imagePet"
             src={selectedPet.mood[2]}
-            alt="canary-normal"
+            alt={`${selectedPet.name} ${selectedPet.mood[2]}`}
           />
           <div className="boxsuccess">
             <div className="congrats">
               <div className="title-congrats">
                 <img className="checkicon" src={failedicon} alt="" />
-                <h2 id="congrat">Time's up!</h2>
+                <h2 id="congrat">
+                  {forfeited === true ? "Forfeited" : "Time's up!"}
+                </h2>
               </div>
-              <h6>It seems you needed more time...</h6>
+              <h6>
+                {forfeited
+                  ? "It seems you gave up on the task..."
+                  : "It seems you needed more time..."}
+              </h6>
             </div>
             <div className="task">
               <img className="icon" src={icon} alt={alt} />

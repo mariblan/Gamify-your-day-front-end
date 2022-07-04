@@ -30,7 +30,7 @@ export default function TaskTimerRender({
     <div className="bodytimer">
       <button
         onClick={() => {
-          setTimeout(navigate("/mytasks"), 150);
+          setTimeout(navigate("../mytasks"), 150);
         }}
         className="menu"
         type="menu"
@@ -39,7 +39,7 @@ export default function TaskTimerRender({
       </button>
       <div className="chicken-bg">
         <img
-          className="chicken"
+          className="imagePet"
           src={image ? image : undefined}
           alt="canary-normal"
         />

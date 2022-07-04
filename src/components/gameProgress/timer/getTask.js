@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import GameGo from "../gameSetup/gameGo";
 import { useTask } from "../../../taskContext";
+import { toast } from "react-toastify";
 
 export default function GetTask() {
   const [counter, setCounter] = useState("Start!");
@@ -21,21 +22,34 @@ export default function GetTask() {
     setTodaysFailed,
     gottenTask,
     setGottenTask,
+    toastErrorSettings,
   } = useTask();
 
   const navigate = useNavigate();
   //user && console.log(user);
+  const focusOnBtn = (e, field) => {
+    let next = field.current.nextSibling;
+    field.current.nextSibling.focus();
+  };
+
   function getTask() {
-    const index = Math.floor(Math.random() * userSettings.length);
-    //return arraytasks[index];
-    //console.log(taskDB[index].taskName);
-    //setInterval();
-    setClicked(true);
-    setCounter(5);
-    countDown();
-    // console.log(todaysList[index]);
-    console.log(userSettings);
-    setGottenTask(userSettings[index]);
+    if (userSettings.length === 0) {
+      toast.error(
+        "You have no tasks left to do, select more tasks to continue!",
+        toastErrorSettings
+      );
+    } else if (userSettings.length > 0) {
+      const index = Math.floor(Math.random() * userSettings.length);
+      //return arraytasks[index];
+      //console.log(taskDB[index].taskName);
+      //setInterval();
+      setClicked(true);
+      setCounter(5);
+      countDown();
+      // console.log(todaysList[index]);
+      //console.log(userSettings);
+      setGottenTask(userSettings[index]);
+    }
   }
 
   const countDown = () => {
@@ -58,7 +72,7 @@ export default function GetTask() {
     <div>
       {console.log(userProgress)}
       <GameGo
-        onClick={getTask}
+        getTask={getTask}
         counter={counter}
         gottenTask={gottenTask}
         clicked={clicked}

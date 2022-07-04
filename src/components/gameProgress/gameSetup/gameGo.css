@@ -10,6 +10,25 @@
     transform: rotateZ(360deg);
   }
 }
+@keyframes shake {
+  10%,
+  90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+  20%,
+  80% {
+    transform: translate3d(2px, 0, 0);
+  }
+  30%,
+  50%,
+  70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+  40%,
+  60% {
+    transform: translate3d(4px, 0, 0);
+  }
+}
 
 .gamegobody {
   display: flex;
@@ -28,7 +47,8 @@
   width: 100%;
 }
 
-.applebtn {
+.applebtn,
+.applebtnnotask {
   background-color: transparent;
   border: none;
   width: 13rem;
@@ -38,7 +58,7 @@
 
 .start {
   position: absolute;
-  top: 59%;
+  top: 54%;
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 2rem;
@@ -50,7 +70,7 @@
   color: black;
   font-size: 2rem;
   text-align: center;
-  margin-top: 6%;
+  margin-top: 19%;
 }
 
 .applebtn:focus {
@@ -71,4 +91,10 @@
   -moz-animation-timing-function: ease-in-out;
   animation-timing-function: ease-in-out;
   transform-origin: 50% 60%;
+}
+.applebtnnotask:focus {
+  /*animation-name*/
+  animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both infinite;
+  transform: translate3d(0, 0, 0);
+  perspective: 1000px;
 }

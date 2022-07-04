@@ -2,8 +2,9 @@ import appleColor from "../../../images/apple-color.png";
 import "./gameGo.css";
 import { useTask } from "../../../taskContext";
 import { useNavigate } from "react-router-dom";
+import { useRef } from "react";
 
-export default function GameGo(props) {
+export default function GameGo({ getTask, counter, clicked }) {
   // console.log(props);
   const {
     selectedPet,
@@ -13,11 +14,14 @@ export default function GameGo(props) {
     setTodaysList,
     gottenTask,
     setGottenTask,
+    forfeited,
+    setForfeited,
   } = useTask();
   // console.log(selectedPet);
   const navigate = useNavigate();
+  const focusBtn = useRef(null);
   return (
-    console.log(userSettings) || (
+    console.log(forfeited) || (
       <div>
         <button
           onClick={() => {
@@ -29,16 +33,19 @@ export default function GameGo(props) {
           My list
         </button>
         <div className="gamegobody">
-          {props.clicked === false ? (
+          {clicked === false ? (
             <h2 className="title">Give me a random task!</h2>
           ) : (
             <h2 className="title">Your next task is...</h2>
           )}
           <button
+            ref={focusBtn}
             id="a"
-            className="applebtn"
+            className={
+              userSettings.length === 0 ? "applebtnnotask" : "applebtn"
+            }
             type="button"
-            onClick={props.onClick}
+            onClick={getTask}
             value="Click"
           >
             <img
@@ -48,9 +55,17 @@ export default function GameGo(props) {
               alt="red apple"
             />
           </button>
-          <div className="start">{props.counter}</div>
+          <div
+            onClick={() => {
+              getTask();
+              focusBtn.current.focus();
+            }}
+            className="start"
+          >
+            {counter}
+          </div>
         </div>
-        {props.clicked === true && (
+        {clicked === true && (
           <div className="gottentask">
             <h4>{gottenTask.taskName}</h4>
           </div>

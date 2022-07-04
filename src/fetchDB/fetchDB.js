@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const port =
-  process.env.REACT_APP_GAMIFY_BACKEND_URL || "http://localhost:5000/";
+  // process.env.REACT_APP_GAMIFY_BACKEND_URL || "http://localhost:5000/";
+  "http://localhost:5000/";
 
 const getAllTasks = async () => {
   const allTasks = await axios
@@ -23,7 +24,14 @@ const loginUser = async (userSignIn) => {
   const login = axios
     .post(`${port}auth/login`, { ...userSignIn })
     .then(({ data }) => data)
-    .catch((err) => console.error(`Error: ${err}`));
+    // .then((data) => console.log(data))
+    .catch(
+      (err) => console.error(`Error: ${err}`)
+      // (err) => {
+      //   let message = typeof err.response !== "undefined" ? err.response.data.message : err.message;
+      //   console.warn("error", message);
+      // }
+    );
   return login;
 };
 
@@ -36,19 +44,27 @@ const registerUser = async (userRegister) => {
 };
 
 const addToToday = async (id, taskId) => {
-  const updatedFavorite = await axios
+  const updatedToday = await axios
     .put(`${port}user/${id}/todayList/${taskId}`)
     .then(({ data }) => data.todayList)
     .catch((err) => console.error(`Error: ${err}`));
-  return updatedFavorite;
+  return updatedToday;
 };
 
 const removeFromToday = async (id, taskId) => {
-  const updatedFavorite = await axios
+  const updatedToday = await axios
     .delete(`${port}user/${id}/todayList/${taskId}`)
     .then(({ data }) => data.todayList)
     .catch((err) => console.error(`Error: ${err}`));
-  return updatedFavorite;
+  return updatedToday;
+};
+
+const clearToday = async (id) => {
+  const updatedToday = await axios
+    .delete(`${port}user/${id}/todayList`)
+    .then(({ data }) => data.todayList)
+    .catch((err) => console.error(`Error: ${err}`));
+  return updatedToday;
 };
 
 const addFavorite = async (id, taskId) => {
@@ -75,9 +91,33 @@ const addFailed = async (id, taskObj) => {
   return updatedFailed;
 };
 
+const getCompletedIds = async (id) => {
+  const completedIds = await axios
+    .get(`${port}user/${id}/completed`)
+    .then(({ data }) => data.todayFailed)
+    .catch((err) => console.error(`Error: ${err}`));
+  return completedIds;
+};
+
+const clearFailed = async (id) => {
+  const updatedFailed = await axios
+    .delete(`${port}user/${id}/failed`)
+    .then(({ data }) => data.todayFailed)
+    .catch((err) => console.error(`Error: ${err}`));
+  return updatedFailed;
+};
+
 const addSuccess = async (id, taskObj) => {
   const updatedSuccess = await axios
     .put(`${port}user/${id}/success/${taskObj._id}`, { ...taskObj })
+    .then(({ data }) => data.todaySuccess)
+    .catch((err) => console.error(`Error: ${err}`));
+  return updatedSuccess;
+};
+
+const clearSuccess = async (id) => {
+  const updatedSuccess = await axios
+    .delete(`${port}user/${id}/success`)
     .then(({ data }) => data.todaySuccess)
     .catch((err) => console.error(`Error: ${err}`));
   return updatedSuccess;
@@ -98,9 +138,13 @@ export {
   registerUser,
   addToToday,
   removeFromToday,
+  clearToday,
   addFavorite,
   removeFavorite,
   addFailed,
+  getCompletedIds,
+  clearFailed,
   addSuccess,
+  clearSuccess,
   addToProgress,
 };

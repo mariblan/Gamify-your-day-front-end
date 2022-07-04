@@ -2,27 +2,55 @@ import MyList from "./myList";
 import reload from "../../../images/change-icon.png";
 import renderApples from "../../../utils/generateApples";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useTask } from "../../../taskContext";
 import { toast } from "react-toastify";
+import { confirm } from "react-confirm-box";
 
 export default function MyTaskList() {
-  // const [user, setUser] = useState([]);
   const {
+    user,
     userProgress,
     todaysList,
-    // selectedPet,
     selectedPet: { name, mood, hungerlevel },
     nextClicked,
+    canChangePet,
+    setCanChangePet,
     setNextClicked,
     toastErrorSettings,
-    logOut,
+    logOutConfirm,
   } = useTask();
   const navigate = useNavigate();
 
   useEffect(() => {
     clearTimeout();
   }, []);
+
+  const options = {
+    render: (message, onConfirm, onCancel) => {
+      return (
+        <div className="react-confirm-box">
+          <h4>
+            Once you start the game you won't be able to select a different pet
+            later on. Would you like to continue?
+          </h4>
+          <div className="confirm-box-btnWrapper">
+            <button onClick={() => onCancel()}>Back</button>
+            <button
+              onClick={() => {
+                onConfirm();
+                setNextClicked(true);
+                setTimeout(() => navigate("../gamego"), 150);
+                setCanChangePet(false);
+              }}
+            >
+              Start!
+            </button>
+          </div>
+        </div>
+      );
+    },
+  };
 
   // Sets the trigger for the values of each task in the today
   // to be stored and be passable to the task randomizer
@@ -33,8 +61,11 @@ export default function MyTaskList() {
         toastErrorSettings
       );
     } else {
-      await setNextClicked(true);
-      setTimeout(() => navigate("../gamego"), 150);
+      if (canChangePet) await confirm("Start the game?", options);
+      else {
+        setNextClicked(true);
+        setTimeout(() => navigate("../gamego"), 150);
+      }
     }
   };
 
@@ -49,12 +80,14 @@ export default function MyTaskList() {
   return (
     <>
       <div className="headerWrapper">
-        <button className="profileBtn fadedBtn" onClick={() => logOut()}>
+        <h1 className="userWelcome">Welcome back {user.name}!</h1>
+        <button className="profileBtn fadedBtn" onClick={() => logOutConfirm()}>
           Log out
         </button>
         <h1 className="title">Today's task list</h1>
       </div>
       <div className="hidden">
+        <h1 className="userWelcome">Welcome back {user.name}!</h1>
         <button className="profileBtn fadedBtn">Profile</button>
         <h1 className="title">Today's task list</h1>
       </div>
@@ -66,13 +99,19 @@ export default function MyTaskList() {
           <h3>My pet for today</h3>
           <div className="imgWrapper">
             <img
-              src={mood ? mood[0] : undefined}
-              alt={`A ${name}` || `A canary`}
+              src={mood ? mood[0] : `No pet selected`}
+              alt={`A ${name}` || `No pet selected`}
               className="animal"
             />
-            <div className="changeAnimal">
-              <img src={reload} alt="A reload icon" onClick={navigateToPets} />
-            </div>
+            {canChangePet && (
+              <div className="changeAnimal">
+                <img
+                  src={reload}
+                  alt="A reload icon"
+                  onClick={navigateToPets}
+                />
+              </div>
+            )}
           </div>
           <div className="appleWrapper">
             {renderApples("appleIcon", userProgress, hungerlevel)}

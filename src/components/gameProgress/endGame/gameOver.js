@@ -1,10 +1,23 @@
 import { useTask } from "../../../taskContext";
 import renderApples from "../../../utils/generateApples";
 import "./gameOver.css";
+import { useNavigate } from "react-router-dom";
 
 export default function GameOver() {
-  const { selectedPet, setSelectedPet, logOut } = useTask();
-  const continueClick = () => {};
+  const {
+    selectedPet,
+    setSelectedPet,
+    logOut,
+    gameFinalScreen,
+    setGameFinalScreen,
+  } = useTask();
+
+  const navigate = useNavigate();
+
+  const continueClick = () => {
+    setGameFinalScreen(false);
+    navigate("../gamego");
+  };
 
   return (
     <div className="gameoverscreen">
@@ -33,7 +46,9 @@ export default function GameOver() {
         </div>
       </div>
       <div className="continue">
-        <button className="mainBtn">Continue</button>
+        <button onClick={continueClick} className="mainBtn">
+          Continue
+        </button>
       </div>
     </div>
   );

@@ -43,7 +43,7 @@ function TimerSeconds(timerInit, paused, setPaused, done, setDone) {
       setTimeout(() => {
         clearTimeout();
         navigate("../taskfailure");
-      });
+      }, 150);
   });
   useEffect(() => {
     timerInit === true &&
@@ -51,9 +51,7 @@ function TimerSeconds(timerInit, paused, setPaused, done, setDone) {
       minutes >= 0 &&
       (paused === false || paused === true) &&
       done === true &&
-      setTimeout(() => {
-        clearTimeout();
-      });
+      clearTimeout();
   });
   useEffect(() => {
     timerInit === true &&
@@ -61,9 +59,7 @@ function TimerSeconds(timerInit, paused, setPaused, done, setDone) {
       minutes >= 0 &&
       paused === true &&
       done === false &&
-      setTimeout(() => {
-        clearTimeout();
-      });
+      clearTimeout();
   }, [seconds, minutes, timerInit, paused, done]);
 }
 

@@ -1,6 +1,14 @@
+import "./components/gameProgress/timer/timer.css";
 import { createContext, useState, useContext, useEffect } from "react";
-import { getAllTasks, addToProgress } from "./fetchDB/fetchDB";
-import { Navigate } from "react-router-dom";
+import {
+  getAllTasks,
+  addToProgress,
+  clearFailed,
+  clearSuccess,
+  clearToday,
+} from "./fetchDB/fetchDB";
+import { confirm } from "react-confirm-box";
+import { useNavigate, Navigate } from "react-router-dom";
 import canaryNorm from "./images/canary-normal.png";
 import canaryHappy from "./images/canary-happy.png";
 import canarySad from "./images/canary-sad.png";
@@ -61,15 +69,60 @@ const TaskProvider = ({
     },
   ];
 
+  const options = {
+    render: (message, onConfirm, onCancel) => {
+      return (
+        <div className="react-confirm-box">
+          <h4>
+            If you log out you will lose all your progress and personalised
+            tasks. Are you sure you want to proceed?
+          </h4>
+          <div className="confirm-box-btnWrapper">
+            <button
+              onClick={() => {
+                onConfirm();
+                logOut();
+              }}
+            >
+              Logout
+            </button>
+            <button
+              onClick={() => {
+                onCancel();
+              }}
+            >
+              Continue
+            </button>
+          </div>
+        </div>
+      );
+    },
+  };
+
+  const logOutConfirm = async () => {
+    if (user.todayList.length > 0) await confirm("Are you sure?", options);
+    return logOut();
+  };
+
   const logOut = () => {
     addToProgress(user._id, 0);
     setUserProgress(0);
+    clearToday(user._id);
+    setTodaysList([]);
+    clearFailed(user._id);
+    setTodaysFailed([]);
+    clearSuccess(user._id);
+    setTodaysSuccess([]);
+    setSelectedPet(false);
+    setCanChangePet(true);
     localStorage.removeItem("token");
     setIsAuthenticated(false);
     setToken("");
     setUser(null);
     setTimeout(() => <Navigate to={"../login"} />, 150);
   };
+
+  const navigate = useNavigate();
 
   const [allTasks, setAllTasks] = useState(false);
   useEffect(() => {
@@ -86,16 +139,12 @@ const TaskProvider = ({
 
   const [selectedPet, setSelectedPet] = useState(false);
 
-  // const [currentUser, setCurrentUser] = useState(false);
-  // useEffect(() => {
-  //   user && getUser(user._id).then((user) => setCurrentUser(user));
-  // }, [user]);
+  const [canChangePet, setCanChangePet] = useState(true);
 
   const [favoriteList, setFavoriteList] = useState(false);
 
   useEffect(() => {
     user && setFavoriteList(user.favoriteList);
-    // console.log(favoriteList);
   }, [user]);
 
   const [userSettings, setUserSettings] = useState([]);
@@ -103,25 +152,16 @@ const TaskProvider = ({
   const [todaysList, setTodaysList] = useState([]);
   useEffect(() => {
     user && setTodaysList(user.todayList);
-    // console.log(todaysList);
-  }, [user]);
-
-  const [todaysCompleted, setTodaysCompleted] = useState([]);
-  useEffect(() => {
-    user && setTodaysCompleted(user.todayCompleted);
-    //console.log(todaysCompleted);
   }, [user]);
 
   const [todaysFailed, setTodaysFailed] = useState([]);
   useEffect(() => {
     user && setTodaysFailed(user.todayFailed);
-    //console.log(todaysFailed);
   }, [user, todaysFailed]);
 
   const [todaysSuccess, setTodaysSuccess] = useState([]);
   useEffect(() => {
     user && setTodaysFailed(user.todayFailed);
-    //console.log(todaysFailed);
   }, [user, todaysFailed]);
 
   const [userProgress, setUserProgress] = useState(0);
@@ -140,6 +180,8 @@ const TaskProvider = ({
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
 
+  const [forfeited, setForfeited] = useState(false);
+  const [gameFinalScreen, setGameFinalScreen] = useState(true);
   return (
     <TaskContext.Provider
       value={{
@@ -147,14 +189,17 @@ const TaskProvider = ({
         setIsAuthenticated,
         token,
         setToken,
-        logOut,
+        logOutConfirm,
         toastErrorSettings,
         allTasks,
         pets,
         selectedPet,
         setSelectedPet,
+        canChangePet,
+        setCanChangePet,
         nextClicked,
         setNextClicked,
+        navigate,
         user,
         userProgress,
         setUserProgress,
@@ -164,8 +209,6 @@ const TaskProvider = ({
         setTodaysList,
         userSettings,
         setUserSettings,
-        todaysCompleted,
-        setTodaysCompleted,
         todaysSuccess,
         setTodaysSuccess,
         todaysFailed,
@@ -176,6 +219,10 @@ const TaskProvider = ({
         setMinutes,
         seconds,
         setSeconds,
+        forfeited,
+        setForfeited,
+        gameFinalScreen,
+        setGameFinalScreen,
       }}
     >
       {children}

@@ -4,7 +4,9 @@ import { useNavigate } from "react-router-dom";
 // import searchIcon from "../../../images/search-icon.png";
 import noFilter from "../../../images/nofilter-icon.png";
 import { categories } from "../../../utils/categoryCheck";
-import changeClassName from "../../../utils/filterBtnsClassChange";
+import changeClassName, {
+  newchangeClassName,
+} from "../../../utils/filterBtnsClassChange";
 import TaskList from "./taskList";
 import { useTask } from "../../../taskContext";
 
@@ -14,11 +16,10 @@ export default function AllTasks() {
   const [filter, setFilter] = useState([]);
   // const [searchValue, setSearchValue] = useState("");
   const [sortByFavorite, setSortByFavorite] = useState(false);
-  // const [sortByComplete, setSortByComplete] = useState(false);
   const noFilterBtn = useRef();
-  let filterContainer = useRef();
+  const filterContainer = useRef();
   const navigate = useNavigate();
-  const { favoriteList, logOut } = useTask();
+  const { user, favoriteList, canChangePet, logOutConfirm } = useTask();
 
   // This checks if there's any filter applied to the task list. If there's no filter selected,
   // the no filter button gets automatically selected again
@@ -27,10 +28,10 @@ export default function AllTasks() {
   }, [filter]);
 
   // Adds filters to an array so the child component returns only tasks that have the same category
-  // as the ones selected. Also disables filtering by completion or favorites.
+  // as the ones selected. Also disables filtering by favorites.
   const filterByCategory = (e) => {
+    // console.log(noFilterBtn.current);
     setSortByFavorite(false);
-    // setSortByComplete(false);
     // If the button that has no name is selected for the filter selection to be cleared,
     // the filtering array is set to empty
     if (!e.target.name) return setFilter([]);
@@ -56,25 +57,19 @@ export default function AllTasks() {
         });
   };
 
-  // Toggles sorting by completion on and off
-  // const checkComplete = () => {
-  //   setFilter([]);
-  //   if (sortByFavorite) setSortByFavorite(false);
-  //   !sortByComplete ? setSortByComplete(true) : setSortByComplete(false);
-  // };
-
   // Toggles sorting by favorite on and off
   const checkFavorite = (e) => {
     console.log(`This is the favorites list:`);
     console.log(favoriteList);
     setFilter([]);
-    changeClassName(e, noFilterBtn, filterContainer);
-    // if (sortByComplete) setSortByComplete(false);
+    changeClassName(e, noFilterBtn, filterContainer, true);
     !sortByFavorite ? setSortByFavorite(true) : setSortByFavorite(false);
   };
 
   const goToMyList = () => {
-    setTimeout(() => navigate("../petselection"), 150);
+    canChangePet
+      ? setTimeout(() => navigate("../petselection"), 150)
+      : setTimeout(() => navigate("../mytasks"), 150);
   };
 
   // // handleChange and handleSubmit are meant for the search function (WIP)
@@ -93,47 +88,45 @@ export default function AllTasks() {
   return (
     <>
       <nav className="headerWrapper">
+        <h1 className="userWelcome">Welcome back {user.name}!</h1>
         <button
           className="profileBtn fadedBtn smallButton"
-          onClick={() => logOut()}
+          onClick={() => logOutConfirm()}
         >
           Log out
         </button>
         <h1 className="title">Select your tasks!</h1>
         <div className="filterWrapper">
           <ul className="filterCategory" ref={filterContainer}>
-            <li onClick={filterByCategory}>
+            {/* <li onClick={filterByCategory}> */}
+            <li>
               <img
                 ref={noFilterBtn}
                 src={noFilter}
-                alt="A cross icon"
+                alt="An x icon"
                 className="categoryIconFilter filterSelected"
                 onClick={(e) => {
-                  changeClassName(e, noFilterBtn, filterContainer);
-                  setSortByFavorite(false);
-                  // setSortByComplete(false);
+                  changeClassName(e, noFilterBtn, filterContainer, false);
+                  filterByCategory(e);
+                  // setSortByFavorite(false);
                   // filterByCategory();
                 }}
               />
             </li>
+            {console.log(filter)}
             {categories.map((category, index) => (
-              <li key={index} onClick={filterByCategory}>
-                {/* <li key={index}> */}
+              // <li key={index} onClick={filterByCategory}>
+              <li key={index}>
                 <img
                   src={category.icon}
                   alt={category.alt}
                   className={`categoryIconFilter ${category.name}`}
                   name={category.name}
                   onClick={(e) => {
-                    changeClassName(
-                      e,
-                      noFilterBtn,
-                      filterContainer,
-                      sortByFavorite
-                    );
-                    setSortByFavorite(false);
-                    // setSortByComplete(false);
-                    // filterByCategory();
+                    changeClassName(e, noFilterBtn, filterContainer, false);
+                    filterByCategory(e);
+                    // setSortByFavorite(false);
+                    // filterByCategory(e);
                   }}
                 />
               </li>
@@ -153,8 +146,14 @@ export default function AllTasks() {
           </form> */}
         </div>
       </nav>
-      <div className="hidden">
-        <button className="profileBtn fadedBtn smallBtn">Profile</button>
+      <nav className="hidden">
+        <h1 className="userWelcome">Welcome back {user.name}!</h1>
+        <button
+          className="profileBtn fadedBtn smallButton"
+          onClick={() => logOutConfirm()}
+        >
+          Log out
+        </button>
         <h1 className="title">Select your tasks!</h1>
         <div className="filterWrapper">
           <ul className="filterCategory">
@@ -163,23 +162,26 @@ export default function AllTasks() {
                 <img
                   src={category.icon}
                   alt={category.alt}
-                  className="categoryIconFilter"
+                  className={`categoryIconFilter ${category.name}`}
+                  name={category.name}
                 />
               </li>
             ))}
           </ul>
-          {/* <form className="searchWrapper">
+          {/* <form className="searchWrapper" onSubmit={handleSubmit}>
             <input
               type="text"
               placeholder="Search Task"
               className="searchInput"
+              value={searchValue}
+              onChange={handleChange}
             />
-            <button className="searchBtn" onClick={(e) => e.preventDefault()}>
+            <button className="searchBtn">
               <img src={searchIcon} alt="A magnifying glass icon" />
             </button>
           </form> */}
         </div>
-      </div>
+      </nav>
       <TaskList
         filterSelection={filter}
         // searchValue={searchValue}
@@ -199,21 +201,17 @@ export default function AllTasks() {
           Completed
         </button> */}
         <button type="button" className="mainBtn" onClick={goToMyList}>
-          Select pet
+          {canChangePet ? `Select pet` : `My tasks`}
         </button>
       </div>
       <div className="hidden">
-        <button
-          type="button"
-          className="fadedBtn"
-          onClick={(e) => checkFavorite(e)}
-        >
+        <button type="button" className="fadedBtn" name="favoriteFilter">
           Favorites
         </button>
         {/* <button type="button" className="fadedBtn" onClick={checkComplete}>
           Completed
         </button> */}
-        <button type="button" className="mainBtn" onClick={goToMyList}>
+        <button type="button" className="mainBtn">
           Select pet
         </button>
       </div>

@@ -17,10 +17,10 @@
   font-family: "Patrick Hand", sans-serif;
 }
 
-.chicken {
+.imagePet {
   width: 80%;
   position: absolute;
-  top: 5%;
+  top: 3%;
   margin-left: 5%;
   z-index: 1;
 }
@@ -43,13 +43,13 @@ failure and pet*/
   z-index: 1;
   position: absolute;
   position: relative;
-  margin: 24% 0% 3% 10%;
+  margin: 19% 0% 3% 10%;
   flex-direction: column;
 }
 
 .boxsuccess {
   z-index: 1;
-  margin: 27% 0% 4% 10%;
+  margin: 22% 0% 2% 10%;
   position: relative;
   top: 15%;
   flex-direction: column;
@@ -67,18 +67,18 @@ failure and pet*/
 
 .confirm-box {
   width: 70%;
-  background-color: rgb(255, 255, 255);
-  border: solid black 1px;
+  background-color: #f5ead6;
+  border: 1px solid #816425;
   border-radius: 15px;
-  padding: 6%;
-  top: 10%;
+  padding: 8% 6%;
   position: relative;
   top: 50%;
-  transform: translateY(80%);
   left: 50%;
+  transform: translateY(80%);
   transform: translateX(-43%);
   margin: auto;
   font-size: 1.2rem;
+  text-align: center;
 }
 
 .confirm-box__overlay {
@@ -111,7 +111,7 @@ the time and the rewards*/
 
 .timer,
 .congrats {
-  margin: 4%;
+  margin: 2%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -193,7 +193,7 @@ the time and the rewards*/
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 3% 0% 10% 0%;
+  margin: 3% 0% 6% 0%;
 }
 
 .petfood {
@@ -266,17 +266,27 @@ the time and the rewards*/
   border-left: rgb(182, 158, 48) 1px;
   border-top: rgb(182, 158, 48) 1px;
   border-right: solid rgba(182, 158, 48, 0.7) 1px;
+  border-bottom: solid rgba(182, 158, 48, 0.7) 1px;
 }
 
-.react-confirm-box > button {
+.react-confirm-box h4 {
+  margin-bottom: 10%;
+}
+
+.react-confirm-box div {
+  display: flex;
+  justify-content: space-around;
+}
+
+/* .react-confirm-box > button {
   padding: 3%;
   font-size: 1.1rem;
   margin: 2%;
   background-color: aliceblue;
   border-radius: 3%;
-}
+} */
 
-.react-confirm-box > button > .forfeit {
+/* .react-confirm-box > button > .forfeit {
   background-color: rgba(182, 158, 48, 0.7);
   color: white;
   border-left: rgb(182, 158, 48) 1px;
@@ -290,7 +300,7 @@ the time and the rewards*/
   border-right: 1px solid rgb(66, 165, 66);
   border-bottom: 1px solid rgb(130, 221, 130);
   background-color: rgb(66, 165, 66);
-}
+} */
 
 .mainBtn {
   border-top: 1px solid rgb(112, 218, 112);
@@ -311,6 +321,7 @@ the time and the rewards*/
 /*Buttons Success and failure*/
 .next {
   position: relative;
+  margin-bottom: 3%;
   left: 70%;
   border-top: 1px solid rgb(112, 218, 112);
   border-left: 1px solid rgb(58, 155, 58);
@@ -326,4 +337,30 @@ the time and the rewards*/
 .next:active {
   transform: translate(2px, 2px);
   box-shadow: -1px 3px 4px rgba(0, 0, 0, 0.3);
+}
+
+.react-confirm-box button:first-of-type {
+  font-size: 1.2rem;
+  outline: none;
+  padding: 6%;
+  background-color: rgba(182, 158, 48, 0.7);
+  border-radius: 65% 5%;
+  color: white;
+  border-left: rgb(182, 158, 48) 1px;
+  border-top: rgb(182, 158, 48) 1px;
+  border-right: solid rgba(182, 158, 48, 0.7) 1px;
+  border-bottom: solid rgba(182, 158, 48, 0.7) 1px;
+}
+
+.react-confirm-box button:last-of-type {
+  font-size: 1.2rem;
+  outline: none;
+  padding: 6%;
+  border-top: 1px solid rgb(112, 218, 112);
+  border-left: 1px solid rgb(58, 155, 58);
+  border-right: 1px solid rgb(66, 165, 66);
+  border-bottom: 1px solid rgb(130, 221, 130);
+  background-color: rgb(66, 165, 66);
+  border-radius: 65% 5%;
+  color: white;
 }

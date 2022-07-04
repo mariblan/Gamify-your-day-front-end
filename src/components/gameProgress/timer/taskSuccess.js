@@ -9,6 +9,7 @@ import checkCategory from "../../../utils/categoryCheck";
 import { useNavigate } from "react-router-dom";
 import renderApples from "../../../utils/generateApples";
 import { addSuccess } from "../../../fetchDB/fetchDB";
+
 export default function TaskSuccess() {
   const {
     user,
@@ -28,6 +29,7 @@ export default function TaskSuccess() {
     setMinutes,
     seconds,
     setSeconds,
+    gameFinalScreen,
   } = useTask();
 
   const { icon, alt } = checkCategory(category);
@@ -80,22 +82,18 @@ export default function TaskSuccess() {
     taskSuccess && successAndCompleted(user._id, taskSuccess);
   }, [taskSuccess]);
 
-  // useEffect(() => {
-  // }, []);
-
   const navigateToList = () => setTimeout(navigate("../mytasks"), 150);
 
   const successClick = () => {
+    setUserSettings(
+      userSettings.filter((task) => task._id !== taskSuccess._id)
+    );
     if (selectedPet.hungerlevel > userProgress) {
-      setUserSettings(
-        userSettings.filter((task) => task._id !== taskSuccess._id)
-      );
       setTimeout(navigate("../gamego"), 150);
-    } else if (selectedPet.hungerlevel <= userProgress) {
-      setUserSettings(
-        userSettings.filter((task) => task._id !== taskSuccess._id)
-      );
+    } else if (selectedPet.hungerlevel <= userProgress && gameFinalScreen) {
       setTimeout(navigate("../gameover"), 150);
+    } else if (selectedPet.hungerlevel <= userProgress && !gameFinalScreen) {
+      setTimeout(navigate("../gamego"), 150);
     }
   };
 
@@ -106,7 +104,7 @@ export default function TaskSuccess() {
       </button>
       <div className="success">
         <img
-          className="chicken"
+          className="imagePet"
           src={selectedPet.mood[1]}
           alt="canary-normal"
         />

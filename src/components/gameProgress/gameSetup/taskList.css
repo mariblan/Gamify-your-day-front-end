@@ -18,8 +18,9 @@ body {
 }
 
 .userWelcome {
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   padding: 8% 0 0 5%;
+  font-family: "Sansita", sans-serif;
 }
 
 .fadedBtn {
@@ -77,13 +78,18 @@ body {
   background-image: url("../../../images/leaves-bg.png");
 } */
 
-.title {
+.title,
+.titleMyList {
   text-align: center;
   max-width: 90%;
   margin: 0 auto;
   padding: 3rem 0 0;
   font-family: "Sansita", sans-serif;
   font-size: 2.7rem;
+}
+
+.titleMyList {
+  margin-bottom: 1rem;
 }
 
 .filterCategory {
@@ -163,7 +169,8 @@ Same for divs fixed at the bottom: How to have the
 */
 
 .taskWrapper {
-  margin-bottom: 10%;
+  margin-top: 62%;
+  margin-bottom: 30%;
 }
 
 .taskExpanded,
@@ -304,11 +311,33 @@ input[type="range"]::-moz-range-thumb {
   width: 50%;
   display: flex;
   justify-content: center;
+  margin-bottom: 3%;
 }
 
 .rewardWrapper img {
   max-width: 30%;
   padding: 2%;
+}
+
+.rewardWrapperConcluded {
+  width: 100%;
+  display: flex;
+  /* justify-content: center; */
+  align-items: center;
+}
+
+.rewardWrapperConcluded img {
+  max-width: 15%;
+  padding: 2%;
+}
+
+.rewardWrapperConcluded img:first-of-type {
+  margin-left: 5%;
+}
+
+.difficultyConcluded {
+  margin-top: 12%;
+  margin-bottom: 12%;
 }
 
 .favIcon {
@@ -361,6 +390,11 @@ input[type="range"]::-moz-range-thumb {
   margin-left: 1vw;
 }
 
+/* .appleMini {
+  max-height: 1vh;
+  padding: 10%;
+} */
+
 .appleExpanded {
   padding: 50%;
 }
@@ -381,8 +415,8 @@ input[type="range"]::-moz-range-thumb {
 }
 
 .fixedTaskWrapper {
-  margin-top: 1rem;
-  margin-bottom: 15rem;
+  margin-top: -3rem;
+  margin-bottom: 14.5rem;
 }
 
 .react-confirm-box button:first-of-type {
@@ -409,4 +443,10 @@ input[type="range"]::-moz-range-thumb {
   background-color: rgb(66, 165, 66);
   border-radius: 65% 5%;
   color: white;
+}
+
+.difficultyWrapperConcluded {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 }

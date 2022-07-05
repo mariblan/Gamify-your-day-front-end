@@ -16,8 +16,6 @@ export default function GetTask() {
     userProgress,
     todaysList,
     setTodaysList,
-    todaysCompleted,
-    setTodaysCompleted,
     todaysFailed,
     setTodaysFailed,
     gottenTask,
@@ -26,11 +24,6 @@ export default function GetTask() {
   } = useTask();
 
   const navigate = useNavigate();
-  //user && console.log(user);
-  const focusOnBtn = (e, field) => {
-    let next = field.current.nextSibling;
-    field.current.nextSibling.focus();
-  };
 
   function getTask() {
     if (userSettings.length === 0) {
@@ -40,14 +33,12 @@ export default function GetTask() {
       );
     } else if (userSettings.length > 0) {
       const index = Math.floor(Math.random() * userSettings.length);
-      //return arraytasks[index];
-      //console.log(taskDB[index].taskName);
       //setInterval();
       setClicked(true);
       setCounter(5);
       countDown();
       // console.log(todaysList[index]);
-      //console.log(userSettings);
+      // console.log(userSettings);
       setGottenTask(userSettings[index]);
     }
   }
@@ -70,7 +61,7 @@ export default function GetTask() {
 
   return (
     <div>
-      {console.log(userProgress)}
+      {/* {console.log(userSettings)} */}
       <GameGo
         getTask={getTask}
         counter={counter}

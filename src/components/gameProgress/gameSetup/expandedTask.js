@@ -14,9 +14,9 @@ export default function TaskExpanded({
   // blockCompleted,
 }) {
   const [sliderValue, setSliderValue] = useState(taskTime.minMedium);
-  const [difficulty, setDifficulty] = useState("");
+  const [difficulty, setDifficulty] = useState("Medium");
   const [reward, setReward] = useState(2);
-  const [taskConcluded, setTaskConcluded] = useState(false); //This goes to the persistence layer!
+  const [taskConcluded, setTaskConcluded] = useState(false);
   const [favorite, setFavorite] = useState(notFavIcon);
   // Function that checks the category of a task and saves the relevant
   // icon and alt description for a mapping component call (to save from
@@ -39,18 +39,18 @@ export default function TaskExpanded({
   //   }
   // }, [todaySuccess, todayFailed]);
 
-  const checkCompletion = () => {
-    if (taskConcluded === "failed")
-      return <img src={redX} alt="An x icon" className="taskConcluded" />;
-    if (taskConcluded === "success")
-      return (
-        <img
-          src={greenCheck}
-          alt="A green check icon"
-          className="taskConcluded"
-        />
-      );
-  };
+  // const checkCompletion = () => {
+  //   if (taskConcluded === "failed")
+  //     return <img src={redX} alt="An x icon" className="taskConcluded" />;
+  //   if (taskConcluded === "success")
+  //     return (
+  //       <img
+  //         src={greenCheck}
+  //         alt="A green check icon"
+  //         className="taskConcluded"
+  //       />
+  //     );
+  // };
 
   useEffect(() => {
     favoriteList && setFavorite(loadFavorites(_id, [...favoriteList]));
@@ -88,9 +88,19 @@ export default function TaskExpanded({
   };
 
   // Sends the task settings tp the parent component
+  // useEffect(() => {
+  //   if (taskConcluded === false) sendTaskSetting(taskSetting);
+  // }, [nextClicked]);
+
   useEffect(() => {
-    if (taskConcluded === false) sendTaskSetting(taskSetting);
+    if (nextClicked) sendTaskSetting(taskSetting);
   }, [nextClicked]);
+
+  // useEffect(() => {
+  //   return () => {
+  //     sendTaskSetting(taskSetting);
+  //   };
+  // }, []);
 
   return (
     <div className="taskExpanded">

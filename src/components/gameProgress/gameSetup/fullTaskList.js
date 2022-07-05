@@ -19,7 +19,16 @@ export default function AllTasks() {
   const noFilterBtn = useRef();
   const filterContainer = useRef();
   const navigate = useNavigate();
-  const { user, favoriteList, canChangePet, logOutConfirm } = useTask();
+  const {
+    user,
+    todaysList,
+    userSettings,
+    favoriteList,
+    canChangePet,
+    logOutConfirm,
+    disabled,
+    setDisabled,
+  } = useTask();
 
   // This checks if there's any filter applied to the task list. If there's no filter selected,
   // the no filter button gets automatically selected again
@@ -30,7 +39,6 @@ export default function AllTasks() {
   // Adds filters to an array so the child component returns only tasks that have the same category
   // as the ones selected. Also disables filtering by favorites.
   const filterByCategory = (e) => {
-    // console.log(noFilterBtn.current);
     setSortByFavorite(false);
     // If the button that has no name is selected for the filter selection to be cleared,
     // the filtering array is set to empty
@@ -59,8 +67,8 @@ export default function AllTasks() {
 
   // Toggles sorting by favorite on and off
   const checkFavorite = (e) => {
-    console.log(`This is the favorites list:`);
-    console.log(favoriteList);
+    // console.log(`This is the favorites list:`);
+    // console.log(favoriteList);
     setFilter([]);
     changeClassName(e, noFilterBtn, filterContainer, true);
     !sortByFavorite ? setSortByFavorite(true) : setSortByFavorite(false);
@@ -91,7 +99,10 @@ export default function AllTasks() {
         <h1 className="userWelcome">Welcome back {user.name}!</h1>
         <button
           className="profileBtn fadedBtn smallButton"
-          onClick={() => logOutConfirm()}
+          onClick={() => {
+            logOutConfirm();
+            setDisabled(true);
+          }}
         >
           Log out
         </button>
@@ -113,7 +124,6 @@ export default function AllTasks() {
                 }}
               />
             </li>
-            {console.log(filter)}
             {categories.map((category, index) => (
               // <li key={index} onClick={filterByCategory}>
               <li key={index}>
@@ -128,42 +138,6 @@ export default function AllTasks() {
                     // setSortByFavorite(false);
                     // filterByCategory(e);
                   }}
-                />
-              </li>
-            ))}
-          </ul>
-          {/* <form className="searchWrapper" onSubmit={handleSubmit}>
-            <input
-              type="text"
-              placeholder="Search Task"
-              className="searchInput"
-              value={searchValue}
-              onChange={handleChange}
-            />
-            <button className="searchBtn">
-              <img src={searchIcon} alt="A magnifying glass icon" />
-            </button>
-          </form> */}
-        </div>
-      </nav>
-      <nav className="hidden">
-        <h1 className="userWelcome">Welcome back {user.name}!</h1>
-        <button
-          className="profileBtn fadedBtn smallButton"
-          onClick={() => logOutConfirm()}
-        >
-          Log out
-        </button>
-        <h1 className="title">Select your tasks!</h1>
-        <div className="filterWrapper">
-          <ul className="filterCategory">
-            {categories.map((category, index) => (
-              <li key={index}>
-                <img
-                  src={category.icon}
-                  alt={category.alt}
-                  className={`categoryIconFilter ${category.name}`}
-                  name={category.name}
                 />
               </li>
             ))}
@@ -197,23 +171,23 @@ export default function AllTasks() {
         >
           Favorites
         </button>
-        {/* <button type="button" className="fadedBtn" onClick={checkComplete}>
-          Completed
-        </button> */}
-        <button type="button" className="mainBtn" onClick={goToMyList}>
+        {disabled ? (
+          <button
+            disabled
+            type="button"
+            className="mainBtn"
+            onClick={goToMyList}
+          >
+            {canChangePet ? `Select pet` : `My tasks`}
+          </button>
+        ) : (
+          <button type="button" className="mainBtn" onClick={goToMyList}>
+            {canChangePet ? `Select pet` : `My tasks`}
+          </button>
+        )}
+        {/* <button type="button" className="mainBtn" onClick={goToMyList}>
           {canChangePet ? `Select pet` : `My tasks`}
-        </button>
-      </div>
-      <div className="hidden">
-        <button type="button" className="fadedBtn" name="favoriteFilter">
-          Favorites
-        </button>
-        {/* <button type="button" className="fadedBtn" onClick={checkComplete}>
-          Completed
         </button> */}
-        <button type="button" className="mainBtn">
-          Select pet
-        </button>
       </div>
     </>
   );

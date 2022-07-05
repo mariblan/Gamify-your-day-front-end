@@ -14,6 +14,8 @@ export default function AnimalSelection(index, id) {
     toastErrorSettings,
   } = useTask();
   let animalContainer = useRef();
+  let animalbtn = useRef();
+  const [animal, setAnimal] = useState(false);
   const navigate = useNavigate();
 
   const goToGame = () => {
@@ -36,25 +38,29 @@ export default function AnimalSelection(index, id) {
       }
       return selectedPet;
     });
-    // selectedPet && console.log(target);
-    // selectedPet && console.log(currentTarget);
   };
 
+  // console.log(selectedPet);
   useEffect(() => {
-    // if a pet has already been selected, mount the page with the selected animal
-    // highlighted on the screen
     if (selectedPet) {
-      console.log(selectedPet);
-      console.log(animalContainer.current.children.name);
+      let animal = document.getElementById(selectedPet.btn);
+      console.log(animal);
+      if (animal.className === "petbtn") {
+        console.log(animal.className);
+        animal.className = "petbtnactive";
+      }
     }
+    //   // console.log(animals);
+    //   // console.log(animals.className);
   }, []);
 
-  const navigateToTasks = () => setTimeout(navigate("../alltasks"), 150);
+  const navigateToTasks = () => setTimeout(navigate("../alltasks"), 350);
 
   return (
     <>
       <div className="bodyselection">
         <button className="menu" type="menu" onClick={navigateToTasks}>
+          {/* <button className="menu" type="menu"> */}
           Tasks
         </button>
         <div className="animalselection">
@@ -63,6 +69,7 @@ export default function AnimalSelection(index, id) {
             {pets.map((pet, index) => {
               return (
                 <button
+                  ref={animalbtn}
                   onClick={pickPetClick}
                   selected={pet.petId}
                   key={index}

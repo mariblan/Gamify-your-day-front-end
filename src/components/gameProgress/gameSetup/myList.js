@@ -1,50 +1,85 @@
 import TaskExpanded from "./expandedTask";
-import { getCompletedIds } from "../../../fetchDB/fetchDB";
+import TaskConcluded from "./taskConcluded";
+// import { getCompletedIds } from "../../../fetchDB/fetchDB";
 import { useState, useEffect } from "react";
 import { useTask } from "../../../taskContext";
 
-export default function MyList() {
+export default function MyList({ showConcluded }) {
   const {
     user,
     nextClicked,
     todaysList,
-    todaysSuccess,
-    todaysFailed,
+    todaysCompleted,
     userSettings,
     setUserSettings,
   } = useTask();
 
   const [renderIncomplete, setRenderIncomplete] = useState(todaysList);
-  const [completedIds, setCompletedIds] = useState(false);
+  const [renderComplete, setRenderComplete] = useState(todaysCompleted);
 
-  const sendTaskSetting = (taskSetting) => {
+  const sendTaskSetting = async (taskSetting) => {
     if (nextClicked && userSettings.length === 0) {
-      setUserSettings((prev) => [...prev, taskSetting]);
+      console.log(userSettings);
+      await setUserSettings((prev) => [...prev, taskSetting]);
     }
   };
 
   useEffect(() => {
-    getCompletedIds(user._id);
-  }, []);
+    if (showConcluded) {
+      setRenderIncomplete(false);
+      setRenderComplete(todaysCompleted);
+    } else {
+      setRenderIncomplete(todaysList);
+      setRenderComplete(false);
+    }
+  }, [showConcluded]);
 
-  useEffect(() => {
-    setCompletedIds();
-    setRenderIncomplete((prev) => {
-      console.log(prev);
-      todaysList.forEach((task) => console.log(task._id));
-      todaysList.forEach((task) => {
-        console.log(todaysSuccess);
-        console.log(todaysFailed);
-        if (todaysSuccess.includes(task._id) || todaysFailed.includes(task._id))
-          return console.log(task);
-      });
-      // todaysList.filter((task) => {
-      //   if (todaysSuccess.includes(task._id) || todaysFailed.includes(task._id))
-      //     return [...prev, task];
-      // });
-      return [...prev];
-    });
-  }, [todaysSuccess, todaysFailed]);
+  // useEffect(() => {
+  //   console.log(todaysSuccess);
+  //   console.log(todaysFailed);
+  //   if (!completedIds) {
+  //     todaysSuccess.forEach((task) => {
+  //       completedIds.includes(task._id)
+  //         ? setCompletedIds([task._id])
+  //         : setCompletedIds();
+  //     });
+  //     todaysFailed.forEach((task) => setCompletedIds([task._id]));
+  //   } else {
+  //     todaysSuccess.forEach((task) =>
+  //       setCompletedIds((prev) => [...prev, task._id])
+  //     );
+  //     todaysFailed.forEach((task) =>
+  //       setCompletedIds((prev) => [...prev, task._id])
+  //     );
+  //   }
+  // setCompletedIds();
+  // setRenderIncomplete((prev) => {
+  //   console.log(prev);
+  //   todaysList.forEach((task) => console.log(task._id));
+  //   todaysList.forEach((task) => {
+  //     console.log(todaysSuccess);
+  //     console.log(todaysFailed);
+  //     if (todaysSuccess.includes(task._id) || todaysFailed.includes(task._id))
+  //       return console.log(task);
+  //   });
+  //   // todaysList.filter((task) => {
+  //   //   if (todaysSuccess.includes(task._id) || todaysFailed.includes(task._id))
+  //   //     return [...prev, task];
+  //   // });
+  //   return [...prev];
+  // });
+  // }, [todaysSuccess, todaysFailed]);
+
+  //   if (filterSelection.length > 0) {
+  //     const filterTasks = [...allTasks];
+  //     const filteredTasks = filterTasks.filter((task) =>
+  //       filterSelection.includes(task.category)
+  //     );
+  //     setTasksFiltered(filteredTasks);
+  //   } else if (!sortByFavorite) {
+  //     setTasksFiltered(allTasks);
+  //   }
+  // }, [allTasks, filterSelection]);
 
   // useEffect(() => {
   //   for (let success of todaysSuccess) {
@@ -70,12 +105,15 @@ export default function MyList() {
   // User is not coming back but todaysList is. Why?
 
   return (
-    renderIncomplete && (
-      <div className="taskWrapper">
-        {/* {console.log(todaysCompleted)} */}
-        {console.log(completedIds)}
-        {renderIncomplete.map((task, index) => (
-          // if (!todaysCompleted)
+    <div className="taskWrapper">
+      {/* {console.log(todaysCompleted)} */}
+      {/* {console.log(completedIds)} */}
+      {console.log("To do tasks:")}
+      {console.log(renderIncomplete)}
+      {console.log("Completed tasks:")}
+      {console.log(renderComplete)}
+      {renderIncomplete &&
+        renderIncomplete.map((task, index) => (
           <TaskExpanded
             key={index}
             task={task}
@@ -83,7 +121,10 @@ export default function MyList() {
             sendTaskSetting={sendTaskSetting}
           />
         ))}
-      </div>
-    )
+      {renderComplete &&
+        renderComplete.map((task, index) => (
+          <TaskConcluded key={index} task={task} />
+        ))}
+    </div>
   );
 }

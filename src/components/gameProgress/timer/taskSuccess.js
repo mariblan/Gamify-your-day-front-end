@@ -8,7 +8,7 @@ import checkicon from "../../../images/check-icon.png";
 import checkCategory from "../../../utils/categoryCheck";
 import { useNavigate } from "react-router-dom";
 import renderApples from "../../../utils/generateApples";
-import { addSuccess } from "../../../fetchDB/fetchDB";
+import { addSuccess, removeFromToday } from "../../../fetchDB/fetchDB";
 
 export default function TaskSuccess() {
   const {
@@ -18,13 +18,16 @@ export default function TaskSuccess() {
     setUserSettings,
     gottenTask,
     gottenTask: { taskId, taskName, category, sliderValue, difficulty, reward },
-    setGottenTask,
     selectedPet,
     setSelectedPet,
     userProgress,
     setUserProgress,
     todaysSuccess,
+    setNextClicked,
+    todaysList,
+    setTodaysList,
     setTodaysSuccess,
+    setTodaysCompleted,
     minutes,
     setMinutes,
     seconds,
@@ -68,13 +71,25 @@ export default function TaskSuccess() {
   // console.log(elapsedTime);
   useEffect(() => {
     setTaskSuccess({ ...gottenTask, time: elapsedTime });
+    // const todaysIds = todaysList.map((task) => task._id);
+    // console.log(todaysIds);
+    // console.log(taskId);
+    // console.log(todaysList.filter((task) => todaysIds.includes(taskId)));
+    // setTodaysList((prev) => prev.filter((task) => todaysIds.includes(taskId)));
   }, []);
 
   const successAndCompleted = async (userId, successSettings) => {
+    console.log(successSettings);
     const taskSucceeded = await addSuccess(userId, successSettings).then(
       (updatedSuccess) => updatedSuccess
     );
+    const updateToday = await removeFromToday(userId, successSettings._id).then(
+      (updatedToday) => updatedToday
+    );
     console.log(taskSucceeded);
+    console.log(updateToday);
+    setTodaysList(updateToday);
+    setTodaysCompleted((prev) => [...prev, taskSucceeded[0]]);
     return setTodaysSuccess(taskSucceeded);
   };
 
@@ -85,6 +100,7 @@ export default function TaskSuccess() {
   const navigateToList = () => setTimeout(navigate("../mytasks"), 150);
 
   const successClick = () => {
+    setNextClicked(false);
     setUserSettings(
       userSettings.filter((task) => task._id !== taskSuccess._id)
     );
@@ -99,6 +115,7 @@ export default function TaskSuccess() {
 
   return (
     <div className="bodytimer">
+      {console.log(todaysList)}
       <button className="menu" type="menu" onClick={navigateToList}>
         My list
       </button>

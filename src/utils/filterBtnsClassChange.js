@@ -10,10 +10,8 @@ const changeClassName = (e, noFilterBtn, filterContainer, sortedByFavorite) => {
   // (getting "deselected").
 
   if (!e.target.name || sortedByFavorite) {
-    console.log(sortedByFavorite);
     for (let i = 1; i < filterContainer.current.children.length; i++) {
       let iconClass = filterContainer.current.children[i].children[0].className;
-      console.log(iconClass);
       if (iconClass.includes("filterSelected")) {
         let getClassIndex = iconClass.indexOf("filterSelected");
         filterContainer.current.children[i].children[0].className =

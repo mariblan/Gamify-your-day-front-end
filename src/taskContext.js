@@ -6,6 +6,7 @@ import {
   clearFailed,
   clearSuccess,
   clearToday,
+  clearCompleted,
 } from "./fetchDB/fetchDB";
 import { confirm } from "react-confirm-box";
 import { useNavigate, Navigate } from "react-router-dom";
@@ -81,7 +82,8 @@ const TaskProvider = ({
             <button
               onClick={() => {
                 onConfirm();
-                logOut();
+                setDisabled(false);
+                return logOut();
               }}
             >
               Logout
@@ -89,6 +91,7 @@ const TaskProvider = ({
             <button
               onClick={() => {
                 onCancel();
+                setDisabled(false);
               }}
             >
               Continue
@@ -100,15 +103,29 @@ const TaskProvider = ({
   };
 
   const logOutConfirm = async () => {
-    if (user.todayList.length > 0) await confirm("Are you sure?", options);
-    return logOut();
+    if (todaysList.length > 0) {
+      await confirm("Are you sure?", options);
+    } else if (todaysList.length === 0) {
+      logOut();
+    }
   };
 
   const logOut = () => {
     addToProgress(user._id, 0);
     setUserProgress(0);
     clearToday(user._id);
+    setTodaysCompleted([]);
+    clearCompleted(user._id);
+    setUserSettings([]);
     setTodaysList([]);
+    setGottenTask({
+      category: "",
+      taskdescription: "",
+      difficulty: "",
+      taskid: 0,
+      taskName: "",
+      taskTime: {},
+    });
     clearFailed(user._id);
     setTodaysFailed([]);
     clearSuccess(user._id);
@@ -154,6 +171,11 @@ const TaskProvider = ({
     user && setTodaysList(user.todayList);
   }, [user]);
 
+  const [todaysCompleted, setTodaysCompleted] = useState([]);
+  useEffect(() => {
+    user && setTodaysCompleted(user.todayCompleted);
+  }, [user]);
+
   const [todaysFailed, setTodaysFailed] = useState([]);
   useEffect(() => {
     user && setTodaysFailed(user.todayFailed);
@@ -161,8 +183,8 @@ const TaskProvider = ({
 
   const [todaysSuccess, setTodaysSuccess] = useState([]);
   useEffect(() => {
-    user && setTodaysFailed(user.todayFailed);
-  }, [user, todaysFailed]);
+    user && setTodaysSuccess(user.todayFailed);
+  }, [user, todaysSuccess]);
 
   const [userProgress, setUserProgress] = useState(0);
 
@@ -172,13 +194,20 @@ const TaskProvider = ({
 
   const [gottenTask, setGottenTask] = useState({
     category: "",
-    taskdescription: "",
+    reward: 0,
+    difficulty: "",
+    sliderValue: 0,
     taskid: 0,
     taskName: "",
-    taskTime: {},
   });
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
+
+  const [disabled, setDisabled] = useState(false);
+
+  const disabledBtnFalse = () => {
+    setDisabled(false);
+  };
 
   const [forfeited, setForfeited] = useState(false);
   const [gameFinalScreen, setGameFinalScreen] = useState(true);
@@ -209,6 +238,8 @@ const TaskProvider = ({
         setTodaysList,
         userSettings,
         setUserSettings,
+        todaysCompleted,
+        setTodaysCompleted,
         todaysSuccess,
         setTodaysSuccess,
         todaysFailed,
@@ -223,6 +254,8 @@ const TaskProvider = ({
         setForfeited,
         gameFinalScreen,
         setGameFinalScreen,
+        disabled,
+        setDisabled,
       }}
     >
       {children}

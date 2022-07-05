@@ -2,7 +2,7 @@ import MyList from "./myList";
 import reload from "../../../images/change-icon.png";
 import renderApples from "../../../utils/generateApples";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useTask } from "../../../taskContext";
 import { toast } from "react-toastify";
 import { confirm } from "react-confirm-box";
@@ -19,8 +19,12 @@ export default function MyTaskList() {
     setNextClicked,
     toastErrorSettings,
     logOutConfirm,
+    disabled,
+    setDisabled,
   } = useTask();
   const navigate = useNavigate();
+
+  const [showConcluded, setShowConcluded] = useState(false);
 
   useEffect(() => {
     clearTimeout();
@@ -69,6 +73,10 @@ export default function MyTaskList() {
     }
   };
 
+  const toggleConcluded = () => {
+    showConcluded ? setShowConcluded(false) : setShowConcluded(true);
+  };
+
   const navigateToTasks = () => {
     setTimeout(() => navigate("../alltasks"), 150);
   };
@@ -81,18 +89,19 @@ export default function MyTaskList() {
     <>
       <div className="headerWrapper">
         <h1 className="userWelcome">Welcome back {user.name}!</h1>
-        <button className="profileBtn fadedBtn" onClick={() => logOutConfirm()}>
+        <button
+          className="profileBtn fadedBtn"
+          onClick={() => {
+            logOutConfirm();
+            setDisabled(true);
+          }}
+        >
           Log out
         </button>
-        <h1 className="title">Today's task list</h1>
-      </div>
-      <div className="hidden">
-        <h1 className="userWelcome">Welcome back {user.name}!</h1>
-        <button className="profileBtn fadedBtn">Profile</button>
-        <h1 className="title">Today's task list</h1>
+        <h1 className="titleMyList">Today's task list</h1>
       </div>
       <div className="fixedTaskWrapper">
-        <MyList />
+        <MyList showConcluded={showConcluded} />
       </div>
       <footer>
         <div className="dailyPet">
@@ -118,15 +127,41 @@ export default function MyTaskList() {
           </div>
         </div>
         <div className="navWrapper">
-          <button type="button" className="fadedBtn" onClick={navigateToTasks}>
+          <button
+            disabled={disabled}
+            type="button"
+            className="fadedBtn"
+            onClick={navigateToTasks}
+          >
             Task selection
           </button>
-          {/* <button type="button" className="fadedBtn">
-            Custom tasks
-          </button> */}
+          <button
+            disabled={disabled}
+            type="button"
+            className="fadedBtn"
+            onClick={toggleConcluded}
+          >
+            {!showConcluded ? "Completed tasks" : "Incomplete tasks"}
+          </button>
+          {!showConcluded && (
+            <button
+              disabled={disabled}
+              type="button"
+              className="mainBtn"
+              onClick={giveSignal}
+            >
+              Start!
+            </button>
+          )}
+          {/* <button type="button" className="fadedBtn" onClick={navigateToTasks}>
+            Task selection
+          </button>
+          <button type="button" className="fadedBtn" onClick={toggleConcluded}>
+            {!showConcluded ? "Completed tasks" : "Incomplete tasks"}
+          </button>
           <button type="button" className="mainBtn" onClick={giveSignal}>
             Start!
-          </button>
+          </button> */}
         </div>
       </footer>
     </>

@@ -121,6 +121,7 @@
   border: solid rgb(109, 212, 109) 1px;
   padding: 4%;
 }
+
 .confirmbtn {
   align-self: center;
   margin: 3% 0%;
@@ -162,6 +163,7 @@
 #hamsterbtn {
   width: 7rem;
 }
+
 .menu:active,
 .confirmbtn:active {
   transform: translate(2px, 2px);

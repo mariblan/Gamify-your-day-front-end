@@ -8,7 +8,7 @@ import failedicon from "../../../images/failed-task-icon.png";
 import checkCategory from "../../../utils/categoryCheck";
 import { useNavigate } from "react-router-dom";
 import renderApples from "../../../utils/generateApples";
-import { addFailed, addSuccess } from "../../../fetchDB/fetchDB";
+import { addFailed, removeFromToday } from "../../../fetchDB/fetchDB";
 
 export default function TaskFailure() {
   const {
@@ -24,6 +24,7 @@ export default function TaskFailure() {
     nextClicked,
     setNextClicked,
     userProgress,
+    setTodaysList,
     setUserProgress,
     todaysCompleted,
     setTodaysCompleted,
@@ -49,7 +50,13 @@ export default function TaskFailure() {
     const taskFailed = await addFailed(userId, failedSettings).then(
       (updatedFailed) => updatedFailed
     );
+    const updateToday = await removeFromToday(userId, failedSettings._id).then(
+      (updatedToday) => updatedToday
+    );
     console.log(taskFailed);
+    console.log(updateToday);
+    setTodaysList(updateToday);
+    setTodaysCompleted((prev) => [...prev, taskFailed[0]]);
     return setTodaysFailed(taskFailed);
   };
 
@@ -64,6 +71,7 @@ export default function TaskFailure() {
   const navigate = useNavigate();
 
   const failureClick = () => {
+    setNextClicked(false);
     setUserSettings(userSettings.filter((task) => task._id !== failedTask._id));
     setForfeited(false);
     if (selectedPet.hungerlevel > userProgress) {

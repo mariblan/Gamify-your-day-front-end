@@ -10,6 +10,8 @@ export default function GameOver() {
     logOut,
     gameFinalScreen,
     setGameFinalScreen,
+    disabled,
+    setDisabled,
   } = useTask();
 
   const navigate = useNavigate();
@@ -46,6 +48,9 @@ export default function GameOver() {
         </div>
       </div>
       <div className="continue">
+        {/* <button disabled={disabled} onClick={continueClick} className="mainBtn">
+          Continue
+        </button> */}
         <button onClick={continueClick} className="mainBtn">
           Continue
         </button>

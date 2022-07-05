@@ -6,7 +6,6 @@ export default function TaskList({
   filterSelection,
   // searchValue,
   sortByFavorite,
-  // sortByComplete,
 }) {
   // console.log(searchValue);
   const [tasksFiltered, setTasksFiltered] = useState([]);
@@ -22,24 +21,6 @@ export default function TaskList({
     // });
   }, []);
 
-  // This useEffect checks the filter array and filters the displayed tasks to show only the tasks
-  // whose category match the category selected in the filter (in parent component)
-  useEffect(() => {
-    // ??? When filterSelection is an empty array, it (correctly) considers filterSelection.length = 0
-    // ??? and yet filterSelection === [] is false. Wth, why???
-    // console.log(filterSelection);
-    // filterSelection === [] ? console.log(true) : console.log(false);
-    if (filterSelection.length >= 1) {
-      const filterTasks = [...allTasks];
-      const filteredTasks = filterTasks.filter((task) =>
-        filterSelection.includes(task.category)
-      );
-      setTasksFiltered(filteredTasks);
-    } else {
-      setTasksFiltered(allTasks);
-    }
-  }, [allTasks, filterSelection]);
-
   // Sorts all tasks by favorite (based on user settings)
   useEffect(() => {
     if (!sortByFavorite) setTasksFiltered(allTasks);
@@ -54,9 +35,26 @@ export default function TaskList({
     }
   }, [sortByFavorite]);
 
+  // This useEffect checks the filter array and filters the displayed tasks to show only the tasks
+  // whose category match the category selected in the filter (in parent component)
+  useEffect(() => {
+    // ??? When filterSelection is an empty array, it (correctly) considers filterSelection.length = 0
+    // ??? and yet filterSelection === [] is false. Wth, why???
+    // console.log(filterSelection);
+    // filterSelection === [] ? console.log(true) : console.log(false);
+    if (filterSelection.length > 0) {
+      const filterTasks = [...allTasks];
+      const filteredTasks = filterTasks.filter((task) =>
+        filterSelection.includes(task.category)
+      );
+      setTasksFiltered(filteredTasks);
+    } else if (!sortByFavorite) {
+      setTasksFiltered(allTasks);
+    }
+  }, [allTasks, filterSelection]);
+
   // Sorts all tasks by completion (based on user's daily progress)
   // useEffect(() => {
-  //   // console.log(sortByComplete);
   //   if (!sortByComplete) setTasksFiltered(allTasks);
   //   if (sortByComplete) {
   //     const sortComp = [...allTasks].sort((a, b) =>
@@ -73,11 +71,6 @@ export default function TaskList({
     allTasks &&
     tasksFiltered && (
       <div className="taskWrapper">
-        {/* {console.log("These are the favorites:")} */}
-        {/* {console.log(favoriteList)} */}
-        {/* {console.log(user.todayList)} */}
-        {/* {console.log(user.todaySuccess)} */}
-        {/* {console.log(user.todayFailed)} */}
         {tasksFiltered.map((task, index) => (
           <TaskMini key={index} task={task} user={user} />
         ))}

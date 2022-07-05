@@ -30,8 +30,10 @@ export default function Login() {
         localStorage.setItem("token", token);
         return setToken(token);
       }
-      if (error) return toast.error(error, toastErrorSettings);
-      if (email && password) setTimeout(() => navigate("/alltasks"), 150);
+      if (error) {
+        console.log(error);
+        return toast.error(error, toastErrorSettings);
+      }
     } catch (error) {
       toast.error(
         `I failed to fetch from the DB! ${error.message}`,

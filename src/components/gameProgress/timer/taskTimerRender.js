@@ -9,10 +9,11 @@ export default function TaskTimerRender({
   pauseClick,
   imDoneClick,
   forfeitTask,
+  goToMyList,
+  givenUpTask,
 }) {
   const {
     gottenTask: { taskName, sliderValue, difficulty, reward },
-    setGottenTask,
     selectedPet,
     setSelectedPet,
     userSettings,
@@ -30,7 +31,8 @@ export default function TaskTimerRender({
     <div className="bodytimer">
       <button
         onClick={() => {
-          setTimeout(navigate("../mytasks"), 150);
+          givenUpTask();
+          goToMyList();
         }}
         className="menu"
         type="menu"

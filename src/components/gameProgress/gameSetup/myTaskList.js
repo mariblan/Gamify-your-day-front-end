@@ -27,6 +27,10 @@ export default function MyTaskList() {
   const [showConcluded, setShowConcluded] = useState(false);
 
   useEffect(() => {
+    setDisabled(false);
+  }, []);
+
+  useEffect(() => {
     clearTimeout();
   }, []);
 

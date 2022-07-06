@@ -209,14 +209,15 @@ const TaskProvider = ({
   }, [user]);
 
   //This sets the values presented by the task that we get randomly in the game
-  const [gottenTask, setGottenTask] = useState({
-    category: "",
-    reward: 0,
-    difficulty: "",
-    sliderValue: 0,
-    taskid: 0,
-    taskName: "",
-  });
+  // const [gottenTask, setGottenTask] = useState({
+  //   category: "",
+  //   reward: 0,
+  //   difficulty: "",
+  //   sliderValue: 0,
+  //   taskid: 0,
+  //   taskName: "",
+  // });
+  const [gottenTask, setGottenTask] = useState(null);
   //The values for the timer component so it can be passed through the success and failure screens and render
   //how long it took the person to do the task.
   const [minutes, setMinutes] = useState(0);
@@ -236,9 +237,14 @@ const TaskProvider = ({
   //This allows the game to know when to redirect the player to the final screen
   const [gameFinalScreen, setGameFinalScreen] = useState(true);
 
+  const [breakInterval, setBreakInterval] = useState(false);
+
+  const [counter, setCounter] = useState("Start!");
   return (
     <TaskContext.Provider
       value={{
+        counter,
+        setCounter,
         isAuthenticated,
         setIsAuthenticated,
         token,
@@ -280,6 +286,8 @@ const TaskProvider = ({
         setGameFinalScreen,
         disabled,
         setDisabled,
+        breakInterval,
+        setBreakInterval,
       }}
     >
       {children}

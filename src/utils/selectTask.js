@@ -3,6 +3,9 @@ import { addToToday, removeFromToday } from "../fetchDB/fetchDB";
 // maybe instead of on click on the heart just run select task for all the div.
 
 export const selectTask = async (e, taskId, user, todaysList) => {
+  // console.log(taskId)
+  // console.log(user)
+  // console.log(todaysList)
   if (e.target.name === "favIcon") {
     // toggleFavorites(taskId, user, user.favoriteList);
     return;

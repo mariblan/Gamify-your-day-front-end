@@ -73,6 +73,7 @@ export default function AllTasks() {
   const checkFavorite = (e) => {
     // console.log(`This is the favorites list:`);
     // console.log(favoriteList);
+    // console.log(sortByFavorite);
     setFilter([]);
     changeClassName(e, noFilterBtn, filterContainer, true);
     !sortByFavorite ? setSortByFavorite(true) : setSortByFavorite(false);
@@ -169,26 +170,21 @@ export default function AllTasks() {
       />
       <div className="navWrapper">
         <button
+          disabled={disabled}
           type="button"
           className="fadedBtn"
           onClick={(e) => checkFavorite(e)}
         >
           Favorites
         </button>
-        {disabled ? (
-          <button
-            disabled
-            type="button"
-            className="mainBtn"
-            onClick={goToMyList}
-          >
-            {canChangePet ? `Select pet` : `My tasks`}
-          </button>
-        ) : (
-          <button type="button" className="mainBtn" onClick={goToMyList}>
-            {canChangePet ? `Select pet` : `My tasks`}
-          </button>
-        )}
+        <button
+          disabled={disabled}
+          type="button"
+          className="mainBtn"
+          onClick={goToMyList}
+        >
+          {canChangePet ? `Select pet` : `My tasks`}
+        </button>
         {/* <button type="button" className="mainBtn" onClick={goToMyList}>
           {canChangePet ? `Select pet` : `My tasks`}
         </button> */}

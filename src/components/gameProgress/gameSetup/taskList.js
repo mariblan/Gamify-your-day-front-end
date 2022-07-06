@@ -9,7 +9,7 @@ export default function TaskList({
 }) {
   // console.log(searchValue);
   const [tasksFiltered, setTasksFiltered] = useState([]);
-  const { user, allTasks } = useTask();
+  const { user, allTasks, favoriteList } = useTask();
 
   useEffect(() => {
     // setTasksFiltered(allData);
@@ -25,7 +25,7 @@ export default function TaskList({
   useEffect(() => {
     if (!sortByFavorite) setTasksFiltered(allTasks);
     if (sortByFavorite) {
-      const favoriteIds = user.favoriteList.map((favTask) => {
+      const favoriteIds = favoriteList.map((favTask) => {
         return favTask._id;
       });
       const sortFavs = [...allTasks].sort((a, b) => {
@@ -38,6 +38,7 @@ export default function TaskList({
   // This useEffect checks the filter array and filters the displayed tasks to show only the tasks
   // whose category match the category selected in the filter (in parent component)
   useEffect(() => {
+    window.scrollTo(0, 0);
     // ??? When filterSelection is an empty array, it (correctly) considers filterSelection.length = 0
     // ??? and yet filterSelection === [] is false. Wth, why???
     // console.log(filterSelection);

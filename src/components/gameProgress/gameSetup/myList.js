@@ -12,6 +12,7 @@ export default function MyList({ showConcluded }) {
     todaysSuccess,
     userSettings,
     setUserSettings,
+    setDisabled,
   } = useTask();
 
   const [renderIncomplete, setRenderIncomplete] = useState(todaysList);
@@ -25,6 +26,7 @@ export default function MyList({ showConcluded }) {
   };
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     if (showConcluded) {
       setRenderIncomplete(false);
       setRenderComplete(todaysCompleted);
@@ -46,26 +48,26 @@ export default function MyList({ showConcluded }) {
   // }, [allTasks, filterSelection]);
 
   return (
-    console.log(userSettings) || (
-      <div className="taskWrapper">
-        {console.log("To do tasks:")}
-        {console.log(renderIncomplete)}
-        {console.log("Completed tasks:")}
-        {console.log(renderComplete)}
-        {renderIncomplete &&
-          renderIncomplete.map((task, index) => (
-            <TaskExpanded
-              key={index}
-              task={task}
-              user={user}
-              sendTaskSetting={sendTaskSetting}
-            />
-          ))}
-        {renderComplete &&
-          renderComplete.map((task, index) => (
-            <TaskConcluded key={index} task={task} />
-          ))}
-      </div>
-    )
+    // console.log(userSettings) || (
+    <div className="taskWrapper">
+      {/* {console.log("To do tasks:")} */}
+      {/* {console.log(renderIncomplete)} */}
+      {/* {console.log("Completed tasks:")} */}
+      {/* {console.log(renderComplete)} */}
+      {renderIncomplete &&
+        renderIncomplete.map((task, index) => (
+          <TaskExpanded
+            key={index}
+            task={task}
+            user={user}
+            sendTaskSetting={sendTaskSetting}
+          />
+        ))}
+      {renderComplete &&
+        renderComplete.map((task, index) => (
+          <TaskConcluded key={index} task={task} />
+        ))}
+    </div>
+    // )
   );
 }

@@ -67,7 +67,13 @@ export default function GameOver() {
         {/* <button disabled={disabled} onClick={continueClick} className="mainBtn">
           Continue
         </button> */}
-        <button onClick={continueClick} className="mainBtn">
+        <button
+          disabled={disabled}
+          onClick={() => {
+            continueClick();
+          }}
+          className="mainBtn"
+        >
           Continue
         </button>
       </div>

@@ -77,8 +77,10 @@ export default function MyTaskList() {
         toastErrorSettings
       );
     } else {
-      if (canChangePet) await confirm("Start the game?", options);
-      else {
+      if (canChangePet) {
+        setDisabled(true);
+        await confirm("Start the game?", options);
+      } else {
         setNextClicked(true);
         setTimeout(() => navigate("../gamego"), 150);
       }
@@ -162,7 +164,6 @@ export default function MyTaskList() {
               className="mainBtn"
               onClick={() => {
                 giveSignal();
-                setDisabled(true);
               }}
             >
               Start!

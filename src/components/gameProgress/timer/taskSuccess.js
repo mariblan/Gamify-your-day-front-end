@@ -34,11 +34,19 @@ export default function TaskSuccess() {
     setSeconds,
     gameFinalScreen,
   } = useTask();
-
-  const { icon, alt } = checkCategory(category);
+  //To use in setTimeout to navigate to the failure and succes screens.
   const navigate = useNavigate();
+
+  //Function info to make the proper icon render with the category of the task randomly selected from the userSettings
+  const { icon, alt } = checkCategory(category);
+
+  //Initial state of the taskSuccess
   const [taskSuccess, setTaskSuccess] = useState(false);
+
+  //Variable that can be modified to get the elapsed time in the taskTimer in the getElapsedTime funtion
   let elapsedTime = "";
+
+  //Function to get how much time the person took to complete the action.
   const getElapsedTime = () => {
     const secondsto = 60 - seconds;
     const minutesto = minutes - 1;
@@ -67,19 +75,18 @@ export default function TaskSuccess() {
     }
     return elapsedTime;
   };
+
   getElapsedTime();
-  // console.log(elapsedTime);
+
+  //UseEffect sets the taskSuccess to the previous value of gottenTask and adds elapsedTime value
+  //upon the key of time.
   useEffect(() => {
     setTaskSuccess({ ...gottenTask, time: elapsedTime });
-    // const todaysIds = todaysList.map((task) => task._id);
-    // console.log(todaysIds);
-    // console.log(taskId);
-    // console.log(todaysList.filter((task) => todaysIds.includes(taskId)));
-    // setTodaysList((prev) => prev.filter((task) => todaysIds.includes(taskId)));
   }, []);
 
+  //Next function sends to the database the successTask to the
+  //database into the successList and the completedList
   const successAndCompleted = async (userId, successSettings) => {
-    console.log(successSettings);
     const taskSucceeded = await addSuccess(userId, successSettings).then(
       (updatedSuccess) => updatedSuccess
     );
@@ -87,9 +94,8 @@ export default function TaskSuccess() {
       (updatedToday) => updatedToday
     );
     console.log(taskSucceeded);
-    console.log(updateToday);
     setTodaysList(updateToday);
-    setTodaysCompleted((prev) => [...prev, taskSucceeded[0]]);
+    setTodaysCompleted((prev) => [...prev, taskSucceeded.slice(-1)[0]]);
     return setTodaysSuccess(taskSucceeded);
   };
 
@@ -97,8 +103,14 @@ export default function TaskSuccess() {
     taskSuccess && successAndCompleted(user._id, taskSuccess);
   }, [taskSuccess]);
 
-  const navigateToList = () => setTimeout(navigate("../mytasks"), 150);
-
+  //This function sets the nextClicked to false so in my list the start button
+  //can add new values to userSettings. It also filters the success task out of
+  //the array of userSettings so it cannot be picked again
+  //in the apple button. Lastly, if redirects to the apple screen upon
+  //if the pet is still hungry or to the final screen if the pet is not
+  //hungry anymore. If you wish to continue the game, it also makes it so
+  //after the first time you get redirected to the final screen you won't be
+  //redirected again.
   const successClick = () => {
     setNextClicked(false);
     setUserSettings(
@@ -113,10 +125,32 @@ export default function TaskSuccess() {
     }
   };
 
+  //This button makes the nextClicked false so in my list new values
+  //can be added. It also filters the userSettings array to take out the
+  //successTask, so if the next button is not clicked, the array gets updated
+  //properly and the completed tasks cannot be selected.
+
+  const myListClick = () => {
+    setNextClicked(false);
+    setUserSettings(
+      userSettings.filter((task) => task._id !== taskSuccess._id)
+    );
+  };
+
+  //Function to navigate to my tasks withing the 150 seconds of the time out upon clicking the my list button
+  const navigateToList = () => setTimeout(navigate("../mytasks"), 150);
+
   return (
     <div className="bodytimer">
       {console.log(todaysList)}
-      <button className="menu" type="menu" onClick={navigateToList}>
+      <button
+        className="menu"
+        type="menu"
+        onClick={() => {
+          myListClick();
+          navigateToList();
+        }}
+      >
         My list
       </button>
       <div className="success">

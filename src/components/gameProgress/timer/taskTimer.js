@@ -7,7 +7,11 @@ import { useNavigate } from "react-router-dom";
 import { useTask } from "../../../taskContext";
 import { TimerSeconds } from "../../../utils/timerSetTimeout";
 import { confirm } from "react-confirm-box";
-import { addToProgress, addFailed } from "../../../fetchDB/fetchDB";
+import {
+  addToProgress,
+  addFailed,
+  removeFromToday,
+} from "../../../fetchDB/fetchDB";
 
 export default function TaskTimer() {
   const [timerInit, setTimerInit] = useState(false);
@@ -24,6 +28,7 @@ export default function TaskTimer() {
     todaysFailed,
     setTodaysFailed,
     todaysCompleted,
+    setTodaysList,
     setTodaysCompleted,
     gottenTask,
     setGottenTask,
@@ -34,14 +39,24 @@ export default function TaskTimer() {
     setSeconds,
     forfeited,
     setForfeited,
+    disabled,
+    setDisabled,
   } = useTask();
-  const [paused, setPaused] = useState(false);
-  const [done, setDone] = useState(false);
-  const { icon, alt } = checkCategory(category);
 
   //To use in setTimeout to navigate to the failure and succes screens.
   const navigate = useNavigate();
-  //Sets the countdown for the timer and prints it in the screen.
+
+  //So the pause button in the timer can clear the time out or reinit the timeout
+  const [paused, setPaused] = useState(false);
+
+  //It controls when the timeout is cleard when the task is finished and redirects to the success screen
+  const [done, setDone] = useState(false);
+
+  //Function info to make the proper icon render with the category of the task randomly selected from the userSettings
+  const { icon, alt } = checkCategory(category);
+
+  //Sets the values of minutes and seconds for the timer and does a small countdown so the timer dosent start inmediately upon rendering the screen
+  //so the user has a few seconds to process the task
   useEffect(() => {
     setMinutes(sliderValue);
     setSeconds(0);
@@ -50,15 +65,20 @@ export default function TaskTimer() {
     }, 200);
   }, [setMinutes, setSeconds]);
 
+  //Component with the timer function to make it work.
   TimerSeconds(timerInit, paused, setPaused, done, setDone);
   //console.log(category);
   //console.log(minutes, seconds);
+
+  //Function to make the pause button work. Upon true clears the timers setTimeout and upon false it reinits it
   const pause = () => {
     paused === false ? setPaused(true) : setPaused(false);
   };
+
+  //Function to make the "I'm done" button to work, setting it to true redirects you to the success screens and clears the interval
+  //so the user can get the exat time that they took to make it
   const imDone = async () => {
-    done === false ? setDone(true) : setPaused(false);
-    // setUserProgress((prevProgres) => prevProgres + reward);
+    done === false ? setDone(true) : setDone(false);
     if (userProgress >= 0) {
       const newUserProgress = userProgress + reward;
       await addToProgress(user._id, newUserProgress).then((progress) => {
@@ -68,6 +88,9 @@ export default function TaskTimer() {
     }
   };
 
+  //Configurates the options for the confirm box upon clicking forfeit task and the functionality of its buttons. When clicking in forfeit it clears the interval
+  //and disables the buttons until the box is closed. Clicking in the forfeit button of the confirm box it sends you to the failure screen and enables the buttons again.
+  //On continue it clears the box and sets the timeout again and enabales the buttons.
   const options = {
     render: (message, onConfirm, onCancel) => {
       return (
@@ -82,6 +105,7 @@ export default function TaskTimer() {
               onClick={() => {
                 onConfirm();
                 navigate("../taskfailure");
+                setDisabled(false);
               }}
             >
               Forfeit
@@ -90,6 +114,7 @@ export default function TaskTimer() {
               onClick={() => {
                 onCancel();
                 setPaused(false);
+                setDisabled(false);
               }}
             >
               Continue
@@ -103,35 +128,55 @@ export default function TaskTimer() {
   const forfeitTask = async () => {
     setPaused(true);
     setForfeited(true);
+    setDisabled(true);
     return await confirm("Are you sure?", options);
   };
 
-  const [failedTask, setFailedTask] = useState(false);
-
+  //This function send the failedTask to the failedList and to the
+  //completeList and takes the task completed out of the todayList(backend).
+  //It also updates the values of the todaysList(frontend) and the
+  //todaysCompleted
   const failedAndCompleted = async (userId, failedSettings) => {
     const taskFailed = await addFailed(userId, failedSettings).then(
       (updatedFailed) => updatedFailed
     );
-    console.log(taskFailed);
-    setTodaysCompleted(taskFailed);
+    const updateToday = await removeFromToday(userId, failedSettings._id).then(
+      (updatedToday) => updatedToday
+    );
+    setTodaysList(updateToday);
+    setTodaysCompleted((prev) => [...prev, taskFailed.slice(-1)[0]]);
     return setTodaysFailed(taskFailed);
   };
-  const givenUpTask = () => {
-    setGottenTask((prev) => ({ ...prev, reward: 0 }));
-    setFailedTask(gottenTask);
-    return failedTask;
+
+  //setting the initial state of failedTask
+  const [failedTask, setFailedTask] = useState(false);
+
+  //Set failed task to the values of gottenTask updating reward to 0 so the
+  //failedTask can be send to the failed array with the profer information.
+  useEffect(() => {
+    setFailedTask({ ...gottenTask, reward: 0 });
+  }, []);
+
+  //This sets the options for opening the confirm box in the my list button in the component of the timer countdown, as it will make the
+  //task to be failed. It disables the buttons upon click, clears the time out. The my list button within the box you has the funtionality of
+  //deleting the task to the failed list in the database, making the task be filtered out of the userSettings array and settubg the nextClick to false
+  //so in my list you can stablish changes upon clicking the "start" button. It also redirects you there and enables the other buttons.
+  //Continue closes the box and sets the timeOut back again
+
+  const goToMyList = async () => {
+    setPaused(true);
+    setForfeited(true);
+    return await confirm("Are you sure?", option);
   };
-  const givenUpClick = () => {
-    console.log(failedTask);
-    console.log(user._id);
-    console.log(userSettings);
-    failedAndCompleted(user._id, failedTask);
-    //   setNextClicked(false);
-    //   setUserSettings(
-    userSettings.filter((task) => task._id !== failedTask._id);
-    //   );
-    //   setForfeited(false);
-    //   navigate("../mytasks");
+
+  const givenUpClick = async () => {
+    // console.log(failedTask);
+    // console.log(user._id);
+    // console.log(userSettings);
+    await failedAndCompleted(user._id, failedTask);
+    setNextClicked(false);
+    setUserSettings(userSettings.filter((task) => task._id !== failedTask._id));
+    navigate("../mytasks");
   };
 
   const option = {
@@ -165,28 +210,18 @@ export default function TaskTimer() {
     },
   };
 
-  const goToMyList = async () => {
-    setPaused(true);
-    setForfeited(true);
-    return await confirm("Are you sure?", option);
-  };
-
-  //console.log(paused);
-  //console.log(done);
-  //console.log(selectedPet);
   return (
-    console.log(userSettings) || (
-      <TaskTimerRender
-        pauseClick={pause}
-        imDoneClick={imDone}
-        forfeitTask={forfeitTask}
-        goToMyList={goToMyList}
-        givenUpTask={givenUpTask}
-        apple={apple}
-        icon={icon}
-        alt={alt}
-        image={selectedPet.mood[0]}
-      />
-    )
+    <TaskTimerRender
+      pauseClick={pause}
+      imDoneClick={imDone}
+      forfeitTask={forfeitTask}
+      goToMyList={goToMyList}
+      // givenUpTask={givenUpTask}
+      apple={apple}
+      icon={icon}
+      alt={alt}
+      image={selectedPet.mood[0]}
+    />
   );
+  // );
 }

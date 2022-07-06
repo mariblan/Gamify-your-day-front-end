@@ -148,7 +148,10 @@ export default function MyTaskList() {
               disabled={disabled}
               type="button"
               className="mainBtn"
-              onClick={giveSignal}
+              onClick={() => {
+                giveSignal();
+                setDisabled(true);
+              }}
             >
               Start!
             </button>

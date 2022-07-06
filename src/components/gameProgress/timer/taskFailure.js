@@ -37,15 +37,23 @@ export default function TaskFailure() {
     gameFinalScreen,
     setGameFinalScreen,
   } = useTask();
+  //So navigate can be use to redirect to pages.
+  const navigate = useNavigate();
   const { icon, alt } = checkCategory(category);
 
+  //Sets the initial value of the failedTask
   const [failedTask, setFailedTask] = useState(false);
 
+  //Set failed task to the values of gottenTask updating reward to 0 so the
+  //failedTask can be send to the failed array with the profer information.
   useEffect(() => {
-    setGottenTask((prev) => ({ ...prev, reward: 0 }));
-    setFailedTask(gottenTask);
+    setFailedTask({ ...gottenTask, reward: 0 });
   }, []);
 
+  //This function send the failedTask to the failedList and to the
+  //completeList and takes the task completed out of the todayList(backend).
+  //It also updates the values of the todaysList(frontend) and the
+  //todaysCompleted
   const failedAndCompleted = async (userId, failedSettings) => {
     const taskFailed = await addFailed(userId, failedSettings).then(
       (updatedFailed) => updatedFailed
@@ -53,10 +61,8 @@ export default function TaskFailure() {
     const updateToday = await removeFromToday(userId, failedSettings._id).then(
       (updatedToday) => updatedToday
     );
-    console.log(taskFailed);
-    console.log(updateToday);
     setTodaysList(updateToday);
-    setTodaysCompleted((prev) => [...prev, taskFailed[0]]);
+    setTodaysCompleted((prev) => [...prev, taskFailed.slice(-1)[0]]);
     return setTodaysFailed(taskFailed);
   };
 
@@ -64,12 +70,14 @@ export default function TaskFailure() {
     failedTask && failedAndCompleted(user._id, failedTask);
   }, [failedTask]);
 
-  // useEffect(() => {
-  //   setUserSettings(userSettings.filter((task) => task._id !== failedTask._id));
-  // }, [userSettings]);
-
-  const navigate = useNavigate();
-
+  //This function sets the nextClicked to false so in my list the start button
+  //can add new values to userSettings. It also filters the failedTask out of
+  //the array of userSettings so it cannot be picked again
+  //in the apple button. Lastly, if redirects to the apple screen
+  //if the pet is still hungry or to the final screen if the pet is not
+  //hungry anymore. If you wish to continue the game, it also makes it so
+  //after the first time you get redirected to the final screen you won't be
+  //redirected again.
   const failureClick = () => {
     setNextClicked(false);
     setUserSettings(userSettings.filter((task) => task._id !== failedTask._id));
@@ -83,12 +91,26 @@ export default function TaskFailure() {
     }
   };
 
+  //This button makes the nextClicked false so in my list new values
+  //can be added. It also filters the userSettings array to take out the
+  //successTask, so if the next button is not clicked, the array gets updated
+  //properly and the completed tasks cannot be selected.
+
+  const myListClick = () => {
+    setNextClicked(false);
+    setUserSettings(userSettings.filter((task) => task._id !== failedTask._id));
+  };
+
+  //To navigate to my list upon click but giving time so the animation displays.
+  const navigateToList = () => setTimeout(navigate("../mytasks"), 150);
+
   return (
     console.log(userSettings) || (
       <div className="bodytimer">
         <button
           onClick={() => {
-            setTimeout(navigate("../mytasks"), 150);
+            myListClick();
+            navigateToList();
           }}
           className="menu"
           type="menu"

@@ -27,9 +27,12 @@ export const selectTask = async (e, taskId, user, todaysList) => {
   }
 };
 
-export const loadSelected = (taskId, userFavorites) => {
-  for (let eachFavorite of userFavorites) {
-    if (eachFavorite._id === taskId) return "taskMiniSelected";
+export const loadSelected = (taskId, todaysList, todaysCompleted) => {
+  for (let eachDaily of todaysList) {
+    if (eachDaily._id === taskId) return "taskMiniSelected";
+  }
+  for (let eachCompletion of todaysCompleted) {
+    if (eachCompletion._id === taskId) return "taskMiniSelected";
   }
   return "taskMini";
 };

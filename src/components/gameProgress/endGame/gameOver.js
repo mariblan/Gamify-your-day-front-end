@@ -2,6 +2,7 @@ import { useTask } from "../../../taskContext";
 import renderApples from "../../../utils/generateApples";
 import "./gameOver.css";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 export default function GameOver() {
   const {
@@ -12,10 +13,19 @@ export default function GameOver() {
     setGameFinalScreen,
     disabled,
     setDisabled,
+    logOutConfirm,
   } = useTask();
 
+  //To use in setTimeout to navigate to the failure and succes screens.
   const navigate = useNavigate();
 
+  //Setting the buttons disabled value to false so they work as they keep getting disabled upon mount.
+  useEffect(() => {
+    setDisabled(false);
+  }, []);
+
+  //Upon clicking "continue" it redirects you to the apple button so the user can get another randome task and keep playing
+  //and it sets the gameFinalScreen to false so it wont redirec the user again to that upon succeding the next tasks.
   const continueClick = () => {
     setGameFinalScreen(false);
     navigate("../gamego");
@@ -23,7 +33,13 @@ export default function GameOver() {
 
   return (
     <div className="gameoverscreen">
-      <button className="menu" onClick={() => logOut()}>
+      <button
+        className="menu"
+        onClick={() => {
+          logOutConfirm();
+          setDisabled(true);
+        }}
+      >
         Log Out
       </button>
       <div className="gameovercontainer">

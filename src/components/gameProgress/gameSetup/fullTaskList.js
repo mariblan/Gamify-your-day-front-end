@@ -65,6 +65,10 @@ export default function AllTasks() {
         });
   };
 
+  useEffect(() => {
+    setDisabled(false);
+  }, []);
+
   // Toggles sorting by favorite on and off
   const checkFavorite = (e) => {
     // console.log(`This is the favorites list:`);

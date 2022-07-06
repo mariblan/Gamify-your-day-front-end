@@ -1,12 +1,12 @@
 // import { useEffect, useContext } from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import GameGo from "../gameSetup/gameGo";
 import { useTask } from "../../../taskContext";
 import { toast } from "react-toastify";
 
 export default function GetTask() {
-  const [counter, setCounter] = useState("Start!");
+  //const [counter, setCounter] = useState("Start!");
   const [clicked, setClicked] = useState(false);
   const [timerActive, setTimerActive] = useState(false);
   const {
@@ -21,6 +21,10 @@ export default function GetTask() {
     gottenTask,
     setGottenTask,
     toastErrorSettings,
+    breakInterval,
+    setBreakInterval,
+    counter,
+    setCounter,
   } = useTask();
 
   const navigate = useNavigate();
@@ -33,16 +37,15 @@ export default function GetTask() {
       );
     } else if (userSettings.length > 0) {
       const index = Math.floor(Math.random() * userSettings.length);
-      //setInterval();
+      console.log("This is happening");
       setClicked(true);
       setCounter(5);
       countDown();
-      // console.log(todaysList[index]);
+      //console.log(todaysList[index]);
       // console.log(userSettings);
       setGottenTask(userSettings[index]);
     }
   }
-
   const countDown = () => {
     let count = 5;
     const interval = setInterval(() => {

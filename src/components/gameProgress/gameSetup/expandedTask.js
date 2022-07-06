@@ -87,20 +87,9 @@ export default function TaskExpanded({
     category,
   };
 
-  // Sends the task settings tp the parent component
-  // useEffect(() => {
-  //   if (taskConcluded === false) sendTaskSetting(taskSetting);
-  // }, [nextClicked]);
-
   useEffect(() => {
     if (nextClicked) sendTaskSetting(taskSetting);
   }, [nextClicked]);
-
-  // useEffect(() => {
-  //   return () => {
-  //     sendTaskSetting(taskSetting);
-  //   };
-  // }, []);
 
   return (
     <div className="taskExpanded">

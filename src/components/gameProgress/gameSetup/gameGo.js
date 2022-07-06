@@ -1,12 +1,16 @@
 import appleColor from "../../../images/apple-color.png";
+import { addFailed, removeFromToday } from "../../../fetchDB/fetchDB";
 import "./gameGo.css";
 import { useTask } from "../../../taskContext";
 import { useNavigate } from "react-router-dom";
-import { useRef } from "react";
+import { useState, useEffect, useRef } from "react";
+import { confirm } from "react-confirm-box";
 
-export default function GameGo({ getTask, counter, clicked }) {
+export default function GameGo({ getTask, clicked }) {
   // console.log(props);
   const {
+    counter,
+    setCounter,
     selectedPet,
     setSelectedPet,
     userSettings,
@@ -15,17 +19,43 @@ export default function GameGo({ getTask, counter, clicked }) {
     gottenTask,
     forfeited,
     setForfeited,
+    setNextClicked,
+    disabled,
+    setDisabled,
+    setGottenTask,
+    setPaused,
+    setUserSettings,
+    setTodaysFailed,
+    setTodaysCompleted,
+    user,
+    breakInterval,
+    setBreakInterval,
   } = useTask();
-  // console.log(selectedPet);
+
   const navigate = useNavigate();
+
+  //ref to use in the button so when clicking in the "strat" on the apple also triggers the button focus
   const focusBtn = useRef(null);
+
+  useEffect(() => {
+    setCounter("Start!");
+  }, []);
+  useEffect(() => {
+    setDisabled(false);
+  }, []);
+
+  useEffect(() => {
+    setGottenTask(false);
+  }, []);
+
+  const navigateToList = () => setTimeout(navigate("../mytasks"), 150);
   return (
     // console.log(forfeited) || (
     <div>
-      {/* {console.log(gottenTask)} */}
+      {console.log(gottenTask)}
       <button
         onClick={() => {
-          setTimeout(navigate("../mytasks"), 150);
+          navigate("../mytasks");
         }}
         className="menu"
         type="menu"
@@ -40,10 +70,15 @@ export default function GameGo({ getTask, counter, clicked }) {
         )}
         <button
           ref={focusBtn}
+          disabled={disabled}
           id="a"
           className={userSettings.length === 0 ? "applebtnnotask" : "applebtn"}
           type="button"
-          onClick={getTask}
+          onClick={() => {
+            if (!gottenTask) {
+              getTask();
+            }
+          }}
           value="Click"
         >
           <img
@@ -55,7 +90,9 @@ export default function GameGo({ getTask, counter, clicked }) {
         </button>
         <div
           onClick={() => {
-            getTask();
+            if (!gottenTask) {
+              getTask();
+            }
             focusBtn.current.focus();
           }}
           className="start"

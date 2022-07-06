@@ -184,8 +184,8 @@ export default function TaskTimer() {
       return (
         <div className="react-confirm-box">
           <h4>
-            If you go back to your list, you will not be able to go back to it
-            and you will lose your reward. Are you sure you want to proceed?
+            If you go back to your list, you will loose this task and won't be
+            able to do it later. Are you sure you want to proceed?
           </h4>
           <div className="confirm-box-btnWrapper">
             <button

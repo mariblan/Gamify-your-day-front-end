@@ -22,7 +22,6 @@ export default function TaskMini({ task: { _id, taskName, category } }) {
   const { icon, alt } = checkCategory(category);
   const [favorite, setFavorite] = useState(notFavIcon);
   const [taskClass, setTaskClass] = useState("taskMini");
-  const [taskConcluded, setTaskConcluded] = useState(false);
 
   // These two useEffects check the favorite and selected arrays from the user and
   // render selecton and favorite icons adequately.
@@ -35,29 +34,15 @@ export default function TaskMini({ task: { _id, taskName, category } }) {
       setTaskClass(loadSelected(_id, [...todaysList], [...todaysCompleted]));
   }, [_id, todaysList, todaysCompleted]);
 
-  // Checks the success and failure arrays from the user and sets the trigger to render the check marks
-  useEffect(() => {
-    for (let success of user.todaySuccess) {
-      // console.log(success);
-      if (success._id === _id) setTaskConcluded("success");
-    }
-
-    for (let failure of user.todayFailed) {
-      // console.log(failure);
-      if (failure._id === _id) setTaskConcluded("failed");
-    }
-  }, [user.todaySuccess, user.todayFailed]);
-
   // Checks the state of the task and if it was succeeded or failed, it renders the adequate mark
   const checkCompletion = () => {
     const allSuccessIds = todaysSuccess.map((task) => task._id);
     const allFailedIds = todaysFailed.map((task) => task._id);
-    console.log(todaysSuccess);
-    console.log(allSuccessIds);
-    console.log(allFailedIds);
+    // console.log(todaysSuccess);
+    // console.log(allSuccessIds);
+    // console.log(allFailedIds);
 
     if (allFailedIds.includes(_id)) {
-      // setIsFailed(true);
       return <img src={redX} alt="An x icon" className="taskConcluded" />;
     } else if (allSuccessIds.includes(_id)) {
       return (
@@ -71,6 +56,7 @@ export default function TaskMini({ task: { _id, taskName, category } }) {
   };
 
   return (
+    user &&
     todaysList &&
     favoriteList && (
       <div
@@ -87,7 +73,7 @@ export default function TaskMini({ task: { _id, taskName, category } }) {
         {/* {console.log(user)} */}
         {/* {console.log(user.todayList)} */}
         {/* {console.log("These are the favorites:")} */}
-        {/* {console.log(user.favoriteList)} */}
+        {/* {console.log(favoriteList)} */}
         <img src={icon} alt={alt} />
         <h3>{taskName}</h3>
         <img
@@ -95,8 +81,8 @@ export default function TaskMini({ task: { _id, taskName, category } }) {
           src={favorite}
           alt="A heart favorite icon"
           className="favIcon"
-          onClick={() =>
-            toggleFavorites(_id, user, favoriteList).then((data) => {
+          onClick={async () =>
+            await toggleFavorites(_id, user, favoriteList).then((data) => {
               if (data) {
                 setFavoriteList(data[0]);
                 setFavorite(data[1]);

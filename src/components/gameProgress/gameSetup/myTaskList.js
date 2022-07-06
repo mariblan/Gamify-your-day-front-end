@@ -43,10 +43,18 @@ export default function MyTaskList() {
             later on. Would you like to continue?
           </h4>
           <div className="confirm-box-btnWrapper">
-            <button onClick={() => onCancel()}>Back</button>
+            <button
+              onClick={() => {
+                onCancel();
+                setDisabled(false);
+              }}
+            >
+              Back
+            </button>
             <button
               onClick={() => {
                 onConfirm();
+                setDisabled(false);
                 setNextClicked(true);
                 setTimeout(() => navigate("../gamego"), 150);
                 setCanChangePet(false);

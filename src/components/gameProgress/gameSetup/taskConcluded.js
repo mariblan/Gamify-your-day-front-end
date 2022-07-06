@@ -48,9 +48,9 @@ export default function TaskConcluded({
   const checkCompletion = () => {
     const allSuccessIds = todaysSuccess.map((task) => task._id);
     const allFailedIds = todaysFailed.map((task) => task._id);
-    console.log(todaysSuccess);
-    console.log(allSuccessIds);
-    console.log(allFailedIds);
+    // console.log(todaysSuccess);
+    // console.log(allSuccessIds);
+    // console.log(allFailedIds);
 
     if (allFailedIds.includes(_id)) {
       // setIsFailed(true);

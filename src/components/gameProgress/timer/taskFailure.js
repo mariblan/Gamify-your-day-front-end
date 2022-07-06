@@ -35,7 +35,6 @@ export default function TaskFailure() {
     forfeited,
     setForfeited,
     gameFinalScreen,
-    setGameFinalScreen,
   } = useTask();
   //So navigate can be use to redirect to pages.
   const navigate = useNavigate();

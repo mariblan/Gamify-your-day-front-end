@@ -34,6 +34,8 @@ const TaskProvider = ({
   setUser,
   children,
 }) => {
+  //Pets are not in database so here we have all the info needed in the games so it can be passed down to
+  //the right components and be used to select the selectedPet.
   const pets = [
     {
       petId: 1,
@@ -70,6 +72,7 @@ const TaskProvider = ({
     },
   ];
 
+  //The options for the setup of the log out confirm box and the functions of its buttons.
   const options = {
     render: (message, onConfirm, onCancel) => {
       return (
@@ -101,11 +104,12 @@ const TaskProvider = ({
       );
     },
   };
-
+  //This makes the confirmation box to pop out so you can decide befrore logging out, and upon confirmation runs the logOut function, which
+  //sets the game to the initial state.
   const logOutConfirm = async () => {
-    if (todaysList.length > 0) {
+    if (todaysList.length > 0 || todaysCompleted.length > 0) {
       await confirm("Are you sure?", options);
-    } else if (todaysList.length === 0) {
+    } else if (todaysList.length === 0 && todaysCompleted.length === 0) {
       logOut();
     }
   };
@@ -139,7 +143,8 @@ const TaskProvider = ({
     setTimeout(() => <Navigate to={"../login"} />, 150);
   };
 
-  const navigate = useNavigate();
+  //Fetching the generic task from database and setting them to display in a different order
+  //each time.
 
   const [allTasks, setAllTasks] = useState(false);
   useEffect(() => {
@@ -152,46 +157,58 @@ const TaskProvider = ({
     });
   }, []);
 
+  //If turns to true upon clicking start in the my list component, so the settings of personalized tasks can be added
+  //to the userSettings. It turns to back to false in the failure and success screens.
   const [nextClicked, setNextClicked] = useState(false);
 
+  //To pass the infor of the selected pet to the timer components
   const [selectedPet, setSelectedPet] = useState(false);
 
+  //To establish that the pet cannot be change once the game starts.
   const [canChangePet, setCanChangePet] = useState(true);
 
-  const [favoriteList, setFavoriteList] = useState(false);
+  //Thisn passes the array of randomize task through the app
+  const [userSettings, setUserSettings] = useState([]);
 
+  // Setting the info from the database in different lists
+  const [favoriteList, setFavoriteList] = useState(false);
   useEffect(() => {
     user && setFavoriteList(user.favoriteList);
   }, [user]);
 
-  const [userSettings, setUserSettings] = useState([]);
-
+  //Settings the todayList of the database to the front end todaysList
   const [todaysList, setTodaysList] = useState([]);
   useEffect(() => {
     user && setTodaysList(user.todayList);
   }, [user]);
 
+  //Settings the todayCompleted of the database to the front end todaysCompleted
   const [todaysCompleted, setTodaysCompleted] = useState([]);
   useEffect(() => {
     user && setTodaysCompleted(user.todayCompleted);
   }, [user]);
 
+  //Settings the todayFailed of the database to the front end todaysFailed
   const [todaysFailed, setTodaysFailed] = useState([]);
   useEffect(() => {
     user && setTodaysFailed(user.todayFailed);
-  }, [user, todaysFailed]);
+  }, [user]);
 
+  //Settings the todaySuccess of the database to the front end todaysSuccess
   const [todaysSuccess, setTodaysSuccess] = useState([]);
   useEffect(() => {
     user && setTodaysSuccess(user.todayFailed);
-  }, [user, todaysSuccess]);
+  }, [user]);
 
+  //Sets the userProgress to pass it througout the app and render the proper progres in the right place
+  //and to send this progress back to the database
   const [userProgress, setUserProgress] = useState(0);
 
   useEffect(() => {
     user && setUserProgress(user.progress);
   }, [user]);
 
+  //This sets the values presented by the task that we get randomly in the game
   const [gottenTask, setGottenTask] = useState({
     category: "",
     reward: 0,
@@ -200,17 +217,25 @@ const TaskProvider = ({
     taskid: 0,
     taskName: "",
   });
+  //The values for the timer component so it can be passed through the success and failure screens and render
+  //how long it took the person to do the task.
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
 
+  //Disables the buttons uppon click when a confirm box is open, so the user cannot go to another screen until the
+  //confirm box has been closed.
   const [disabled, setDisabled] = useState(false);
 
-  const disabledBtnFalse = () => {
+  useEffect(() => {
     setDisabled(false);
-  };
+  }, []);
 
+  //This sets if the task is forfeited so the failures screen can send the right info to the array.
   const [forfeited, setForfeited] = useState(false);
+
+  //This allows the game to know when to redirect the player to the final screen
   const [gameFinalScreen, setGameFinalScreen] = useState(true);
+
   return (
     <TaskContext.Provider
       value={{
@@ -228,7 +253,6 @@ const TaskProvider = ({
         setCanChangePet,
         nextClicked,
         setNextClicked,
-        navigate,
         user,
         userProgress,
         setUserProgress,

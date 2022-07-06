@@ -1,4 +1,5 @@
 import { useTask } from "../../../taskContext";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import renderApples from "../../../utils/generateApples";
 export default function TaskTimerRender({
@@ -10,7 +11,7 @@ export default function TaskTimerRender({
   imDoneClick,
   forfeitTask,
   goToMyList,
-  givenUpTask,
+  // givenUpTask,
 }) {
   const {
     gottenTask: { taskName, sliderValue, difficulty, reward },
@@ -23,15 +24,23 @@ export default function TaskTimerRender({
     setMinutes,
     seconds,
     setSeconds,
+    disabled,
+    setDisabled,
   } = useTask();
+
+  //Setting the buttons disabled value to false so they work as they keep getting disabled upon mount.
+  useEffect(() => {
+    setDisabled(false);
+  }, []);
+
   const navigate = useNavigate();
   // console.log(reward);
   // console.log(userProgress);
   return (
     <div className="bodytimer">
       <button
+        disabled={disabled}
         onClick={() => {
-          givenUpTask();
           goToMyList();
         }}
         className="menu"
@@ -53,7 +62,7 @@ export default function TaskTimerRender({
             </h2>
             <div className="tasks-options">
               <button onClick={pauseClick} className="fadedBtn" type="button">
-                ||{" "}
+                | |
               </button>
             </div>
           </div>
@@ -86,7 +95,12 @@ export default function TaskTimerRender({
               </button>
             </div>
             <div>
-              <button onClick={imDoneClick} className="mainBtn" type="button">
+              <button
+                disabled={disabled}
+                onClick={imDoneClick}
+                className="mainBtn"
+                type="button"
+              >
                 I'm done
               </button>
             </div>

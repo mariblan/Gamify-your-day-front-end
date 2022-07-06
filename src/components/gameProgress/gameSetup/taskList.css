@@ -225,6 +225,7 @@ Same for divs fixed at the bottom: How to have the
   display: flex;
   justify-content: space-around;
   margin-bottom: 2vh;
+  margin-left: 6%;
   width: 100%;
 }
 
@@ -449,4 +450,9 @@ input[type="range"]::-moz-range-thumb {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+}
+
+.rewardWrapperConcludedFailed {
+  margin-top: 4%;
+  margin-bottom: 3%;
 }

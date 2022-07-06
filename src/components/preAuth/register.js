@@ -12,7 +12,7 @@ export default function Register() {
   const [{ name, email, password }, setFormState] = useState({
     name: "",
     email: "",
-    newPassword: "",
+    password: "",
   });
 
   const navigate = useNavigate();
@@ -31,7 +31,10 @@ export default function Register() {
         localStorage.setItem("token", token);
         return setToken(token);
       }
-      if (error) return toast.error(`I'm a try error`, toastErrorSettings);
+      if (error) {
+        console.log(error);
+        return toast.error(error, toastErrorSettings);
+      }
     } catch (error) {
       toast.error(error.stack, toastErrorSettings);
     }

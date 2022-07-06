@@ -8,8 +8,17 @@ import { selectTask, loadSelected } from "../../../utils/selectTask";
 import { useTask } from "../../../taskContext";
 
 export default function TaskMini({ task: { _id, taskName, category } }) {
-  const { user, favoriteList, setFavoriteList, todaysList, setTodaysList } =
-    useTask();
+  const {
+    user,
+    favoriteList,
+    setFavoriteList,
+    todaysList,
+    setTodaysList,
+    todaysCompleted,
+    todaysSuccess,
+    todaysFailed,
+  } = useTask();
+
   const { icon, alt } = checkCategory(category);
   const [favorite, setFavorite] = useState(notFavIcon);
   const [taskClass, setTaskClass] = useState("taskMini");
@@ -22,8 +31,9 @@ export default function TaskMini({ task: { _id, taskName, category } }) {
   }, [_id, favoriteList]);
 
   useEffect(() => {
-    todaysList && setTaskClass(loadSelected(_id, [...todaysList]));
-  }, [_id, todaysList]);
+    todaysList &&
+      setTaskClass(loadSelected(_id, [...todaysList], [...todaysCompleted]));
+  }, [_id, todaysList, todaysCompleted]);
 
   // Checks the success and failure arrays from the user and sets the trigger to render the check marks
   useEffect(() => {
@@ -40,10 +50,16 @@ export default function TaskMini({ task: { _id, taskName, category } }) {
 
   // Checks the state of the task and if it was succeeded or failed, it renders the adequate mark
   const checkCompletion = () => {
-    if (taskConcluded === "failed") {
+    const allSuccessIds = todaysSuccess.map((task) => task._id);
+    const allFailedIds = todaysFailed.map((task) => task._id);
+    console.log(todaysSuccess);
+    console.log(allSuccessIds);
+    console.log(allFailedIds);
+
+    if (allFailedIds.includes(_id)) {
+      // setIsFailed(true);
       return <img src={redX} alt="An x icon" className="taskConcluded" />;
-    }
-    if (taskConcluded === "success") {
+    } else if (allSuccessIds.includes(_id)) {
       return (
         <img
           src={greenCheck}
@@ -53,10 +69,6 @@ export default function TaskMini({ task: { _id, taskName, category } }) {
       );
     }
   };
-
-  useEffect(() => {
-    checkCompletion();
-  }, [taskConcluded]);
 
   return (
     todaysList &&

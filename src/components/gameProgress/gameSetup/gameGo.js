@@ -40,6 +40,7 @@ export default function GameGo({ getTask, clicked }) {
   useEffect(() => {
     setCounter("Start!");
   }, []);
+
   useEffect(() => {
     setDisabled(false);
   }, []);

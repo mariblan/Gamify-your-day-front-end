@@ -20,7 +20,7 @@ export default function MyList({ showConcluded }) {
 
   const sendTaskSetting = async (taskSetting) => {
     if (nextClicked && userSettings.length === 0) {
-      console.log(userSettings);
+      // console.log(userSettings);
       await setUserSettings((prev) => [...prev, taskSetting]);
     }
   };

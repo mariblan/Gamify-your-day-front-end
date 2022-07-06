@@ -134,6 +134,8 @@ const TaskProvider = ({
     setTodaysFailed([]);
     clearSuccess(user._id);
     setTodaysSuccess([]);
+    setGameFinalScreen(true);
+    setDisabled(false);
     setSelectedPet(false);
     setCanChangePet(true);
     localStorage.removeItem("token");
@@ -227,15 +229,15 @@ const TaskProvider = ({
   //confirm box has been closed.
   const [disabled, setDisabled] = useState(false);
 
-  useEffect(() => {
-    setDisabled(false);
-  }, []);
-
   //This sets if the task is forfeited so the failures screen can send the right info to the array.
   const [forfeited, setForfeited] = useState(false);
 
   //This allows the game to know when to redirect the player to the final screen
   const [gameFinalScreen, setGameFinalScreen] = useState(true);
+
+  // useEffect(() => {
+  //   setGameFinalScreen(true);
+  // }, []);
 
   const [breakInterval, setBreakInterval] = useState(false);
 

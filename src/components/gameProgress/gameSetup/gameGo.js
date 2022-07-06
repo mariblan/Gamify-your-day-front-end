@@ -52,7 +52,7 @@ export default function GameGo({ getTask, clicked }) {
   return (
     // console.log(forfeited) || (
     <div>
-      {console.log(gottenTask)}
+      {/* {console.log(gottenTask)} */}
       <button
         onClick={() => {
           navigate("../mytasks");

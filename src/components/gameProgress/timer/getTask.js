@@ -37,7 +37,7 @@ export default function GetTask() {
       );
     } else if (userSettings.length > 0) {
       const index = Math.floor(Math.random() * userSettings.length);
-      console.log("This is happening");
+      // console.log("This is happening");
       setClicked(true);
       setCounter(5);
       countDown();

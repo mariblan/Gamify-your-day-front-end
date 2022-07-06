@@ -111,16 +111,17 @@ export default function TaskSuccess() {
   //hungry anymore. If you wish to continue the game, it also makes it so
   //after the first time you get redirected to the final screen you won't be
   //redirected again.
-  const successClick = () => {
+  const successClick = async () => {
     setNextClicked(false);
     setUserSettings(
       userSettings.filter((task) => task._id !== taskSuccess._id)
     );
-    if (selectedPet.hungerlevel > userProgress) {
+    const currentProgress = await userProgress;
+    if (selectedPet.hungerlevel > currentProgress) {
       setTimeout(navigate("../gamego"), 150);
-    } else if (selectedPet.hungerlevel <= userProgress && gameFinalScreen) {
+    } else if (selectedPet.hungerlevel <= currentProgress && gameFinalScreen) {
       setTimeout(navigate("../gameover"), 150);
-    } else if (selectedPet.hungerlevel <= userProgress && !gameFinalScreen) {
+    } else if (selectedPet.hungerlevel <= currentProgress && !gameFinalScreen) {
       setTimeout(navigate("../gamego"), 150);
     }
   };

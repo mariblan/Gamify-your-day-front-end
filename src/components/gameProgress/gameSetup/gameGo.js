@@ -1,13 +1,12 @@
-import appleColor from "../../../images/apple-color.png";
-import { addFailed, removeFromToday } from "../../../fetchDB/fetchDB";
-import "./gameGo.css";
-import { useTask } from "../../../taskContext";
-import { useNavigate } from "react-router-dom";
-import { useState, useEffect, useRef } from "react";
-import { confirm } from "react-confirm-box";
+import { appleColor } from '../../../images';
+import { addFailed, removeFromToday } from '../../../fetchDB/fetchDB';
+import './gameGo.css';
+import { useTask } from '../../../taskContext';
+import { useNavigate } from 'react-router-dom';
+import { useState, useEffect, useRef } from 'react';
+import { confirm } from 'react-confirm-box';
 
 export default function GameGo({ getTask, clicked }) {
-  // console.log(props);
   const {
     counter,
     setCounter,
@@ -38,7 +37,7 @@ export default function GameGo({ getTask, clicked }) {
   const focusBtn = useRef(null);
 
   useEffect(() => {
-    setCounter("Start!");
+    setCounter('Start!');
   }, []);
 
   useEffect(() => {
@@ -49,44 +48,44 @@ export default function GameGo({ getTask, clicked }) {
     setGottenTask(false);
   }, []);
 
-  const navigateToList = () => setTimeout(navigate("../mytasks"), 150);
+  const navigateToList = () => setTimeout(navigate('../mytasks'), 150);
   return (
     // console.log(forfeited) || (
     <div>
       {/* {console.log(gottenTask)} */}
       <button
         onClick={() => {
-          navigate("../mytasks");
+          navigate('../mytasks');
         }}
-        className="menu"
-        type="menu"
+        className='menu'
+        type='menu'
       >
         My list
       </button>
-      <div className="gamegobody">
+      <div className='gamegobody'>
         {clicked === false ? (
-          <h2 className="title">Give me a random task!</h2>
+          <h2 className='title'>Give me a random task!</h2>
         ) : (
-          <h2 className="title">Your next task is...</h2>
+          <h2 className='title'>Your next task is...</h2>
         )}
         <button
           ref={focusBtn}
           disabled={disabled}
-          id="a"
-          className={userSettings.length === 0 ? "applebtnnotask" : "applebtn"}
-          type="button"
+          id='a'
+          className={userSettings.length === 0 ? 'applebtnnotask' : 'applebtn'}
+          type='button'
           onClick={() => {
             if (!gottenTask) {
               getTask();
             }
           }}
-          value="Click"
+          value='Click'
         >
           <img
-            id="applebtnimage"
-            className="applebtnimage"
+            id='applebtnimage'
+            className='applebtnimage'
             src={appleColor}
-            alt="red apple"
+            alt='red apple'
           />
         </button>
         <div
@@ -96,13 +95,13 @@ export default function GameGo({ getTask, clicked }) {
             }
             focusBtn.current.focus();
           }}
-          className="start"
+          className='start'
         >
           {counter}
         </div>
       </div>
       {clicked === true && (
-        <div className="gottentask">
+        <div className='gottentask'>
           <h4>{gottenTask.taskName}</h4>
         </div>
       )}

@@ -1,29 +1,26 @@
-import checkCategory from "../../../utils/categoryCheck";
-import redX from "../../../images/failed-task-icon.png";
-import greenCheck from "../../../images/check-icon.png";
-import notFavIcon from "../../../images/fav-icon.png";
-import { loadFavorites, toggleFavorites } from "../../../utils/displayFavorite";
-import renderApples from "../../../utils/generateApples";
-import { useState, useEffect } from "react";
-import { useTask } from "../../../taskContext";
+import { notFavIcon } from '../../../images';
+import {
+  loadFavorites,
+  toggleFavorites,
+  renderApples,
+  checkCategory,
+} from '../../../utils';
+import { useState, useEffect } from 'react';
+import { useTask } from '../../../taskContext';
 
 export default function TaskExpanded({
   task: { _id, taskName, taskTime, category },
-  user: { todaySuccess, todayFailed },
   sendTaskSetting,
-  // blockCompleted,
 }) {
   const [sliderValue, setSliderValue] = useState(taskTime.minMedium);
-  const [difficulty, setDifficulty] = useState("Medium");
+  const [difficulty, setDifficulty] = useState('Medium');
   const [reward, setReward] = useState(2);
-  const [taskConcluded, setTaskConcluded] = useState(false);
   const [favorite, setFavorite] = useState(notFavIcon);
   // Function that checks the category of a task and saves the relevant
   // icon and alt description for a mapping component call (to save from
   // having to import all icons in multiple files)
   const { icon, alt } = checkCategory(category);
-  const { user, favoriteList, setFavoriteList, nextClicked, setNextClicked } =
-    useTask();
+  const { user, favoriteList, setFavoriteList, nextClicked } = useTask();
 
   //!!! Have this work. Check if the task is in the success or failed array and change state
   // of variable to render checks/xs conditionally
@@ -61,13 +58,13 @@ export default function TaskExpanded({
   // displayed on screen
   useEffect(() => {
     if (sliderValue <= taskTime.maxEasy) {
-      setDifficulty("Easy");
+      setDifficulty('Easy');
       setReward(1);
     } else if (sliderValue >= taskTime.minHard) {
-      setDifficulty("Hard");
+      setDifficulty('Hard');
       setReward(3);
     } else {
-      setDifficulty("Medium");
+      setDifficulty('Medium');
       setReward(2);
     }
   }, [sliderValue]);
@@ -92,15 +89,14 @@ export default function TaskExpanded({
   }, [nextClicked]);
 
   return (
-    <div className="taskExpanded">
-      {/* {checkCompletion()} */}
-      <div className="taskMain">
+    <div className='taskExpanded'>
+      <div className='taskMain'>
         <img src={icon} alt={alt} />
-        <div className="titleFavoriteWrapper">
+        <div className='titleFavoriteWrapper'>
           <img
             src={favorite}
-            alt="favorite"
-            className="favIcon"
+            alt='favorite'
+            className='favIcon'
             onClick={() =>
               toggleFavorites(_id, user, favoriteList).then((data) => {
                 setFavoriteList(data[0]);
@@ -111,30 +107,30 @@ export default function TaskExpanded({
           <h2>{taskName}</h2>
         </div>
       </div>
-      <div className="taskDescription">
-        <div className="difficultyWrapper">
-          <label htmlFor="timeSetter">Difficulty</label>
+      <div className='taskDescription'>
+        <div className='difficultyWrapper'>
+          <label htmlFor='timeSetter'>Difficulty</label>
           <p>Total Time</p>
         </div>
-        <div className="timeWrapper">
+        <div className='timeWrapper'>
           <p>{difficulty}</p>
           <p>{sliderValue} min</p>
         </div>
       </div>
       <input
-        type="range"
-        id="timeSetter"
-        name="timeSetter"
+        type='range'
+        id='timeSetter'
+        name='timeSetter'
         min={taskTime.minEasy}
         max={taskTime.maxHard}
-        step="1"
+        step='1'
         value={sliderValue}
         onChange={handleChange}
       />
-      <div className="rewardDisplay">
-        <div className="rewardText">Reward: </div>
-        <div className="rewardWrapper">
-          {renderApples("appleExpanded", reward)}
+      <div className='rewardDisplay'>
+        <div className='rewardText'>Reward: </div>
+        <div className='rewardWrapper'>
+          {renderApples('appleExpanded', reward)}
         </div>
       </div>
     </div>

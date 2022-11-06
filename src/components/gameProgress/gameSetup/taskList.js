@@ -7,7 +7,6 @@ export default function TaskList({
   // searchValue,
   sortByFavorite,
 }) {
-  // console.log(searchValue);
   const [tasksFiltered, setTasksFiltered] = useState([]);
   const { user, allTasks, favoriteList } = useTask();
 
@@ -39,10 +38,6 @@ export default function TaskList({
   // whose category match the category selected in the filter (in parent component)
   useEffect(() => {
     window.scrollTo(0, 0);
-    // ??? When filterSelection is an empty array, it (correctly) considers filterSelection.length = 0
-    // ??? and yet filterSelection === [] is false. Wth, why???
-    // console.log(filterSelection);
-    // filterSelection === [] ? console.log(true) : console.log(false);
     if (filterSelection.length > 0) {
       const filterTasks = [...allTasks];
       const filteredTasks = filterTasks.filter((task) =>
@@ -68,7 +63,6 @@ export default function TaskList({
   // !!! WIP: functioning search feature comes here:
 
   return (
-    // Console.logging is making it not render the rest of the component. Wth???
     allTasks &&
     tasksFiltered && (
       <div className="taskWrapper">
@@ -77,6 +71,5 @@ export default function TaskList({
         ))}
       </div>
     )
-    // )
   );
 }

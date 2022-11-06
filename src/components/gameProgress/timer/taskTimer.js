@@ -1,17 +1,16 @@
-import { useState, useEffect } from "react";
-import "./timer.css";
-import apple from "../../../images/apple-color.png";
-import checkCategory from "../../../utils/categoryCheck";
-import TaskTimerRender from "./taskTimerRender";
-import { useNavigate } from "react-router-dom";
-import { useTask } from "../../../taskContext";
-import { TimerSeconds } from "../../../utils/timerSetTimeout";
-import { confirm } from "react-confirm-box";
+import { useState, useEffect } from 'react';
+import './timer.css';
+import { appleColor } from '../../../images';
+import TaskTimerRender from './taskTimerRender';
+import { useNavigate } from 'react-router-dom';
+import { useTask } from '../../../taskContext';
+import { TimerSeconds, checkCategory } from '../../../utils';
+import { confirm } from 'react-confirm-box';
 import {
   addToProgress,
   addFailed,
   removeFromToday,
-} from "../../../fetchDB/fetchDB";
+} from '../../../fetchDB/fetchDB';
 
 export default function TaskTimer() {
   const [timerInit, setTimerInit] = useState(false);
@@ -83,7 +82,7 @@ export default function TaskTimer() {
       const newUserProgress = userProgress + reward;
       await addToProgress(user._id, newUserProgress).then((progress) => {
         setUserProgress(progress);
-        navigate("../tasksuccess");
+        navigate('../tasksuccess');
       });
     }
   };
@@ -94,17 +93,17 @@ export default function TaskTimer() {
   const options = {
     render: (message, onConfirm, onCancel) => {
       return (
-        <div className="react-confirm-box">
+        <div className='react-confirm-box'>
           <h4>
             If you forfeit the task you will not be able to go back to it and
             you will lose your reward. Are you sure you want to forfeit the
             task?
           </h4>
-          <div className="confirm-box-btnWrapper">
+          <div className='confirm-box-btnWrapper'>
             <button
               onClick={() => {
                 onConfirm();
-                navigate("../taskfailure");
+                navigate('../taskfailure');
                 setDisabled(false);
               }}
             >
@@ -129,7 +128,7 @@ export default function TaskTimer() {
     setPaused(true);
     setForfeited(true);
     setDisabled(true);
-    return await confirm("Are you sure?", options);
+    return await confirm('Are you sure?', options);
   };
 
   //This function send the failedTask to the failedList and to the
@@ -166,7 +165,7 @@ export default function TaskTimer() {
   const goToMyList = async () => {
     setPaused(true);
     setForfeited(true);
-    return await confirm("Are you sure?", option);
+    return await confirm('Are you sure?', option);
   };
 
   const givenUpClick = async () => {
@@ -176,18 +175,18 @@ export default function TaskTimer() {
     await failedAndCompleted(user._id, failedTask);
     setNextClicked(false);
     setUserSettings(userSettings.filter((task) => task._id !== failedTask._id));
-    navigate("../mytasks");
+    navigate('../mytasks');
   };
 
   const option = {
     render: (message, onConfirm, onCancel) => {
       return (
-        <div className="react-confirm-box">
+        <div className='react-confirm-box'>
           <h4>
             If you go back to your list, you will loose this task and won't be
             able to do it later. Are you sure you want to proceed?
           </h4>
-          <div className="confirm-box-btnWrapper">
+          <div className='confirm-box-btnWrapper'>
             <button
               onClick={() => {
                 onConfirm();
@@ -217,7 +216,7 @@ export default function TaskTimer() {
       forfeitTask={forfeitTask}
       goToMyList={goToMyList}
       // givenUpTask={givenUpTask}
-      apple={apple}
+      apple={appleColor}
       icon={icon}
       alt={alt}
       image={selectedPet.mood[0]}

@@ -9,10 +9,8 @@ export default function MyList({ showConcluded }) {
     nextClicked,
     todaysList,
     todaysCompleted,
-    todaysSuccess,
     userSettings,
     setUserSettings,
-    setDisabled,
   } = useTask();
 
   const [renderIncomplete, setRenderIncomplete] = useState(todaysList);
@@ -20,7 +18,6 @@ export default function MyList({ showConcluded }) {
 
   const sendTaskSetting = async (taskSetting) => {
     if (nextClicked && userSettings.length === 0) {
-      // console.log(userSettings);
       await setUserSettings((prev) => [...prev, taskSetting]);
     }
   };
@@ -36,24 +33,8 @@ export default function MyList({ showConcluded }) {
     }
   }, [showConcluded]);
 
-  //   if (filterSelection.length > 0) {
-  //     const filterTasks = [...allTasks];
-  //     const filteredTasks = filterTasks.filter((task) =>
-  //       filterSelection.includes(task.category)
-  //     );
-  //     setTasksFiltered(filteredTasks);
-  //   } else if (!sortByFavorite) {
-  //     setTasksFiltered(allTasks);
-  //   }
-  // }, [allTasks, filterSelection]);
-
   return (
-    // console.log(userSettings) || (
     <div className="taskWrapper">
-      {/* {console.log("To do tasks:")} */}
-      {/* {console.log(renderIncomplete)} */}
-      {/* {console.log("Completed tasks:")} */}
-      {/* {console.log(renderComplete)} */}
       {renderIncomplete &&
         renderIncomplete.map((task, index) => (
           <TaskExpanded
@@ -68,6 +49,5 @@ export default function MyList({ showConcluded }) {
           <TaskConcluded key={index} task={task} />
         ))}
     </div>
-    // )
   );
 }

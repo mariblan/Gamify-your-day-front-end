@@ -1,10 +1,10 @@
-@import url("https://fonts.googleapis.com/css2?family=Fresca&family=Merienda&family=Patrick+Hand&family=Sansita&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Fresca&family=Merienda&family=Patrick+Hand&family=Sansita&display=swap');
 
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: "Patrick Hand", sans-serif;
+  font-family: 'Patrick Hand', sans-serif;
 }
 
 .introPage {
@@ -15,23 +15,27 @@
   align-items: center;
   justify-content: flex-start;
 }
+
 .applestop {
   position: absolute;
   top: 1%;
   left: 20%;
   margin: 0% 20%;
 }
+
 .applestopimg {
   width: 80%;
 }
+
 .titleIntro {
   position: absolute;
   top: 35%;
   margin: 0% 20%;
-  font-family: "Sansita", sans-serif;
+  font-family: 'Sansita', sans-serif;
   font-size: 3.5rem;
   text-align: center;
 }
+
 .animals {
   position: absolute;
   top: 60%;
@@ -42,6 +46,7 @@
   width: 110%;
   transform: translateX(-4%);
 }
+
 .loginWrapper,
 .registerWrapper {
   width: 80%;

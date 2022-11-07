@@ -110,7 +110,6 @@ export default function AllTasks() {
         <h1 className='title'>Select your tasks!</h1>
         <div className='filterWrapper'>
           <ul className='filterCategory' ref={filterContainer}>
-            {/* <li onClick={filterByCategory}> */}
             <li>
               <img
                 ref={noFilterBtn}

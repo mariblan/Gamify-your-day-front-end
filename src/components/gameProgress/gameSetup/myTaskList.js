@@ -38,6 +38,8 @@ export default function MyTaskList() {
     render: (message, onConfirm, onCancel) => {
       return (
         <div className='react-confirm-box'>
+          <h2>{message}</h2>
+          <br />
           <h4>
             Once you start the game you won't be able to select a different pet
             later on. Would you like to continue?
@@ -169,15 +171,6 @@ export default function MyTaskList() {
               Start!
             </button>
           )}
-          {/* <button type="button" className="fadedBtn" onClick={navigateToTasks}>
-            Task selection
-          </button>
-          <button type="button" className="fadedBtn" onClick={toggleConcluded}>
-            {!showConcluded ? "Completed tasks" : "Incomplete tasks"}
-          </button>
-          <button type="button" className="mainBtn" onClick={giveSignal}>
-            Start!
-          </button> */}
         </div>
       </footer>
     </>

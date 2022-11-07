@@ -14,6 +14,8 @@ import {
   TaskSuccess,
   TaskFailure,
   GameOver,
+  NotFound,
+  HowToPlay,
 } from './components';
 import { TaskProvider } from './taskContext';
 import { checkValidToken } from './fetchDB/fetchDB';
@@ -52,7 +54,7 @@ function App() {
         setUser={setUser}
       >
         <Routes>
-          <Route path='/' element={<GameIntro />} />
+          <Route index element={<GameIntro />} />
           <Route path='login' element={<Login />} />
           <Route path='register' element={<Register />} />
           <Route path='auth' element={<RequireLogin />}>
@@ -65,6 +67,7 @@ function App() {
             <Route path='taskfailure' element={<TaskFailure />} />
             <Route path='gameover' element={<GameOver />} />
           </Route>
+          <Route path='*' element={<NotFound />} />
         </Routes>
       </TaskProvider>
       <ToastContainer />

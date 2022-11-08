@@ -15,7 +15,6 @@ import {
   TaskFailure,
   GameOver,
   NotFound,
-  HowToPlay,
 } from './components';
 import { TaskProvider } from './taskContext';
 import { checkValidToken } from './fetchDB/fetchDB';

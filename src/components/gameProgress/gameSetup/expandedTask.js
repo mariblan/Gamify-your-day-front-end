@@ -7,9 +7,10 @@ import {
 } from '../../../utils';
 import { useState, useEffect } from 'react';
 import { useTask } from '../../../taskContext';
+import ExplainTask from './explainTask';
 
 export default function TaskExpanded({
-  task: { _id, taskName, taskTime, category },
+  task: { _id, taskName, taskTime, category, taskDescription },
   sendTaskSetting,
 }) {
   const [sliderValue, setSliderValue] = useState(taskTime.minMedium);
@@ -90,6 +91,7 @@ export default function TaskExpanded({
 
   return (
     <div className='taskExpanded'>
+      <ExplainTask {...taskDescription} />
       <div className='taskMain'>
         <img src={icon} alt={alt} />
         <div className='titleFavoriteWrapper'>

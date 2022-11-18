@@ -1,14 +1,14 @@
-import { useState, useEffect } from "react";
-import { useTask } from "../../../taskContext";
-import "./timer.css";
-import canaryhappy from "../../../images/canary-happy.png";
-import applecolor from "../../../images/apple-color.png";
-import appleBW from "../../../images/apple-bw.png";
-import checkicon from "../../../images/check-icon.png";
-import checkCategory from "../../../utils/categoryCheck";
-import { useNavigate } from "react-router-dom";
-import renderApples from "../../../utils/generateApples";
-import { addSuccess, removeFromToday } from "../../../fetchDB/fetchDB";
+import { useState, useEffect } from 'react';
+import { useTask } from '../../../taskContext';
+import './timer.css';
+import canaryhappy from '../../../images/canary-happy.png';
+import applecolor from '../../../images/apple-color.png';
+import appleBW from '../../../images/apple-bw.png';
+import checkicon from '../../../images/check-icon.png';
+import checkCategory from '../../../utils/categoryCheck';
+import { useNavigate } from 'react-router-dom';
+import renderApples from '../../../utils/generateApples';
+import { addSuccess, removeFromToday } from '../../../fetchDB/fetchDB';
 
 export default function TaskSuccess() {
   const {
@@ -44,7 +44,7 @@ export default function TaskSuccess() {
   const [taskSuccess, setTaskSuccess] = useState(false);
 
   //Variable that can be modified to get the elapsed time in the taskTimer in the getElapsedTime funtion
-  let elapsedTime = "";
+  let elapsedTime = '';
 
   //Function to get how much time the person took to complete the action.
   const getElapsedTime = () => {
@@ -52,24 +52,18 @@ export default function TaskSuccess() {
     const minutesto = minutes - 1;
     if (seconds > 0 && minutes === sliderValue - 1) {
       if (secondsto < 10) {
-        // console.log(`00:0${secondsto}`);
         elapsedTime = `00:0${secondsto}`;
       } else {
-        // console.log(`00:${secondsto}`);
         elapsedTime = `00:${secondsto}`;
       }
     } else if (seconds >= 0) {
       if (secondsto < 10 && minutesto < 10) {
-        // console.log(`0${minutesto}:0${secondsto}`);
         elapsedTime = `0${minutesto}:0${secondsto}`;
       } else if (seconds >= 10 && minutes < 10) {
-        // console.log(`0${minutesto}:${secondsto}`);
         elapsedTime = `0${minutesto}:${secondsto}`;
       } else if (seconds < 10 && minutes > 10) {
-        // console.log(`${minutesto}:0${secondsto}`);
         elapsedTime = `${minutesto}:0${secondsto}`;
       } else {
-        // console.log(`${minutesto}:${secondsto}`);
         elapsedTime = `${minutesto}:${secondsto}`;
       }
     }
@@ -93,7 +87,6 @@ export default function TaskSuccess() {
     const updateToday = await removeFromToday(userId, successSettings._id).then(
       (updatedToday) => updatedToday
     );
-    console.log(taskSucceeded);
     setTodaysList(updateToday);
     setTodaysCompleted((prev) => [...prev, taskSucceeded.slice(-1)[0]]);
     return setTodaysSuccess(taskSucceeded);
@@ -118,11 +111,11 @@ export default function TaskSuccess() {
     );
     const currentProgress = await userProgress;
     if (selectedPet.hungerlevel > currentProgress) {
-      setTimeout(navigate("../gamego"), 150);
+      setTimeout(navigate('../gamego'), 150);
     } else if (selectedPet.hungerlevel <= currentProgress && gameFinalScreen) {
-      setTimeout(navigate("../gameover"), 150);
+      setTimeout(navigate('../gameover'), 150);
     } else if (selectedPet.hungerlevel <= currentProgress && !gameFinalScreen) {
-      setTimeout(navigate("../gamego"), 150);
+      setTimeout(navigate('../gamego'), 150);
     }
   };
 
@@ -139,14 +132,13 @@ export default function TaskSuccess() {
   };
 
   //Function to navigate to my tasks withing the 150 seconds of the time out upon clicking the my list button
-  const navigateToList = () => setTimeout(navigate("../mytasks"), 150);
+  const navigateToList = () => setTimeout(navigate('../mytasks'), 150);
 
   return (
-    <div className="bodytimer">
-      {console.log(todaysList)}
+    <div className='bodytimer'>
       <button
-        className="menu"
-        type="menu"
+        className='menu'
+        type='menu'
         onClick={() => {
           myListClick();
           navigateToList();
@@ -154,52 +146,52 @@ export default function TaskSuccess() {
       >
         My list
       </button>
-      <div className="success">
+      <div className='success'>
         <img
-          className="imagePet"
+          className='imagePet'
           src={selectedPet.mood[1]}
-          alt="canary-normal"
+          alt='canary-normal'
         />
-        <div className="boxsuccess">
-          <div className="congrats">
-            <div className="title-congrats">
-              <img className="checkicon" src={checkicon} alt="" />
-              <h2 id="congrat">Well done!</h2>
+        <div className='boxsuccess'>
+          <div className='congrats'>
+            <div className='title-congrats'>
+              <img className='checkicon' src={checkicon} alt='' />
+              <h2 id='congrat'>Well done!</h2>
             </div>
             <h6>
-              You finished your task with{" "}
-              {minutes === 0 ? "" : `${minutes} minutes and `}
+              You finished your task with{' '}
+              {minutes === 0 ? '' : `${minutes} minutes and `}
               {seconds < 10 ? `0${seconds}` : seconds} seconds remaining
             </h6>
           </div>
-          <div className="task">
-            <img className="icon" src={icon} alt={alt} />
-            <h5 className="">{taskName}</h5>
+          <div className='task'>
+            <img className='icon' src={icon} alt={alt} />
+            <h5 className=''>{taskName}</h5>
           </div>
-          <div className="difficulty">
-            <h6 className="category">Difficulty</h6>
-            <h6 className="info">{difficulty}</h6>
+          <div className='difficulty'>
+            <h6 className='category'>Difficulty</h6>
+            <h6 className='info'>{difficulty}</h6>
           </div>
-          <div className="time">
-            <h6 className="category">Total time</h6>
-            <h6 className="info">
-              {sliderValue} {sliderValue === 1 ? "minute" : "minutes"}
+          <div className='time'>
+            <h6 className='category'>Total time</h6>
+            <h6 className='info'>
+              {sliderValue} {sliderValue === 1 ? 'minute' : 'minutes'}
             </h6>
           </div>
-          <div className="reward">
+          <div className='reward'>
             <h6>Reward</h6>
-            {renderApples("apple", reward)}
+            {renderApples('apple', reward)}
           </div>
           <div>
-            <button onClick={successClick} className="next">
+            <button onClick={successClick} className='next'>
               Next
             </button>
           </div>
         </div>
-        <div className="boxpet">
-          <img className="pet" src={selectedPet.mood[1]} alt="" />
-          <div className="petfood">
-            {renderApples("applereward", userProgress, selectedPet.hungerlevel)}
+        <div className='boxpet'>
+          <img className='pet' src={selectedPet.mood[1]} alt='' />
+          <div className='petfood'>
+            {renderApples('applereward', userProgress, selectedPet.hungerlevel)}
           </div>
         </div>
       </div>

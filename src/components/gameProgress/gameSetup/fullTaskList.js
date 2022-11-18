@@ -1,14 +1,14 @@
-import "./taskList.css";
-import { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import './taskList.css';
+import { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 // import searchIcon from "../../../images/search-icon.png";
-import noFilter from "../../../images/nofilter-icon.png";
-import { categories } from "../../../utils/categoryCheck";
+import noFilter from '../../../images/nofilter-icon.png';
+import { categories } from '../../../utils/categoryCheck';
 import changeClassName, {
   newchangeClassName,
-} from "../../../utils/filterBtnsClassChange";
-import TaskList from "./taskList";
-import { useTask } from "../../../taskContext";
+} from '../../../utils/filterBtnsClassChange';
+import TaskList from './taskList';
+import { useTask } from '../../../taskContext';
 
 export default function AllTasks() {
   // Initial states for filtering or searching functions for task selection. All filters are false/empty
@@ -33,7 +33,7 @@ export default function AllTasks() {
   // This checks if there's any filter applied to the task list. If there's no filter selected,
   // the no filter button gets automatically selected again
   useEffect(() => {
-    if (filter.length === 0) noFilterBtn.current.className += " filterSelected";
+    if (filter.length === 0) noFilterBtn.current.className += ' filterSelected';
   }, [filter]);
 
   // Adds filters to an array so the child component returns only tasks that have the same category
@@ -71,9 +71,6 @@ export default function AllTasks() {
 
   // Toggles sorting by favorite on and off
   const checkFavorite = (e) => {
-    // console.log(`This is the favorites list:`);
-    // console.log(favoriteList);
-    // console.log(sortByFavorite);
     setFilter([]);
     changeClassName(e, noFilterBtn, filterContainer, true);
     !sortByFavorite ? setSortByFavorite(true) : setSortByFavorite(false);
@@ -81,8 +78,8 @@ export default function AllTasks() {
 
   const goToMyList = () => {
     canChangePet
-      ? setTimeout(() => navigate("../petselection"), 150)
-      : setTimeout(() => navigate("../mytasks"), 150);
+      ? setTimeout(() => navigate('../petselection'), 150)
+      : setTimeout(() => navigate('../mytasks'), 150);
   };
 
   // // handleChange and handleSubmit are meant for the search function (WIP)
@@ -100,10 +97,10 @@ export default function AllTasks() {
 
   return (
     <>
-      <nav className="headerWrapper">
-        <h1 className="userWelcome">Welcome back {user.name}!</h1>
+      <nav className='headerWrapper'>
+        <h1 className='userWelcome'>Welcome back {user.name}!</h1>
         <button
-          className="profileBtn fadedBtn smallButton"
+          className='profileBtn fadedBtn smallButton'
           onClick={() => {
             logOutConfirm();
             setDisabled(true);
@@ -111,16 +108,16 @@ export default function AllTasks() {
         >
           Log out
         </button>
-        <h1 className="title">Select your tasks!</h1>
-        <div className="filterWrapper">
-          <ul className="filterCategory" ref={filterContainer}>
+        <h1 className='title'>Select your tasks!</h1>
+        <div className='filterWrapper'>
+          <ul className='filterCategory' ref={filterContainer}>
             {/* <li onClick={filterByCategory}> */}
             <li>
               <img
                 ref={noFilterBtn}
                 src={noFilter}
-                alt="An x icon"
-                className="categoryIconFilter filterSelected"
+                alt='An x icon'
+                className='categoryIconFilter filterSelected'
                 onClick={(e) => {
                   changeClassName(e, noFilterBtn, filterContainer, false);
                   filterByCategory(e);
@@ -168,19 +165,19 @@ export default function AllTasks() {
         setSortByFavorite={setSortByFavorite}
         // sortByComplete={sortByComplete}
       />
-      <div className="navWrapper">
+      <div className='navWrapper'>
         <button
           disabled={disabled}
-          type="button"
-          className="fadedBtn"
+          type='button'
+          className='fadedBtn'
           onClick={(e) => checkFavorite(e)}
         >
           Favorites
         </button>
         <button
           disabled={disabled}
-          type="button"
-          className="mainBtn"
+          type='button'
+          className='mainBtn'
           onClick={goToMyList}
         >
           {canChangePet ? `Select pet` : `My tasks`}

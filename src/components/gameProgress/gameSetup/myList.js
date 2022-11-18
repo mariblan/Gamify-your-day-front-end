@@ -1,7 +1,7 @@
-import TaskExpanded from "./expandedTask";
-import TaskConcluded from "./taskConcluded";
-import { useState, useEffect } from "react";
-import { useTask } from "../../../taskContext";
+import TaskExpanded from './expandedTask';
+import TaskConcluded from './taskConcluded';
+import { useState, useEffect } from 'react';
+import { useTask } from '../../../taskContext';
 
 export default function MyList({ showConcluded }) {
   const {
@@ -20,7 +20,6 @@ export default function MyList({ showConcluded }) {
 
   const sendTaskSetting = async (taskSetting) => {
     if (nextClicked && userSettings.length === 0) {
-      // console.log(userSettings);
       await setUserSettings((prev) => [...prev, taskSetting]);
     }
   };
@@ -48,12 +47,7 @@ export default function MyList({ showConcluded }) {
   // }, [allTasks, filterSelection]);
 
   return (
-    // console.log(userSettings) || (
-    <div className="taskWrapper">
-      {/* {console.log("To do tasks:")} */}
-      {/* {console.log(renderIncomplete)} */}
-      {/* {console.log("Completed tasks:")} */}
-      {/* {console.log(renderComplete)} */}
+    <div className='taskWrapper'>
       {renderIncomplete &&
         renderIncomplete.map((task, index) => (
           <TaskExpanded
@@ -68,6 +62,5 @@ export default function MyList({ showConcluded }) {
           <TaskConcluded key={index} task={task} />
         ))}
     </div>
-    // )
   );
 }

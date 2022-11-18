@@ -1,25 +1,19 @@
-import notFavIcon from "../images/fav-icon.png";
-import favIcon from "../images/fav-filled-icon.png";
-import { addFavorite, removeFavorite } from "../fetchDB/fetchDB";
+import notFavIcon from '../images/fav-icon.png';
+import favIcon from '../images/fav-filled-icon.png';
+import { addFavorite, removeFavorite } from '../fetchDB/fetchDB';
 
 export const toggleFavorites = async (taskId, user, favoriteList) => {
-  console.log(taskId);
-  console.log(user);
-  console.log(favoriteList);
   for (let i = 0; i < favoriteList.length; i++) {
     if (favoriteList[i]._id === taskId) {
-      // console.log(`I match! My Id is: ${taskId}`);
       const newFavs = await removeFavorite(user._id, taskId).then(
         (newFavorites) => newFavorites
       );
       return [newFavs, favIcon];
     }
   }
-  // console.log(`I don't match! My Id is ${taskId}`);
   const newFavs = await addFavorite(user._id, taskId).then(
     (newFavorites) => newFavorites
   );
-  console.log(newFavs);
   return [newFavs, notFavIcon];
 };
 

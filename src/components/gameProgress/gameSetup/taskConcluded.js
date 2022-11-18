@@ -1,11 +1,11 @@
-import { useState, useEffect } from "react";
-import redX from "../../../images/failed-task-icon.png";
-import greenCheck from "../../../images/check-icon.png";
-import renderApples from "../../../utils/generateApples";
-import { loadFavorites, toggleFavorites } from "../../../utils/displayFavorite";
-import checkCategory from "../../../utils/categoryCheck";
-import notFavIcon from "../../../images/fav-icon.png";
-import { useTask } from "../../../taskContext";
+import { useState, useEffect } from 'react';
+import redX from '../../../images/failed-task-icon.png';
+import greenCheck from '../../../images/check-icon.png';
+import renderApples from '../../../utils/generateApples';
+import { loadFavorites, toggleFavorites } from '../../../utils/displayFavorite';
+import checkCategory from '../../../utils/categoryCheck';
+import notFavIcon from '../../../images/fav-icon.png';
+import { useTask } from '../../../taskContext';
 
 export default function TaskConcluded({
   task: { _id, taskName, sliderValue, difficulty, reward, category, time },
@@ -48,34 +48,31 @@ export default function TaskConcluded({
   const checkCompletion = () => {
     const allSuccessIds = todaysSuccess.map((task) => task._id);
     const allFailedIds = todaysFailed.map((task) => task._id);
-    // console.log(todaysSuccess);
-    // console.log(allSuccessIds);
-    // console.log(allFailedIds);
 
     if (allFailedIds.includes(_id)) {
       // setIsFailed(true);
-      return <img src={redX} alt="An x icon" className="taskConcluded" />;
+      return <img src={redX} alt='An x icon' className='taskConcluded' />;
     } else if (allSuccessIds.includes(_id)) {
       return (
         <img
           src={greenCheck}
-          alt="A green check icon"
-          className="taskConcluded"
+          alt='A green check icon'
+          className='taskConcluded'
         />
       );
     }
   };
 
   return (
-    <div className="taskExpanded">
+    <div className='taskExpanded'>
       {checkCompletion()}
-      <div className="taskMain">
+      <div className='taskMain'>
         <img src={icon} alt={alt} />
-        <div className="titleFavoriteWrapper">
+        <div className='titleFavoriteWrapper'>
           <img
             src={favorite}
-            alt="favorite"
-            className="favIcon"
+            alt='favorite'
+            className='favIcon'
             onClick={() =>
               toggleFavorites(_id, user, favoriteList).then((data) => {
                 if (data) {
@@ -88,16 +85,16 @@ export default function TaskConcluded({
           <h2>{taskName}</h2>
         </div>
       </div>
-      <div className="taskDescription">
-        <div className="difficultyWrapperConcluded">
-          <p className="difficultyConcluded">Difficulty</p>
+      <div className='taskDescription'>
+        <div className='difficultyWrapperConcluded'>
+          <p className='difficultyConcluded'>Difficulty</p>
           {!failedIds.includes(_id) && <p>Total Time</p>}
           {failedIds.includes(_id) && <p>Time</p>}
         </div>
-        <div className="timeWrapperConcluded">
+        <div className='timeWrapperConcluded'>
           {!failedIds.includes(_id) && (
-            <div className="rewardWrapperConcluded">
-              {difficulty} {renderApples("appleMini", reward)}
+            <div className='rewardWrapperConcluded'>
+              {difficulty} {renderApples('appleMini', reward)}
             </div>
           )}
           {!failedIds.includes(_id) && (
@@ -106,7 +103,7 @@ export default function TaskConcluded({
             </p>
           )}
           {failedIds.includes(_id) && (
-            <div className="rewardWrapperConcludedFailed">{difficulty}</div>
+            <div className='rewardWrapperConcludedFailed'>{difficulty}</div>
           )}
           {failedIds.includes(_id) && (
             <p>You had {sliderValue}:00 min for this task</p>

@@ -1,13 +1,12 @@
-import TaskMini from "./minifiedTask";
-import { useState, useEffect } from "react";
-import { useTask } from "../../../taskContext.js";
+import TaskMini from './minifiedTask';
+import { useState, useEffect } from 'react';
+import { useTask } from '../../../taskContext.js';
 
 export default function TaskList({
   filterSelection,
   // searchValue,
   sortByFavorite,
 }) {
-  // console.log(searchValue);
   const [tasksFiltered, setTasksFiltered] = useState([]);
   const { user, allTasks, favoriteList } = useTask();
 
@@ -68,10 +67,9 @@ export default function TaskList({
   // !!! WIP: functioning search feature comes here:
 
   return (
-    // Console.logging is making it not render the rest of the component. Wth???
     allTasks &&
     tasksFiltered && (
-      <div className="taskWrapper">
+      <div className='taskWrapper'>
         {tasksFiltered.map((task, index) => (
           <TaskMini key={index} task={task} user={user} />
         ))}

@@ -1,11 +1,11 @@
-import checkCategory from "../../../utils/categoryCheck";
-import notFavIcon from "../../../images/fav-icon.png";
-import redX from "../../../images/failed-task-icon.png";
-import greenCheck from "../../../images/check-icon.png";
-import { loadFavorites, toggleFavorites } from "../../../utils/displayFavorite";
-import { useState, useEffect } from "react";
-import { selectTask, loadSelected } from "../../../utils/selectTask";
-import { useTask } from "../../../taskContext";
+import checkCategory from '../../../utils/categoryCheck';
+import notFavIcon from '../../../images/fav-icon.png';
+import redX from '../../../images/failed-task-icon.png';
+import greenCheck from '../../../images/check-icon.png';
+import { loadFavorites, toggleFavorites } from '../../../utils/displayFavorite';
+import { useState, useEffect } from 'react';
+import { selectTask, loadSelected } from '../../../utils/selectTask';
+import { useTask } from '../../../taskContext';
 
 export default function TaskMini({ task: { _id, taskName, category } }) {
   const {
@@ -21,7 +21,7 @@ export default function TaskMini({ task: { _id, taskName, category } }) {
 
   const { icon, alt } = checkCategory(category);
   const [favorite, setFavorite] = useState(notFavIcon);
-  const [taskClass, setTaskClass] = useState("taskMini");
+  const [taskClass, setTaskClass] = useState('taskMini');
 
   // These two useEffects check the favorite and selected arrays from the user and
   // render selecton and favorite icons adequately.
@@ -38,18 +38,15 @@ export default function TaskMini({ task: { _id, taskName, category } }) {
   const checkCompletion = () => {
     const allSuccessIds = todaysSuccess.map((task) => task._id);
     const allFailedIds = todaysFailed.map((task) => task._id);
-    // console.log(todaysSuccess);
-    // console.log(allSuccessIds);
-    // console.log(allFailedIds);
 
     if (allFailedIds.includes(_id)) {
-      return <img src={redX} alt="An x icon" className="taskConcluded" />;
+      return <img src={redX} alt='An x icon' className='taskConcluded' />;
     } else if (allSuccessIds.includes(_id)) {
       return (
         <img
           src={greenCheck}
-          alt="A green check icon"
-          className="taskConcluded"
+          alt='A green check icon'
+          className='taskConcluded'
         />
       );
     }
@@ -69,18 +66,13 @@ export default function TaskMini({ task: { _id, taskName, category } }) {
         }
       >
         {checkCompletion()}
-        {/* {console.log(minifiedTask.current)} */}
-        {/* {console.log(user)} */}
-        {/* {console.log(user.todayList)} */}
-        {/* {console.log("These are the favorites:")} */}
-        {/* {console.log(favoriteList)} */}
         <img src={icon} alt={alt} />
         <h3>{taskName}</h3>
         <img
-          name="favIcon"
+          name='favIcon'
           src={favorite}
-          alt="A heart favorite icon"
-          className="favIcon"
+          alt='A heart favorite icon'
+          className='favIcon'
           onClick={async () =>
             await toggleFavorites(_id, user, favoriteList).then((data) => {
               if (data) {

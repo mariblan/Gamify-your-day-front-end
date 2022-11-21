@@ -1,9 +1,101 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
-  "icons": [],
-  "start_url": ".",
+  "short_name": "Gamify Your Day",
+  "name": "Gamify Your Day",
+  "description": "Gamify your day is an app to help those with mental or mood disorders navigate through their daily chores in an engaging and fun manner!",
+  "categories": ["entertainment", "games", "productivity"],
+  "lang": "en",
+  "dir": "ltr",
+  "icons": [
+    {
+      "src": "/logo192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/logo256.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    },
+    {
+      "src": "/logo384.png",
+      "sizes": "384x384",
+      "type": "image/png"
+    },
+    {
+      "src": "/logo512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/maskableApple.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/maskableApple.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "app-ss-01.webp",
+      "sizes": "374x667",
+      "type": "image/webp",
+      "platform": "narrow",
+      "label": "Homescreen of Gamify Your Day"
+    },
+    {
+      "src": "app-ss-02.webp",
+      "sizes": "374x667",
+      "type": "image/webp",
+      "platform": "narrow",
+      "label": "Landing page once logged in"
+    },
+    {
+      "src": "app-ss-03.webp",
+      "sizes": "374x665",
+      "type": "image/webp",
+      "platform": "narrow",
+      "label": "Task customization screen"
+    },
+    {
+      "src": "app-ss-04.webp",
+      "sizes": "372x665",
+      "type": "image/webp",
+      "platform": "narrow",
+      "label": "Countdown for a task - game on!"
+    },
+    {
+      "src": "app-ss-05.webp",
+      "sizes": "373x667",
+      "type": "image/webp",
+      "platform": "narrow",
+      "label": "You get one happy, satisfied pet upon succeeding in enough tasks"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Homescreen",
+      "url": "/",
+      "description": "Intro screen for the game"
+    },
+    {
+      "name": "Login",
+      "url": "/login",
+      "description": "Login screen for already existent users"
+    },
+    {
+      "name": "Registration",
+      "url": "/register",
+      "description": "Registration screen for new users"
+    }
+  ],
+  "start_url": "/",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "orientation": "portrait",
+  "theme_color": "#6ac76a",
+  "background_color": "#bbff33"
 }

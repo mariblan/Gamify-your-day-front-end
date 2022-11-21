@@ -32,6 +32,8 @@ const TaskProvider = ({
   user,
   toastErrorSettings,
   token,
+  firstLogin,
+  setFirstLogin,
   setToken,
   setUser,
   children,
@@ -145,6 +147,7 @@ const TaskProvider = ({
     setToken('');
     setUser(null);
     setTimeout(() => <Navigate to={'../login'} />, 150);
+    setFirstLogin(false);
   };
 
   //Fetching the generic task from database and setting them to display in a different order
@@ -253,6 +256,8 @@ const TaskProvider = ({
         setIsAuthenticated,
         token,
         setToken,
+        firstLogin,
+        setFirstLogin,
         logOutConfirm,
         toastErrorSettings,
         allTasks,

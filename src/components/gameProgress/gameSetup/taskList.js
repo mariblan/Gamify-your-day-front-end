@@ -1,6 +1,6 @@
-import TaskMini from "./minifiedTask";
-import { useState, useEffect } from "react";
-import { useTask } from "../../../taskContext.js";
+import TaskMini from './minifiedTask';
+import { useState, useEffect } from 'react';
+import { useTask } from '../../../taskContext.js';
 
 export default function TaskList({
   filterSelection,
@@ -65,7 +65,7 @@ export default function TaskList({
   return (
     allTasks &&
     tasksFiltered && (
-      <div className="taskWrapper">
+      <div className='taskWrapper'>
         {tasksFiltered.map((task, index) => (
           <TaskMini key={index} task={task} user={user} />
         ))}

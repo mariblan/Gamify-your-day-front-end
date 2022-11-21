@@ -1,7 +1,10 @@
 import './howToPlay.css';
+import { useEffect } from 'react';
 import { confirm } from 'react-confirm-box';
+import { useTask } from '../../taskContext';
 
 const HowToPlay = () => {
+  const { firstLogin } = useTask();
   const title = 'How to Gamify your Day';
 
   const guideTabs = {};
@@ -90,6 +93,10 @@ const HowToPlay = () => {
   const explainGame = async () => {
     return await confirm('0', options);
   };
+
+  useEffect(() => {
+    firstLogin && explainGame();
+  }, []);
 
   return (
     <div className='howToPlay' onClick={explainGame}>

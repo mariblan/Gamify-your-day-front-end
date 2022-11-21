@@ -1,7 +1,7 @@
-import TaskExpanded from "./expandedTask";
-import TaskConcluded from "./taskConcluded";
-import { useState, useEffect } from "react";
-import { useTask } from "../../../taskContext";
+import TaskExpanded from './expandedTask';
+import TaskConcluded from './taskConcluded';
+import { useState, useEffect } from 'react';
+import { useTask } from '../../../taskContext';
 
 export default function MyList({ showConcluded }) {
   const {
@@ -34,7 +34,7 @@ export default function MyList({ showConcluded }) {
   }, [showConcluded]);
 
   return (
-    <div className="taskWrapper">
+    <div className='taskWrapper'>
       {renderIncomplete &&
         renderIncomplete.map((task, index) => (
           <TaskExpanded

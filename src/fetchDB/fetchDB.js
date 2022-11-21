@@ -1,135 +1,169 @@
-import axios from "axios";
+import axios from 'axios';
 
 const port =
-  process.env.REACT_APP_GAMIFY_BACKEND_URL || "http://localhost:5000/";
-// "http://localhost:5000/";
+  process.env.REACT_APP_GAMIFY_BACKEND_URL || 'http://localhost:5000/';
+// 'http://localhost:5000/';
 
 const getAllTasks = async () => {
-  const allTasks = await axios
-    .get(port)
-    .then(({ data }) => data)
-    .catch((error) => error.response.data);
-  return allTasks;
+  try {
+    const { data } = await axios(port);
+    return data;
+  } catch (error) {
+    return error.response.data.error;
+  }
 };
 
 const checkValidToken = async (token) => {
-  const login = axios
-    .post(`${port}auth/me`, {}, { headers: { Authorization: token } })
-    .then(({ data }) => data)
-    .catch((error) => error.response.data);
-  return login;
+  try {
+    const { data } = await axios.post(
+      `${port}auth/me`,
+      {},
+      { headers: { Authorization: token } }
+    );
+    return data;
+  } catch (error) {
+    return error.response.data.error;
+  }
 };
 
 const loginUser = async (userSignIn) => {
-  const login = axios
-    .post(`${port}auth/login`, { ...userSignIn })
-    .then(({ data }) => data)
-    .catch((error) => error.response.data);
-  return login;
+  try {
+    const { data } = await axios.post(`${port}auth/login`, { ...userSignIn });
+    return data;
+  } catch (error) {
+    return error.response.data.error;
+  }
 };
 
 const registerUser = async (userRegister) => {
-  const register = axios
-    .post(`${port}auth/register`, { ...userRegister })
-    .then(({ data }) => data)
-    .catch((error) => error.response.data);
-  return register;
+  try {
+    const { data } = await axios.post(`${port}auth/register`, {
+      ...userRegister,
+    });
+    return data;
+  } catch (error) {
+    return error.response.data.error;
+  }
 };
 
 const addToToday = async (id, taskId) => {
-  const updatedToday = await axios
-    .put(`${port}user/${id}/todayList/${taskId}`)
-    .then(({ data }) => data.todayList)
-    .catch((error) => error.response.data);
-  return updatedToday;
+  try {
+    const { data } = await axios.put(`${port}user/${id}/todayList/${taskId}`);
+    return data.todayList;
+  } catch (error) {
+    return error.response.data.error;
+  }
 };
 
 const removeFromToday = async (id, taskId) => {
-  const updatedToday = await axios
-    .delete(`${port}user/${id}/todayList/${taskId}`)
-    .then(({ data }) => data.todayList)
-    .catch((error) => error.response.data);
-  return updatedToday;
+  try {
+    const { data } = await axios.delete(
+      `${port}user/${id}/todayList/${taskId}`
+    );
+    return data.todayList;
+  } catch (error) {
+    return error.response.data.error;
+  }
 };
 
 const clearToday = async (id) => {
-  const updatedToday = await axios
-    .delete(`${port}user/${id}/todayList`)
-    .then(({ data }) => data.todayList)
-    .catch((error) => error.response.data);
-  return updatedToday;
+  try {
+    const { data } = await axios.delete(`${port}user/${id}/todayList`);
+    return data.todayList;
+  } catch (error) {
+    return error.response.data.error;
+  }
 };
 
 const addFavorite = async (id, taskId) => {
-  const updatedFavorite = await axios
-    .put(`${port}user/${id}/favorites/${taskId}`)
-    .then(({ data }) => data.favoriteList)
-    .catch((error) => error.response.data);
-  return updatedFavorite;
+  try {
+    const { data } = await axios.put(`${port}user/${id}/favorites/${taskId}`);
+    return data.favoriteList;
+  } catch (error) {
+    return error.response.data.error;
+  }
 };
 
 const removeFavorite = async (id, taskId) => {
-  const updatedFavorite = await axios
-    .delete(`${port}user/${id}/favorites/${taskId}`)
-    .then(({ data }) => data.favoriteList)
-    .catch((error) => error.response.data);
-  return updatedFavorite;
+  try {
+    const { data } = await axios.delete(
+      `${port}user/${id}/favorites/${taskId}`
+    );
+    return data.favoriteList;
+  } catch (error) {
+    return error.response.data.error;
+  }
 };
 
 const addFailed = async (id, taskObj) => {
-  const updatedFailed = await axios
-    .put(`${port}user/${id}/failed/${taskObj._id}`, { ...taskObj })
-    .then(({ data }) => data.todayFailed)
-    .catch((error) => error.response.data);
-  return updatedFailed;
+  try {
+    const { data } = await axios.put(
+      `${port}user/${id}/failed/${taskObj._id}`,
+      {
+        ...taskObj,
+      }
+    );
+    return data.todayFailed;
+  } catch (error) {
+    return error.response.data.error;
+  }
 };
 
 const clearFailed = async (id) => {
-  const updatedFailed = await axios
-    .delete(`${port}user/${id}/failed`)
-    .then(({ data }) => data.todayFailed)
-    .catch((error) => error.response.data);
-  return updatedFailed;
+  try {
+    const { data } = await axios.delete(`${port}user/${id}/failed`);
+    return data.todayFailed;
+  } catch (error) {
+    return error.response.data.error;
+  }
 };
 
 const getCompleted = async (id) => {
-  const completedIds = await axios
-    .get(`${port}user/${id}/completed`)
-    .then(({ data }) => data.todayFailed)
-    .catch((error) => error.response.data);
-  return completedIds;
+  try {
+    const { data } = await axios(`${port}user/${id}/completed`);
+    return data.todayFailed;
+  } catch (error) {
+    return error.response.data.error;
+  }
 };
 
 const clearCompleted = async (id) => {
-  const completedIds = await axios
-    .delete(`${port}user/${id}/completed`)
-    .then(({ data }) => data.todayCompleted)
-    .catch((error) => error.response.data);
-  return completedIds;
+  try {
+    const { data } = await axios.delete(`${port}user/${id}/completed`);
+    return data.todayCompleted;
+  } catch (error) {
+    return error.response.data.error;
+  }
 };
 
 const addSuccess = async (id, taskObj) => {
-  const updatedSuccess = await axios
-    .put(`${port}user/${id}/success/${taskObj._id}`, { ...taskObj })
-    .then(({ data }) => data.todaySuccess)
-    .catch((error) => error.response.data);
-  return updatedSuccess;
+  try {
+    const { data } = await axios.put(
+      `${port}user/${id}/success/${taskObj._id}`,
+      { ...taskObj }
+    );
+    return data.todaySuccess;
+  } catch (error) {
+    return error.response.data.error;
+  }
 };
 
 const clearSuccess = async (id) => {
-  const updatedSuccess = await axios
-    .delete(`${port}user/${id}/success`)
-    .then(({ data }) => data.todaySuccess)
-    .catch((error) => error.response.data);
-  return updatedSuccess;
+  try {
+    const { data } = await axios.delete(`${port}user/${id}/success`);
+    return data.todaySuccess;
+  } catch (error) {
+    return error.response.data.error;
+  }
 };
 
 const addToProgress = async (id, newUserProgress) => {
-  const updatedProgress = await axios
-    .put(`${port}user/${id}/${newUserProgress}`)
-    .then(({ data }) => data.progress)
-    .catch((error) => error.response.data);
-  return updatedProgress;
+  try {
+    const { data } = await axios.put(`${port}user/${id}/${newUserProgress}`);
+    return data.progress;
+  } catch (error) {
+    return error.response.data.error;
+  }
 };
 
 export {

@@ -50,9 +50,7 @@ export default function GameGo({ getTask, clicked }) {
 
   const navigateToList = () => setTimeout(navigate('../mytasks'), 150);
   return (
-    // console.log(forfeited) || (
     <div>
-      {/* {console.log(gottenTask)} */}
       <button
         onClick={() => {
           navigate('../mytasks');

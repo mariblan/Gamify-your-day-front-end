@@ -1,9 +1,9 @@
 // import { useEffect, useContext } from "react";
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import GameGo from "../gameSetup/gameGo";
-import { useTask } from "../../../taskContext";
-import { toast } from "react-toastify";
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import GameGo from '../gameSetup/gameGo';
+import { useTask } from '../../../taskContext';
+import { toast } from 'react-toastify';
 
 export default function GetTask() {
   //const [counter, setCounter] = useState("Start!");
@@ -32,17 +32,14 @@ export default function GetTask() {
   function getTask() {
     if (userSettings.length === 0) {
       toast.error(
-        "You have no tasks left to do, select more tasks to continue!",
+        'You have no tasks left to do, select more tasks to continue!',
         toastErrorSettings
       );
     } else if (userSettings.length > 0) {
       const index = Math.floor(Math.random() * userSettings.length);
-      // console.log("This is happening");
       setClicked(true);
       setCounter(5);
       countDown();
-      //console.log(todaysList[index]);
-      // console.log(userSettings);
       setGottenTask(userSettings[index]);
     }
   }
@@ -54,9 +51,9 @@ export default function GetTask() {
         --count;
       } else {
         clearInterval(interval);
-        setCounter("GO!");
+        setCounter('GO!');
         setTimeout(() => {
-          navigate("../tasktimer");
+          navigate('../tasktimer');
         }, 1000);
       }
     }, 1000);
@@ -64,7 +61,6 @@ export default function GetTask() {
 
   return (
     <div>
-      {/* {console.log(userSettings)} */}
       <GameGo
         getTask={getTask}
         counter={counter}

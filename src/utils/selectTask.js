@@ -13,7 +13,6 @@ export const selectTask = async (e, taskId, user, todaysList) => {
         const newToday = await removeFromToday(user._id, taskId).then(
           (updatedToday) => updatedToday
         );
-        // console.log(newToday);
         return [newToday, 'taskMini'];
       }
     }

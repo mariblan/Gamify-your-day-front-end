@@ -67,9 +67,6 @@ export default function AllTasks() {
 
   // Toggles sorting by favorite on and off
   const checkFavorite = (e) => {
-    // console.log(`This is the favorites list:`);
-    // console.log(favoriteList);
-    // console.log(sortByFavorite);
     setFilter([]);
     changeClassName(e, noFilterBtn, filterContainer, true);
     !sortByFavorite ? setSortByFavorite(true) : setSortByFavorite(false);

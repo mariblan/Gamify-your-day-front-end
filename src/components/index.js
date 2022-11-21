@@ -15,6 +15,8 @@ import HowToPlay from './genericComponents/HowToPlay';
 
 export {
   GameIntro,
+  HowToPlay,
+  NotFound,
   Login,
   Register,
   RequireLogin,
@@ -26,6 +28,4 @@ export {
   TaskSuccess,
   TaskFailure,
   GameOver,
-  NotFound,
-  HowToPlay,
 };

@@ -25,7 +25,6 @@ export default function Login() {
       if (!email || !password)
         return toast.error('Please fill in all fields', toastErrorSettings);
       const res = await loginUser({ email, password });
-
       if (res.token) {
         localStorage.setItem('token', res.token);
         return setToken(res.token);

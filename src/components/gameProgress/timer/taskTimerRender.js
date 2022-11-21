@@ -1,7 +1,7 @@
 import { useTask } from '../../../taskContext';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import renderApples from '../../../utils/generateApples';
+import { renderApples } from '../../../utils';
 export default function TaskTimerRender({
   apple,
   icon,

@@ -1,5 +1,5 @@
-import "./components/gameProgress/timer/timer.css";
-import { createContext, useState, useContext, useEffect } from "react";
+import './components/gameProgress/timer/timer.css';
+import { createContext, useState, useContext, useEffect } from 'react';
 import {
   getAllTasks,
   addToProgress,
@@ -7,18 +7,20 @@ import {
   clearSuccess,
   clearToday,
   clearCompleted,
-} from "./fetchDB/fetchDB";
-import { confirm } from "react-confirm-box";
-import { useNavigate, Navigate } from "react-router-dom";
-import canaryNorm from "./images/canary-normal.png";
-import canaryHappy from "./images/canary-happy.png";
-import canarySad from "./images/canary-sad.png";
-import hamsterNorm from "./images/hamster-normal.png";
-import hamsterHappy from "./images/hamster-happy.png";
-import hamsterSad from "./images/hamster-sad.png";
-import tortoiseNorm from "./images/tortoise-normal.png";
-import tortoiseHappy from "./images/tortoise-happy.png";
-import tortoiseSad from "./images/tortoise-sad.png";
+} from './fetchDB/fetchDB';
+import { confirm } from 'react-confirm-box';
+import { Navigate } from 'react-router-dom';
+import {
+  canaryNorm,
+  canaryHappy,
+  canarySad,
+  hamsterNorm,
+  hamsterHappy,
+  hamsterSad,
+  tortoiseNorm,
+  tortoiseHappy,
+  tortoiseSad,
+} from './images';
 
 const TaskContext = createContext();
 
@@ -30,6 +32,8 @@ const TaskProvider = ({
   user,
   toastErrorSettings,
   token,
+  firstLogin,
+  setFirstLogin,
   setToken,
   setUser,
   children,
@@ -39,10 +43,10 @@ const TaskProvider = ({
   const pets = [
     {
       petId: 1,
-      name: "tortoise",
-      classname: "petbtn",
+      name: 'tortoise',
+      classname: 'petbtn',
       petClicked: false,
-      btn: "tortoisebtn",
+      btn: 'tortoisebtn',
       hungerlevel: 2,
       mood: [tortoiseNorm, tortoiseHappy, tortoiseSad],
       completion:
@@ -50,10 +54,10 @@ const TaskProvider = ({
     },
     {
       petId: 2,
-      name: "canary",
-      classname: "petbtn",
+      name: 'canary',
+      classname: 'petbtn',
       petClicked: false,
-      btn: "canarybtn",
+      btn: 'canarybtn',
       hungerlevel: 4,
       mood: [canaryNorm, canaryHappy, canarySad],
       completion:
@@ -61,10 +65,10 @@ const TaskProvider = ({
     },
     {
       petId: 3,
-      name: "hamster",
-      classname: "petbtn",
+      name: 'hamster',
+      classname: 'petbtn',
       petClicked: false,
-      btn: "hamsterbtn",
+      btn: 'hamsterbtn',
       hungerlevel: 8,
       mood: [hamsterNorm, hamsterHappy, hamsterSad],
       completion:
@@ -76,12 +80,12 @@ const TaskProvider = ({
   const options = {
     render: (message, onConfirm, onCancel) => {
       return (
-        <div className="react-confirm-box">
+        <div className='react-confirm-box'>
           <h4>
             If you log out you will lose all your progress and personalised
             tasks. Are you sure you want to proceed?
           </h4>
-          <div className="confirm-box-btnWrapper">
+          <div className='confirm-box-btnWrapper'>
             <button
               onClick={() => {
                 onConfirm();
@@ -108,7 +112,7 @@ const TaskProvider = ({
   //sets the game to the initial state.
   const logOutConfirm = async () => {
     if (todaysList.length > 0 || todaysCompleted.length > 0) {
-      await confirm("Are you sure?", options);
+      await confirm('Are you sure?', options);
     } else if (todaysList.length === 0 && todaysCompleted.length === 0) {
       logOut();
     }
@@ -123,11 +127,11 @@ const TaskProvider = ({
     setUserSettings([]);
     setTodaysList([]);
     setGottenTask({
-      category: "",
-      taskdescription: "",
-      difficulty: "",
+      category: '',
+      taskdescription: '',
+      difficulty: '',
       taskid: 0,
-      taskName: "",
+      taskName: '',
       taskTime: {},
     });
     clearFailed(user._id);
@@ -138,11 +142,12 @@ const TaskProvider = ({
     setDisabled(false);
     setSelectedPet(false);
     setCanChangePet(true);
-    localStorage.removeItem("token");
+    localStorage.removeItem('token');
     setIsAuthenticated(false);
-    setToken("");
+    setToken('');
     setUser(null);
-    setTimeout(() => <Navigate to={"../login"} />, 150);
+    setTimeout(() => <Navigate to={'../login'} />, 150);
+    setFirstLogin(false);
   };
 
   //Fetching the generic task from database and setting them to display in a different order
@@ -241,7 +246,7 @@ const TaskProvider = ({
 
   const [breakInterval, setBreakInterval] = useState(false);
 
-  const [counter, setCounter] = useState("Start!");
+  const [counter, setCounter] = useState('Start!');
   return (
     <TaskContext.Provider
       value={{
@@ -251,6 +256,8 @@ const TaskProvider = ({
         setIsAuthenticated,
         token,
         setToken,
+        firstLogin,
+        setFirstLogin,
         logOutConfirm,
         toastErrorSettings,
         allTasks,
@@ -296,4 +303,4 @@ const TaskProvider = ({
     </TaskContext.Provider>
   );
 };
-export { useTask, TaskContext, TaskProvider };
+export { useTask, TaskProvider };

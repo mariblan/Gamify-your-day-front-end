@@ -7,7 +7,8 @@ import { registerUser } from '../../fetchDB/fetchDB';
 import { useTask } from '../../taskContext';
 
 export default function Register() {
-  const { isAuthenticated, setToken, toastErrorSettings } = useTask();
+  const { isAuthenticated, setToken, setFirstLogin, toastErrorSettings } =
+    useTask();
 
   const [{ name, email, password }, setFormState] = useState({
     name: '',
@@ -49,6 +50,7 @@ export default function Register() {
       const res = await registerUser({ name, email, password });
       if (res.token) {
         localStorage.setItem('token', res.token);
+        setFirstLogin(true);
         return setToken(res.token);
       } else {
         return toast.error(res, toastErrorSettings);

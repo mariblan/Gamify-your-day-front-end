@@ -1,10 +1,12 @@
-import checkCategory from '../../../utils/categoryCheck';
-import notFavIcon from '../../../images/fav-icon.png';
-import redX from '../../../images/failed-task-icon.png';
-import greenCheck from '../../../images/check-icon.png';
-import { loadFavorites, toggleFavorites } from '../../../utils/displayFavorite';
+import { notFavIcon, redX, greenCheck } from '../../../images';
+import {
+  checkCategory,
+  loadFavorites,
+  toggleFavorites,
+  selectTask,
+  loadSelected,
+} from '../../../utils';
 import { useState, useEffect } from 'react';
-import { selectTask, loadSelected } from '../../../utils/selectTask';
 import { useTask } from '../../../taskContext';
 
 export default function TaskMini({ task: { _id, taskName, category } }) {

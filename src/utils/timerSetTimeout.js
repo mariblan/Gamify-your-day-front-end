@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { useTask } from "../taskContext";
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useTask } from '../taskContext';
 
 function TimerSeconds(timerInit, paused, setPaused, done, setDone) {
   const {
@@ -41,7 +41,7 @@ function TimerSeconds(timerInit, paused, setPaused, done, setDone) {
       done === false &&
       setTimeout(() => {
         clearTimeout();
-        navigate("../taskfailure");
+        navigate('../taskfailure');
       }, 150);
   });
   useEffect(() => {

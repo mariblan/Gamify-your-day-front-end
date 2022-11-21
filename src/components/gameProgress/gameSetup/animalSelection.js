@@ -1,6 +1,6 @@
 import './animalSelection.css';
 import { useState, useRef, useEffect } from 'react';
-import renderApples from '../../../utils/generateApples';
+import { renderApples } from '../../../utils';
 import { useNavigate } from 'react-router-dom';
 import { useTask } from '../../../taskContext';
 import { toast } from 'react-toastify';

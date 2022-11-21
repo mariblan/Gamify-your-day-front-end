@@ -1,4 +1,4 @@
-import appleColor from '../../../images/apple-color.png';
+import { appleColor } from '../../../images';
 import { addFailed, removeFromToday } from '../../../fetchDB/fetchDB';
 import './gameGo.css';
 import { useTask } from '../../../taskContext';

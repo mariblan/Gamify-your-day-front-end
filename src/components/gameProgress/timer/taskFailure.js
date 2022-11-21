@@ -1,13 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useTask } from '../../../taskContext';
 import './timer.css';
-import applecolor from '../../../images/apple-color.png';
-import applebw from '../../../images/apple-bw.png';
-import canarysad from '../../../images/canary-sad.png';
-import failedicon from '../../../images/failed-task-icon.png';
-import checkCategory from '../../../utils/categoryCheck';
+import { appleColor, appleBW, canarySad, redX } from '../../../images';
+import { checkCategory, renderApples } from '../../../utils';
 import { useNavigate } from 'react-router-dom';
-import renderApples from '../../../utils/generateApples';
 import { addFailed, removeFromToday } from '../../../fetchDB/fetchDB';
 
 export default function TaskFailure() {
@@ -124,7 +120,7 @@ export default function TaskFailure() {
         <div className='boxsuccess'>
           <div className='congrats'>
             <div className='title-congrats'>
-              <img className='checkicon' src={failedicon} alt='' />
+              <img className='checkicon' src={redX} alt='' />
               <h2 id='congrat'>
                 {forfeited === true ? 'Forfeited' : "Time's up!"}
               </h2>
@@ -134,6 +130,16 @@ export default function TaskFailure() {
                 ? 'It seems you gave up on the task...'
                 : 'It seems you needed more time...'}
             </h6>
+          </div>
+          <div className='boxpet'>
+            <img className='pet' src={selectedPet.mood[2]} alt='' />
+            <div className='petfood'>
+              {renderApples(
+                'applereward',
+                userProgress,
+                selectedPet.hungerlevel
+              )}
+            </div>
           </div>
           <div className='task'>
             <img className='icon' src={icon} alt={alt} />

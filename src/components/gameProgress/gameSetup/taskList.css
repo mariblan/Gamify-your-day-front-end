@@ -1,15 +1,15 @@
-@import url("https://fonts.googleapis.com/css2?family=Fresca&family=Merienda&family=Patrick+Hand&family=Sansita&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Fresca&family=Merienda&family=Patrick+Hand&family=Sansita&display=swap');
 
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: "Patrick Hand", sans-serif;
+  font-family: 'Patrick Hand', sans-serif;
 }
 
 body {
   background-color: rgb(235, 243, 192);
-  background-image: url("../../../images/leaves-bg.png");
+  background-image: url('../../../images/leaves-bg.png');
 }
 
 .hidden {
@@ -20,7 +20,7 @@ body {
 .userWelcome {
   font-size: 1.4rem;
   padding: 8% 0 0 5%;
-  font-family: "Sansita", sans-serif;
+  font-family: 'Sansita', sans-serif;
 }
 
 .fadedBtn {
@@ -68,7 +68,7 @@ body {
   top: 0;
   width: 100%;
   background-color: rgb(235, 243, 192);
-  background-image: url("../../../images/leaves-bg.png");
+  background-image: url('../../../images/leaves-bg.png');
   padding-bottom: 2%;
 }
 
@@ -84,7 +84,7 @@ body {
   max-width: 90%;
   margin: 0 auto;
   padding: 3rem 0 0;
-  font-family: "Sansita", sans-serif;
+  font-family: 'Sansita', sans-serif;
   font-size: 2.7rem;
 }
 
@@ -239,7 +239,7 @@ Same for divs fixed at the bottom: How to have the
   height: 0.5rem;
 }
 
-input[type="range"]::-webkit-slider-thumb {
+input[type='range']::-webkit-slider-thumb {
   -webkit-appearance: none; /* Override default look */
   appearance: none;
   background-color: #d39522;
@@ -248,7 +248,7 @@ input[type="range"]::-webkit-slider-thumb {
   border-radius: 50%;
 }
 
-input[type="range"]::-moz-range-thumb {
+input[type='range']::-moz-range-thumb {
   -webkit-appearance: none; /* Override default look */
   appearance: none;
   border: none;
@@ -353,6 +353,7 @@ input[type="range"]::-moz-range-thumb {
   border-bottom: 1px solid rgba(47, 79, 79, 0.1);
   background-color: #f7fae6;
   position: fixed;
+  z-index: 5;
   bottom: 15%;
   width: 100%;
   display: flex;
@@ -391,11 +392,6 @@ input[type="range"]::-moz-range-thumb {
   margin-left: 1vw;
 }
 
-/* .appleMini {
-  max-height: 1vh;
-  padding: 10%;
-} */
-
 .appleExpanded {
   padding: 50%;
 }
@@ -410,6 +406,7 @@ input[type="range"]::-moz-range-thumb {
   width: 100%;
   position: fixed;
   bottom: 0;
+  z-index: 5;
   display: flex;
   align-items: center;
   justify-content: space-around;

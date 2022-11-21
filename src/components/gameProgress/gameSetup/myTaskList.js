@@ -1,11 +1,11 @@
-import MyList from "./myList";
-import reload from "../../../images/change-icon.png";
-import renderApples from "../../../utils/generateApples";
-import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { useTask } from "../../../taskContext";
-import { toast } from "react-toastify";
-import { confirm } from "react-confirm-box";
+import MyList from './myList';
+import { reload } from '../../../images';
+import { renderApples } from '../../../utils';
+import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useTask } from '../../../taskContext';
+import { toast } from 'react-toastify';
+import { confirm } from 'react-confirm-box';
 
 export default function MyTaskList() {
   const {
@@ -37,12 +37,14 @@ export default function MyTaskList() {
   const options = {
     render: (message, onConfirm, onCancel) => {
       return (
-        <div className="react-confirm-box">
+        <div className='react-confirm-box'>
+          <h2>{message}</h2>
+          <br />
           <h4>
             Once you start the game you won't be able to select a different pet
             later on. Would you like to continue?
           </h4>
-          <div className="confirm-box-btnWrapper">
+          <div className='confirm-box-btnWrapper'>
             <button
               onClick={() => {
                 onCancel();
@@ -56,7 +58,7 @@ export default function MyTaskList() {
                 onConfirm();
                 setDisabled(false);
                 setNextClicked(true);
-                setTimeout(() => navigate("../gamego"), 150);
+                setTimeout(() => navigate('../gamego'), 150);
                 setCanChangePet(false);
               }}
             >
@@ -73,16 +75,16 @@ export default function MyTaskList() {
   const giveSignal = async () => {
     if (todaysList.length === 0) {
       toast.error(
-        "Please select at least one task before proceeding!",
+        'Please select at least one task before proceeding!',
         toastErrorSettings
       );
     } else {
       if (canChangePet) {
         setDisabled(true);
-        await confirm("Start the game?", options);
+        await confirm('Start the game?', options);
       } else {
         setNextClicked(true);
-        setTimeout(() => navigate("../gamego"), 150);
+        setTimeout(() => navigate('../gamego'), 150);
       }
     }
   };
@@ -92,19 +94,19 @@ export default function MyTaskList() {
   };
 
   const navigateToTasks = () => {
-    setTimeout(() => navigate("../alltasks"), 150);
+    setTimeout(() => navigate('../alltasks'), 150);
   };
 
   const navigateToPets = () => {
-    setTimeout(() => navigate("../petselection"), 150);
+    setTimeout(() => navigate('../petselection'), 150);
   };
 
   return (
     <>
-      <div className="headerWrapper">
-        <h1 className="userWelcome">Welcome back {user.name}!</h1>
+      <div className='headerWrapper'>
+        <h1 className='userWelcome'>Welcome back {user.name}!</h1>
         <button
-          className="profileBtn fadedBtn"
+          className='profileBtn fadedBtn'
           onClick={() => {
             logOutConfirm();
             setDisabled(true);
@@ -112,56 +114,56 @@ export default function MyTaskList() {
         >
           Log out
         </button>
-        <h1 className="titleMyList">Today's task list</h1>
+        <h1 className='titleMyList'>Today's task list</h1>
       </div>
-      <div className="fixedTaskWrapper">
+      <div className='fixedTaskWrapper'>
         <MyList showConcluded={showConcluded} />
       </div>
       <footer>
-        <div className="dailyPet">
+        <div className='dailyPet'>
           <h3>My pet for today</h3>
-          <div className="imgWrapper">
+          <div className='imgWrapper'>
             <img
               src={mood ? mood[0] : `No pet selected`}
               alt={`A ${name}` || `No pet selected`}
-              className="animal"
+              className='animal'
             />
             {canChangePet && (
-              <div className="changeAnimal">
+              <div className='changeAnimal'>
                 <img
                   src={reload}
-                  alt="A reload icon"
+                  alt='A reload icon'
                   onClick={navigateToPets}
                 />
               </div>
             )}
           </div>
-          <div className="appleWrapper">
-            {renderApples("appleIcon", userProgress, hungerlevel)}
+          <div className='appleWrapper'>
+            {renderApples('appleIcon', userProgress, hungerlevel)}
           </div>
         </div>
-        <div className="navWrapper">
+        <div className='navWrapper'>
           <button
             disabled={disabled}
-            type="button"
-            className="fadedBtn"
+            type='button'
+            className='fadedBtn'
             onClick={navigateToTasks}
           >
             Task selection
           </button>
           <button
             disabled={disabled}
-            type="button"
-            className="fadedBtn"
+            type='button'
+            className='fadedBtn'
             onClick={toggleConcluded}
           >
-            {!showConcluded ? "Completed tasks" : "Incomplete tasks"}
+            {!showConcluded ? 'Completed tasks' : 'Incomplete tasks'}
           </button>
           {!showConcluded && (
             <button
               disabled={disabled}
-              type="button"
-              className="mainBtn"
+              type='button'
+              className='mainBtn'
               onClick={() => {
                 giveSignal();
               }}
@@ -169,15 +171,6 @@ export default function MyTaskList() {
               Start!
             </button>
           )}
-          {/* <button type="button" className="fadedBtn" onClick={navigateToTasks}>
-            Task selection
-          </button>
-          <button type="button" className="fadedBtn" onClick={toggleConcluded}>
-            {!showConcluded ? "Completed tasks" : "Incomplete tasks"}
-          </button>
-          <button type="button" className="mainBtn" onClick={giveSignal}>
-            Start!
-          </button> */}
         </div>
       </footer>
     </>

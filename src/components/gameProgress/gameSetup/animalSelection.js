@@ -40,18 +40,13 @@ export default function AnimalSelection(index, id) {
     });
   };
 
-  // console.log(selectedPet);
   useEffect(() => {
     if (selectedPet) {
       let animal = document.getElementById(selectedPet.btn);
-      console.log(animal);
       if (animal.className === 'petbtn') {
-        console.log(animal.className);
         animal.className = 'petbtnactive';
       }
     }
-    //   // console.log(animals);
-    //   // console.log(animals.className);
   }, []);
 
   const navigateToTasks = () => setTimeout(navigate('../alltasks'), 350);

@@ -48,24 +48,18 @@ export default function TaskSuccess() {
     const minutesto = minutes - 1;
     if (seconds > 0 && minutes === sliderValue - 1) {
       if (secondsto < 10) {
-        // console.log(`00:0${secondsto}`);
         elapsedTime = `00:0${secondsto}`;
       } else {
-        // console.log(`00:${secondsto}`);
         elapsedTime = `00:${secondsto}`;
       }
     } else if (seconds >= 0) {
       if (secondsto < 10 && minutesto < 10) {
-        // console.log(`0${minutesto}:0${secondsto}`);
         elapsedTime = `0${minutesto}:0${secondsto}`;
       } else if (seconds >= 10 && minutes < 10) {
-        // console.log(`0${minutesto}:${secondsto}`);
         elapsedTime = `0${minutesto}:${secondsto}`;
       } else if (seconds < 10 && minutes > 10) {
-        // console.log(`${minutesto}:0${secondsto}`);
         elapsedTime = `${minutesto}:0${secondsto}`;
       } else {
-        // console.log(`${minutesto}:${secondsto}`);
         elapsedTime = `${minutesto}:${secondsto}`;
       }
     }
@@ -89,7 +83,6 @@ export default function TaskSuccess() {
     const updateToday = await removeFromToday(userId, successSettings._id).then(
       (updatedToday) => updatedToday
     );
-    console.log(taskSucceeded);
     setTodaysList(updateToday);
     setTodaysCompleted((prev) => [...prev, taskSucceeded.slice(-1)[0]]);
     return setTodaysSuccess(taskSucceeded);
@@ -139,7 +132,6 @@ export default function TaskSuccess() {
 
   return (
     <div className='bodytimer'>
-      {console.log(todaysList)}
       <button
         className='menu'
         type='menu'

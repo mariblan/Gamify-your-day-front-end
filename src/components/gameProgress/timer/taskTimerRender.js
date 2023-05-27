@@ -2,6 +2,7 @@ import { useTask } from '../../../taskContext';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { renderApples } from '../../../utils';
+
 export default function TaskTimerRender({
   apple,
   icon,
@@ -34,8 +35,6 @@ export default function TaskTimerRender({
   }, []);
 
   const navigate = useNavigate();
-  // console.log(reward);
-  // console.log(userProgress);
   return (
     <div className='bodytimer'>
       <button

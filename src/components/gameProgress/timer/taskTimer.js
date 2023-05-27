@@ -66,8 +66,6 @@ export default function TaskTimer() {
 
   //Component with the timer function to make it work.
   TimerSeconds(timerInit, paused, setPaused, done, setDone);
-  //console.log(category);
-  //console.log(minutes, seconds);
 
   //Function to make the pause button work. Upon true clears the timers setTimeout and upon false it reinits it
   const pause = () => {
@@ -169,9 +167,6 @@ export default function TaskTimer() {
   };
 
   const givenUpClick = async () => {
-    // console.log(failedTask);
-    // console.log(user._id);
-    // console.log(userSettings);
     await failedAndCompleted(user._id, failedTask);
     setNextClicked(false);
     setUserSettings(userSettings.filter((task) => task._id !== failedTask._id));

@@ -10,7 +10,7 @@ export default function GameIntro() {
       <div className='applestop'>
         <img className='applestopimg' src={applesTop} alt='apples at the top' />
       </div>
-      <h1 className='titleIntro'>Gamify Your day</h1>
+      <h1 className='titleIntro'>Gamify Your Day</h1>
       <div className='animals'>
         <img
           className='animalsbottom'

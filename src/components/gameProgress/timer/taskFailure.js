@@ -100,74 +100,68 @@ export default function TaskFailure() {
   const navigateToList = () => setTimeout(navigate('../mytasks'), 150);
 
   return (
-    console.log(userSettings) || (
-      <div className='bodytimer'>
-        <button
-          onClick={() => {
-            myListClick();
-            navigateToList();
-          }}
-          className='menu'
-          type='menu'
-        >
-          My list
-        </button>
-        <div className='success'>
-          <img
-            className='imagePet'
-            src={selectedPet.mood[2]}
-            alt={`${selectedPet.name} ${selectedPet.mood[2]}`}
-          />
-          <div className='boxsuccess'>
-            <div className='congrats'>
-              <div className='title-congrats'>
-                <img className='checkicon' src={redX} alt='' />
-                <h2 id='congrat'>
-                  {forfeited === true ? 'Forfeited' : "Time's up!"}
-                </h2>
-              </div>
-              <h6>
-                {forfeited
-                  ? 'It seems you gave up on the task...'
-                  : 'It seems you needed more time...'}
-              </h6>
+<div className='bodytimer'>
+      <button
+        onClick={() => {
+          myListClick();
+          navigateToList();
+        }}
+        className='menu'
+        type='menu'
+      >
+        My list
+      </button>
+      <div className='success'>
+        <img
+          className='imagePet'
+          src={selectedPet.mood[2]}
+          alt={`${selectedPet.name} ${selectedPet.mood[2]}`}
+        />
+        <div className='boxsuccess'>
+          <div className='congrats'>
+            <div className='title-congrats'>
+              <img className='checkicon' src={failedicon} alt='' />
+              <h2 id='congrat'>
+                {forfeited === true ? 'Forfeited' : "Time's up!"}
+              </h2>
             </div>
-            <div className='task'>
-              <img className='icon' src={icon} alt={alt} />
-              <h5 className=''>{taskName}</h5>
-            </div>
-            <div className='difficulty'>
-              <h6 className='category'>Difficulty</h6>
-              <h6 className='info'>{difficulty}</h6>
-            </div>
-            <div className='time'>
-              <h6 className='category'>Total time</h6>
-              <h6 className='info'>
-                {sliderValue} {sliderValue === 1 ? 'minutes' : 'minute'}
-              </h6>
-            </div>
-            <div className='reward'>
-              <h6>Reward</h6>
-              {renderApples('apple', reward)}
-            </div>
-            <div>
-              <button onClick={failureClick} className='next'>
-                Next
-              </button>
-            </div>
+            <h6>
+              {forfeited
+                ? 'It seems you gave up on the task...'
+                : 'It seems you needed more time...'}
+            </h6>
           </div>
-          <div className='boxpet'>
-            <img className='pet' src={selectedPet.mood[2]} alt='' />
-            <div className='petfood'>
-              {renderApples(
-                'applereward',
-                userProgress,
-                selectedPet.hungerlevel
-              )}
-            </div>
+          <div className='task'>
+            <img className='icon' src={icon} alt={alt} />
+            <h5 className=''>{taskName}</h5>
+          </div>
+          <div className='difficulty'>
+            <h6 className='category'>Difficulty</h6>
+            <h6 className='info'>{difficulty}</h6>
+          </div>
+          <div className='time'>
+            <h6 className='category'>Total time</h6>
+            <h6 className='info'>
+              {sliderValue} {sliderValue === 1 ? 'minutes' : 'minute'}
+            </h6>
+          </div>
+          <div className='reward'>
+            <h6>Reward</h6>
+            {renderApples('apple', reward)}
+          </div>
+          <div>
+            <button onClick={failureClick} className='next'>
+              Next
+            </button>
+          </div>
+        </div>
+        <div className='boxpet'>
+          <img className='pet' src={selectedPet.mood[2]} alt='' />
+          <div className='petfood'>
+            {renderApples('applereward', userProgress, selectedPet.hungerlevel)}
           </div>
         </div>
       </div>
-    )
+    </div>
   );
 }

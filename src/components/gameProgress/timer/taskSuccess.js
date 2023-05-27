@@ -1,13 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useTask } from '../../../taskContext';
 import './timer.css';
-import canaryhappy from '../../../images/canary-happy.png';
-import applecolor from '../../../images/apple-color.png';
-import appleBW from '../../../images/apple-bw.png';
-import checkicon from '../../../images/check-icon.png';
-import checkCategory from '../../../utils/categoryCheck';
+import { canaryhappy, applecolor, appleBW, greenCheck } from '../../../images';
+import { checkCategory, renderApples } from '../../../utils';
 import { useNavigate } from 'react-router-dom';
-import renderApples from '../../../utils/generateApples';
 import { addSuccess, removeFromToday } from '../../../fetchDB/fetchDB';
 
 export default function TaskSuccess() {
@@ -155,7 +151,7 @@ export default function TaskSuccess() {
         <div className='boxsuccess'>
           <div className='congrats'>
             <div className='title-congrats'>
-              <img className='checkicon' src={checkicon} alt='' />
+              <img className='checkicon' src={greenCheck} alt='' />
               <h2 id='congrat'>Well done!</h2>
             </div>
             <h6>

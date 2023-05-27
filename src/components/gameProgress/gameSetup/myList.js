@@ -9,10 +9,8 @@ export default function MyList({ showConcluded }) {
     nextClicked,
     todaysList,
     todaysCompleted,
-    todaysSuccess,
     userSettings,
     setUserSettings,
-    setDisabled,
   } = useTask();
 
   const [renderIncomplete, setRenderIncomplete] = useState(todaysList);
@@ -35,19 +33,8 @@ export default function MyList({ showConcluded }) {
     }
   }, [showConcluded]);
 
-  //   if (filterSelection.length > 0) {
-  //     const filterTasks = [...allTasks];
-  //     const filteredTasks = filterTasks.filter((task) =>
-  //       filterSelection.includes(task.category)
-  //     );
-  //     setTasksFiltered(filteredTasks);
-  //   } else if (!sortByFavorite) {
-  //     setTasksFiltered(allTasks);
-  //   }
-  // }, [allTasks, filterSelection]);
-
   return (
-    <div className='taskWrapper'>
+    <div className="taskWrapper">
       {renderIncomplete &&
         renderIncomplete.map((task, index) => (
           <TaskExpanded

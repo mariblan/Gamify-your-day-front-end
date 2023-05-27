@@ -1,70 +1,19 @@
-# Getting Started with Create React App
+# Welcome to Gamify your Day! Let's get through our daily chores the fun way!
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## What is our purpose?
 
-## Available Scripts
+Gamify your Day is an app meant to help anyone - in particular those who struggle with mood or mental disorders - get through their daily tasks in a more engaging and fun way!
 
-In the project directory, you can run:
+## How do I use this app?
 
-### `npm start`
+This app is [live](https://gamifyyourday.netlify.app/) and you can use it anytime!
+This app was designed with a mobile view in mind - please either use the console to toggle a mobile view, an extension for mobile view, or even better, check it out on your mobile!
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+1. Simply select the chores that you feel like tackling today.
+2. Select a pet you'd like to feed. Each pet has different hunger (difficulty) levels.
+3. Select the time for each task, according to how long you think you'd take to accomplish it.
+4. Once satisfied with your time and pet selection, you can start the game! One of the tasks you selected will be randomly assigned to you.
+5. Off you go! The timer will count down. Finishing the task in time and clicking on "I'm done!" will award you with apples to feed your pet!
+6. If you accumulate all necessary apples for your pet, you win the game! Don't worry though, if you still have tasks to finish or would like to do more, you are free to do so!
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+This is an eternal WIP - please feel free to reach out to the collaborators of this project if you find bugs or would like to make suggestions! :D

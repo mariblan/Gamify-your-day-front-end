@@ -1,40 +1,42 @@
-import iconChores from "../images/chores-icon.png";
-import iconWork from "../images/work-icon.png";
-import iconSocial from "../images/social-icon.png";
-import iconErrand from "../images/errands-icon.png";
-import iconCare from "../images/self-care-icon.png";
-import iconMisc from "../images/misc-icon.png";
+import {
+  iconChores,
+  iconWork,
+  iconSocial,
+  iconErrand,
+  iconCare,
+  iconMisc,
+} from '../images';
 
 const categories = [
   {
-    name: "work",
+    name: 'work',
     icon: iconWork,
-    alt: "A suitcase icon",
+    alt: 'A suitcase icon',
   },
   {
-    name: "social",
+    name: 'social',
     icon: iconSocial,
-    alt: "A telephone handle icon",
+    alt: 'A telephone handle icon',
   },
   {
-    name: "errands",
+    name: 'errands',
     icon: iconErrand,
-    alt: "An icon of an open package with a location flag",
+    alt: 'An icon of an open package with a location flag',
   },
   {
-    name: "chores",
+    name: 'chores',
     icon: iconChores,
-    alt: "A house icon with soap bubbles around",
+    alt: 'A house icon with soap bubbles around',
   },
   {
-    name: "care",
+    name: 'care',
     icon: iconCare,
-    alt: "Icon of a hand holding a drop of blood with a medical cross inside",
+    alt: 'Icon of a hand holding a drop of blood with a medical cross inside',
   },
   {
-    name: "miscellaneous",
+    name: 'miscellaneous',
     icon: iconMisc,
-    alt: "A lightbulb shining icon",
+    alt: 'A lightbulb shining icon',
   },
 ];
 

@@ -1,6 +1,5 @@
-import notFavIcon from '../images/fav-icon.png';
-import favIcon from '../images/fav-filled-icon.png';
-import { addFavorite, removeFavorite } from '../fetchDB/fetchDB';
+import { notFavIcon, favIcon } from "../images";
+import { addFavorite, removeFavorite } from "../fetchDB/fetchDB";
 
 export const toggleFavorites = async (taskId, user, favoriteList) => {
   for (let i = 0; i < favoriteList.length; i++) {

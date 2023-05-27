@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
-import redX from '../../../images/failed-task-icon.png';
-import greenCheck from '../../../images/check-icon.png';
-import renderApples from '../../../utils/generateApples';
-import { loadFavorites, toggleFavorites } from '../../../utils/displayFavorite';
-import checkCategory from '../../../utils/categoryCheck';
-import notFavIcon from '../../../images/fav-icon.png';
+import { redX, greenCheck, notFavIcon } from '../../../images';
+import {
+  checkCategory,
+  renderApples,
+  loadFavorites,
+  toggleFavorites,
+} from '../../../utils';
 import { useTask } from '../../../taskContext';
 
 export default function TaskConcluded({
@@ -14,9 +15,6 @@ export default function TaskConcluded({
   const [favorite, setFavorite] = useState(notFavIcon);
   const { user, todaysSuccess, todaysFailed, favoriteList, setFavoriteList } =
     useTask();
-  // const [allSuccessIds, setAllSuccessIds] = useState([]);
-  // const [allFailedIds, setAllFailedIds] = useState([]);
-  const [isFailed, setIsFailed] = useState(false);
 
   useEffect(() => {
     favoriteList && setFavorite(loadFavorites(_id, [...favoriteList]));

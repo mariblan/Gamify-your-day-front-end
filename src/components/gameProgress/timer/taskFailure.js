@@ -1,13 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useTask } from '../../../taskContext';
 import './timer.css';
-import applecolor from '../../../images/apple-color.png';
-import applebw from '../../../images/apple-bw.png';
-import canarysad from '../../../images/canary-sad.png';
-import failedicon from '../../../images/failed-task-icon.png';
-import checkCategory from '../../../utils/categoryCheck';
+import { appleColor, appleBW, canarySad, redX } from '../../../images';
+import { checkCategory, renderApples } from '../../../utils';
 import { useNavigate } from 'react-router-dom';
-import renderApples from '../../../utils/generateApples';
 import { addFailed, removeFromToday } from '../../../fetchDB/fetchDB';
 
 export default function TaskFailure() {
@@ -104,7 +100,7 @@ export default function TaskFailure() {
   const navigateToList = () => setTimeout(navigate('../mytasks'), 150);
 
   return (
-    <div className='bodytimer'>
+<div className='bodytimer'>
       <button
         onClick={() => {
           myListClick();

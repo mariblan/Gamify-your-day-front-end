@@ -1,7 +1,6 @@
 import './userAuth.css';
 import { useNavigate } from 'react-router-dom';
-import animals from '../../images/cover_bottom.png';
-import applesTop from '../../images/cover_top.png';
+import { animals, applesTop } from '../../images';
 
 export default function GameIntro() {
   const navigate = useNavigate();

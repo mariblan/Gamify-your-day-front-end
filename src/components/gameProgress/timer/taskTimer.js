@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react';
 import './timer.css';
-import apple from '../../../images/apple-color.png';
-import checkCategory from '../../../utils/categoryCheck';
+import { appleColor } from '../../../images';
 import TaskTimerRender from './taskTimerRender';
 import { useNavigate } from 'react-router-dom';
 import { useTask } from '../../../taskContext';
-import { TimerSeconds } from '../../../utils/timerSetTimeout';
+import { TimerSeconds, checkCategory } from '../../../utils';
 import { confirm } from 'react-confirm-box';
 import {
   addToProgress,
@@ -212,7 +211,7 @@ export default function TaskTimer() {
       forfeitTask={forfeitTask}
       goToMyList={goToMyList}
       // givenUpTask={givenUpTask}
-      apple={apple}
+      apple={appleColor}
       icon={icon}
       alt={alt}
       image={selectedPet.mood[0]}

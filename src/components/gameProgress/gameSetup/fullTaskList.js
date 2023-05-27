@@ -1,12 +1,8 @@
 import './taskList.css';
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-// import searchIcon from "../../../images/search-icon.png";
-import noFilter from '../../../images/nofilter-icon.png';
-import { categories } from '../../../utils/categoryCheck';
-import changeClassName, {
-  newchangeClassName,
-} from '../../../utils/filterBtnsClassChange';
+import { noFilter } from '../../../images';
+import { categories, changeClassName } from '../../../utils';
 import TaskList from './taskList';
 import { useTask } from '../../../taskContext';
 
